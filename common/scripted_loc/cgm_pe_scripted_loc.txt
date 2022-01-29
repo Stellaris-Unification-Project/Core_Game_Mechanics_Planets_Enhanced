@@ -1,0 +1,203 @@
+defined_text = { name = GetCGMAstrocartographyResearchOption text = { localization_key = cgm_research_option_added trigger = {  has_global_flag = cgm_astrocartography_enabled } } text = { localization_key = cgm_null trigger = { has_global_flag = cgm_astrocartography_disabled }}} 
+
+defined_text = { name = GetCGMResourceMessageCountry_teldar text = { localization_key = teldar_discovered_country trigger = { has_technology = tech_astrocartography_1 has_country_flag = teldar_discovered } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = teldar_discovered }}}}
+defined_text = { name = GetCGMResourceMessageCountry_yurantic text = { localization_key = yurantic_discovered_country trigger = { has_technology = tech_astrocartography_1 has_country_flag = yurantic_discovered } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = yurantic_discovered }}}}
+defined_text = { name = GetCGMResourceMessageCountry_aldar text = { localization_key = aldar_discovered_country trigger = { has_technology = tech_astrocartography_1 has_country_flag = aldar_discovered } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = aldar_discovered }}}}
+defined_text = { name = GetCGMResourceMessageCountry_neodymium  text = { localization_key = neodymium_discovered_country  trigger = { has_technology = tech_astrocartography_1 has_country_flag = neodymium_discovered  } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = neodymium_discovered  }}}}
+defined_text = { name = GetCGMResourceMessageCountry_hyperfuels text = { localization_key = hyperfuels_discovered_country trigger = { has_technology = tech_astrocartography_1 has_country_flag = hyperfuels_discovered } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = hyperfuels_discovered }}}}
+defined_text = { name = GetCGMResourceMessageCountry_pyronium  text = { localization_key = pyronium_discovered_country  trigger = { has_technology = tech_astrocartography_1 has_country_flag = pyronium_discovered  } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = pyronium_discovered  }}}}
+defined_text = { name = GetCGMResourceMessageCountry_cryodine text = { localization_key = cryodine_discovered_country trigger = { has_technology = tech_astrocartography_1 has_country_flag = cryodine_discovered } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = cryodine_discovered }}}}
+defined_text = { name = GetCGMResourceMessageCountry_selenemite text = { localization_key = selenemite_discovered_country trigger = { has_technology = tech_astrocartography_1 has_country_flag = selenemite_discovered } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = selenemite_discovered }}}}
+defined_text = { name = GetCGMResourceMessageCountry_garanthium text = { localization_key = garanthium_discovered_country trigger = { has_technology = tech_astrocartography_2 has_country_flag = garanthium_discovered } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = garanthium_discovered }}}}
+defined_text = { name = GetCGMResourceMessageCountry_lythuric text = { localization_key = lythuric_discovered_country trigger = { has_technology = tech_astrocartography_2 has_country_flag = lythuric_discovered } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = lythuric_discovered }}}}
+defined_text = { name = GetCGMResourceMessageCountry_orillium text = { localization_key = orillium_discovered_country trigger = { has_technology = tech_astrocartography_2 has_country_flag = orillium_discovered } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = orillium_discovered }}}}
+defined_text = { name = GetCGMResourceMessageCountry_xerodine  text = { localization_key = xerodine_discovered_country  trigger = { has_technology = tech_astrocartography_2 has_country_flag = xerodine_discovered  } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = xerodine_discovered  }}}}
+defined_text = { name = GetCGMResourceMessageCountry_sorium_3 text = { localization_key = sorium_3_discovered_country trigger = { has_technology = tech_astrocartography_2 has_country_flag = sorium_3_discovered } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = sorium_3_discovered }}}}
+defined_text = { name = GetCGMResourceMessageCountry_neorite  text = { localization_key = neorite_discovered_country  trigger = { has_technology = tech_astrocartography_2 has_country_flag = neorite_discovered  } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = neorite_discovered  }}}}
+defined_text = { name = GetCGMResourceMessageCountry_illum  text = { localization_key = illum_discovered_country  trigger = { has_technology = tech_astrocartography_2 has_country_flag = illum_discovered  } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = illum_discovered  }}}}
+defined_text = { name = GetCGMResourceMessageCountry_hyper_diamond  text = { localization_key = hyper_diamond_discovered_country  trigger = { has_technology = tech_astrocartography_2 has_country_flag = hyper_diamond_discovered  } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = hyper_diamond_discovered  }}}}
+defined_text = { name = GetCGMResourceMessageCountry_cavorite text = { localization_key = cavorite_discovered_country trigger = { has_technology = tech_astrocartography_2 has_country_flag = cavorite_discovered } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = cavorite_discovered }}}}
+defined_text = { name = GetCGMResourceMessageCountry_thullium text = { localization_key = thullium_discovered_country trigger = { has_technology = tech_astrocartography_2 has_country_flag = thullium_discovered } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = thullium_discovered }}}}
+defined_text = { name = GetCGMResourceMessageCountry_neutronium  text = { localization_key = neutronium_discovered_country  trigger = { has_technology = tech_astrocartography_3 has_country_flag = neutronium_discovered  } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = neutronium_discovered  }}}}
+defined_text = { name = GetCGMResourceMessageCountry_zro text = { localization_key = zro_discovered_country trigger = { has_technology = tech_astrocartography_3 has_country_flag = zro_discovered } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = zro_discovered }}}}
+defined_text = { name = GetCGMResourceMessageCountry_dark_matter text = { localization_key = dark_matter_discovered_country trigger = { has_technology = tech_astrocartography_3 has_country_flag = dark_matter_discovered } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = dark_matter_discovered }}}}
+defined_text = { name = GetCGMResourceMessageCountry_living_metal  text = { localization_key = living_metal_discovered_country  trigger = { has_technology = tech_astrocartography_3 has_country_flag = living_metal_discovered  } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = living_metal_discovered  }}}}
+defined_text = { name = GetCGMResourceMessageCountry_scritch  text = { localization_key = scritch_discovered_country  trigger = { has_technology = tech_astrocartography_3 has_country_flag = scritch_discovered  } } text = { localization_key = cgm_null trigger = { NOT = { has_country_flag = scritch_discovered  }}}}
+      
+defined_text = {        
+  name = GetCGMResourceMessageShip    
+  text = { localization_key = teldar_discovered_ship trigger = { prev = { has_ship_flag = teldar_discovered }}}
+  text = { localization_key = yurantic_discovered_ship trigger = { prev = { has_ship_flag = yurantic_discovered }}}
+  text = { localization_key = aldar_discovered_ship trigger = { prev = { has_ship_flag = aldar_discovered }}}
+  text = { localization_key = neodymium_discovered_ship trigger = { prev = { has_ship_flag = neodymium_discovered }}}
+  text = { localization_key = hyperfuels_discovered_ship trigger = { prev = { has_ship_flag = hyperfuels_discovered }}}
+  text = { localization_key = pyronium_discovered_ship trigger = { prev = { has_ship_flag = pyronium_discovered }}}
+  text = { localization_key = cryodine_discovered_ship trigger = { prev = { has_ship_flag = cryodine_discovered }}}
+  text = { localization_key = selenemite_discovered_ship trigger = { prev = { has_ship_flag = selenemite_discovered }}}
+  text = { localization_key = garanthium_discovered_ship trigger = { prev = { has_ship_flag = garanthium_discovered }}}
+  text = { localization_key = lythuric_discovered_ship trigger = { prev = { has_ship_flag = lythuric_discovered }}}
+  text = { localization_key = orillium_discovered_ship trigger = { prev = { has_ship_flag = orillium_discovered }}}
+  text = { localization_key = xerodine_discovered_ship trigger = { prev = { has_ship_flag = xerodine_discovered }}}
+  text = { localization_key = sorium_3_discovered_ship trigger = { prev = { has_ship_flag = sorium_3_discovered }}}
+  text = { localization_key = neorite_discovered_ship trigger = { prev = { has_ship_flag = neorite_discovered }}}
+  text = { localization_key = illum_discovered_ship trigger = { prev = { has_ship_flag = illum_discovered }}}
+  text = { localization_key = hyper_diamond_discovered_ship trigger = { prev = { has_ship_flag = hyper_diamond_discovered }}}
+  text = { localization_key = cavorite_discovered_ship trigger = { prev = { has_ship_flag = cavorite_discovered }}}
+  text = { localization_key = thullium_discovered_ship trigger = { prev = { has_ship_flag = thullium_discovered }}}
+  text = { localization_key = neutronium_discovered_ship trigger = { prev = { has_ship_flag = neutronium_discovered }}}
+  text = { localization_key = zro_discovered_ship trigger = { prev = { has_ship_flag = zro_discovered }}}
+  text = { localization_key = dark_matter_discovered_ship trigger = { prev = { has_ship_flag = dark_matter_discovered }}}
+  text = { localization_key = living_metal_discovered_ship trigger = { prev = { has_ship_flag = living_metal_discovered }}}
+  text = { localization_key = scritch_discovered_ship trigger = { prev = { has_ship_flag = scritch_discovered }}}
+}      
+
+
+defined_text = {   
+	name = GetCGMWelcomeMessage
+	text = { localization_key = welcome_message_on trigger = { has_country_flag = level_0_menu }}
+	text = { localization_key = welcome_message_off trigger = { NOT = { has_country_flag = level_0_menu }}}
+}	
+defined_text = {   
+	name = GetCGMPlanets
+	text = { localization_key = cgm_disabled trigger = { has_global_flag = cgm_new_worlds_disabled }}
+	text = { localization_key = cgm_enabled trigger = { has_global_flag = cgm_new_worlds_enabled }}
+	text = { localization_key = cgm_new_worlds_disabled_planetary_diversity_enabled trigger = { has_global_flag = cgm_new_worlds_disabled_planetary_diversity_enabled }}
+	text = { localization_key = cgm_new_worlds_enabled_planetary_diversity_enabled trigger = { has_global_flag = cgm_new_worlds_enabled_planetary_diversity_enabled }}
+}  
+
+defined_text = {   
+	name = GetCGMPrescriptedReadjustment
+	text = { localization_key = cgm_disabled trigger = { has_global_flag = cgm_pe_prescripted_planets_and_species_adjustment_disabled }}
+	text = { localization_key = cgm_enabled trigger = { has_global_flag = cgm_pe_prescripted_planets_and_species_adjustment_enabled }}
+}  
+
+defined_text = {   
+	name = GetCGMResourcesStatus   
+	text = { localization_key = cgm_vanilla_only trigger = { has_global_flag = cgm_resources_disabled }}
+	text = { localization_key = cgm_resources trigger = { has_global_flag = cgm_resources_enabled }}
+}	
+defined_text = {   
+	name = GetCGMblockerStatus   
+	text = { localization_key = cgm_vanilla_only trigger = { has_global_flag = cgm_tile_blockers_disabled }}
+	text = { localization_key = cgm_blockers trigger = { has_global_flag = cgm_tile_blockers_enabled }}
+}	
+
+defined_text = {   
+	name = GetCGMResources   
+	text = { localization_key = cgm_disabled trigger = { has_global_flag = cgm_resources_disabled }}
+	text = { localization_key = cgm_very_high trigger = { has_global_flag = cgm_very_high_strategic_resources }}
+	text = { localization_key = cgm_high trigger = { has_global_flag = cgm_high_strategic_resources }}
+	text = { localization_key = cgm_default trigger = { has_global_flag = cgm_default_strategic_resources }}
+	text = { localization_key = cgm_low trigger = { has_global_flag = cgm_low_strategic_resources }}
+	text = { localization_key = cgm_very_low trigger = { has_global_flag = cgm_very_low_strategic_resources }}
+}   
+defined_text = {   
+	name = GetCGMDeposits   
+	text = { localization_key = cgm_disabled trigger = { has_global_flag = cgm_no_deposit_num_change }}
+	text = { localization_key = cgm_very_high trigger = { has_global_flag = cgm_very_high_deposits }}
+	text = { localization_key = cgm_high trigger = { has_global_flag = cgm_high_deposits }}
+	text = { localization_key = cgm_default trigger = { has_global_flag = cgm_default_deposits }}
+	text = { localization_key = cgm_low trigger = { has_global_flag = cgm_low_deposits }}
+	text = { localization_key = cgm_very_low trigger = { has_global_flag = cgm_very_low_deposits }}
+}   
+defined_text = {   
+	name = GetCGMDepositSize   
+	text = { localization_key = cgm_disabled trigger = { has_global_flag = cgm_no_deposit_size_change }}
+	text = { localization_key = cgm_very_large trigger = { has_global_flag = cgm_very_high_deposits_size }}
+	text = { localization_key = cgm_large trigger = { has_global_flag = cgm_high_deposits_size }}
+	text = { localization_key = cgm_small trigger = { has_global_flag = cgm_low_deposits_size }}
+	text = { localization_key = cgm_very_small trigger = { has_global_flag = cgm_very_low_deposits_size }}
+}   
+defined_text = {   
+	name = GetCGMBlockers
+	text = { localization_key = cgm_disabled trigger = { has_global_flag = cgm_tile_blockers_disabled }}
+	text = { localization_key = cgm_very_high trigger = { has_global_flag = cgm_very_high_tile_blockers }}
+	text = { localization_key = cgm_high trigger = { has_global_flag = cgm_high_tile_blockers }}
+	text = { localization_key = cgm_default trigger = { has_global_flag = cgm_default_tile_blockers }}
+	text = { localization_key = cgm_low trigger = { has_global_flag = cgm_low_tile_blockers }}
+	text = { localization_key = cgm_very_low trigger = { has_global_flag = cgm_very_low_tile_blockers }}
+}   
+defined_text = {   
+	name = GetCGMPlanetSize   
+	text = { localization_key = cgm_disabled trigger = { has_global_flag = cgm_no_planet_resize }}
+	text = { localization_key = cgm_very_large trigger = { has_global_flag = cgm_very_large_planet_size }}
+	text = { localization_key = cgm_large trigger = { has_global_flag = cgm_large_planet_size }}
+	text = { localization_key = cgm_small trigger = { has_global_flag = cgm_small_planet_size }}
+	text = { localization_key = cgm_very_small trigger = { has_global_flag = cgm_very_small_planet_size }}
+}   
+defined_text = {   
+	name = GetCGMCapitalSize   
+	text = { localization_key = cgm_disabled trigger = { has_global_flag = cgm_no_capital_planet_resize }}
+	text = { localization_key = cgm_very_large trigger = { has_global_flag = cgm_very_large_capital_planet_size }}
+	text = { localization_key = cgm_large trigger = { has_global_flag = cgm_large_capital_planet_size }}
+	text = { localization_key = cgm_small trigger = { has_global_flag = cgm_small_capital_planet_size }}
+	text = { localization_key = cgm_very_small trigger = { has_global_flag = cgm_very_small_capital_planet_size }}
+}   
+defined_text = {   
+	name = GetCGMAstrocartography
+	text = { localization_key = cgm_disabled trigger = { has_global_flag = cgm_astrocartography_disabled }}
+	text = { localization_key = cgm_enabled trigger = { has_global_flag = cgm_astrocartography_enabled }}
+}   
+defined_text = {   
+	name = GetCGMAsteroidColonization   
+	text = { localization_key = cgm_disabled trigger = { has_global_flag = cgm_asteroid_colonization_disabled }}
+	text = { localization_key = cgm_enabled trigger = { has_global_flag = cgm_asteroid_colonization_enabled }}
+}   
+defined_text = {   
+	name = GetCGMUninhabitableTerraforming   
+	text = { localization_key = cgm_disabled trigger = { has_global_flag = cgm_uninhabitable_terraforming_mechanics_disabled }}
+	text = { localization_key = cgm_enabled trigger = { has_global_flag = cgm_uninhabitable_terraforming_mechanics_enabled }}
+}   
+defined_text = {   
+	name = GetCGMPlanetaryProjects
+	text = { localization_key = cgm_disabled trigger = { has_global_flag = cgm_planetary_projects_mechanics_disabled }}
+	text = { localization_key = cgm_enabled trigger = { has_global_flag = cgm_planetary_projects_mechanics_enabled }}
+} 
+defined_text = {   
+	name = GetCGMTerraformingAfterEffects
+	text = { localization_key = cgm_disabled trigger = { has_global_flag = cgm_terraforming_after_effects_disabled }}
+	text = { localization_key = cgm_enabled trigger = { has_global_flag = cgm_terraforming_after_effects_enabled }}
+} 
+defined_text = {   
+	name = GetCGMAutoExplore
+	text = { localization_key = cgm_disabled trigger = { NOT = { has_global_flag = cgm_game_start_auto_exploration }}}
+	text = { localization_key = cgm_enabled trigger = { has_global_flag = cgm_game_start_auto_exploration }}
+}
+defined_text = {   
+	name = GetCGMColonizationAutomation
+	text = { localization_key = cgm_disabled trigger = { has_global_flag = cgm_colonization_automation_disabled }}
+	text = { localization_key = cgm_enabled trigger = { has_global_flag = cgm_colonization_automation_enabled }}
+}
+defined_text = {   
+	name = GetCGMPresapientChance
+	text = { localization_key = cgm_very_low trigger = { has_global_flag = cgm_very_rare_presapients }}
+	text = { localization_key = cgm_vanilla_only trigger = { has_global_flag = cgm_vanilla_presapients }}
+	text = { localization_key = cgm_default trigger = { has_global_flag = cgm_default_presapients }}
+	text = { localization_key = cgm_high trigger = { has_global_flag = cgm_common_presapients }}
+	text = { localization_key = cgm_very_high trigger = { has_global_flag = cgm_very_common_presapients }}
+}   
+defined_text = {   
+	name = GetCGMTerraformingCandidateChance
+	text = { localization_key = cgm_very_low trigger = { has_global_flag = cgm_very_rare_terraforming_candidates }}
+	text = { localization_key = cgm_vanilla_only trigger = { has_global_flag = cgm_vanilla_terraforming_candidates }}
+	text = { localization_key = cgm_default trigger = { has_global_flag = cgm_default_terraforming_candidates }}
+	text = { localization_key = cgm_high trigger = { has_global_flag = cgm_common_terraforming_candidates }}
+	text = { localization_key = cgm_very_high trigger = { has_global_flag = cgm_very_common_terraforming_candidates }}
+}   
+defined_text = {   
+	name = GetCGMColonizableAsteroids
+	text = { localization_key = cgm_disabled trigger = { has_global_flag = cgm_asteroid_colonization_disabled }}
+	text = { localization_key = cgm_very_high trigger = { has_global_flag = cgm_very_high_colonizable_asteroids }}
+	text = { localization_key = cgm_high trigger = { has_global_flag = cgm_high_colonizable_asteroids }}
+	text = { localization_key = cgm_default trigger = { has_global_flag = cgm_default_colonizable_asteroids }}
+	text = { localization_key = cgm_low trigger = { has_global_flag = cgm_low_colonizable_asteroids }}
+	text = { localization_key = cgm_very_low trigger = { has_global_flag = cgm_very_low_colonizable_asteroids }}
+} 
+
+defined_text = { 
+	name = GetCGMTerraformerDesc
+	text = { localization_key = deactivated_terraformer trigger = { has_planet_flag = terraformer_inactive } }
+	text = { localization_key = baseline_terraformer_speed_desc trigger = { has_planet_flag = baseline_terraformer_speed } }
+	text = { localization_key = increased_terraformer_speed_desc trigger = { has_planet_flag = increased_terraformer_speed } }
+	text = { localization_key = maximal_terraformer_speed_desc trigger = { has_planet_flag = maximal_terraformer_speed } }
+}	

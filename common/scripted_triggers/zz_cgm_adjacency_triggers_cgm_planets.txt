@@ -1,0 +1,157 @@
+ # This file was created by script!
+ # Instead of editing it, you should change the python script.
+ # Changes to the file will be overwritten the next time the script is run.
+ #this = planet
+ #prev = tile
+energy_adjacency_any_building_available_cgm_planets = {
+	OR = {
+		AND = {
+			owner = { has_technology = "tech_helium_power" }
+			prev = {
+				planet_is_not_virtual = yes
+				owner = {
+					has_country_strategic_resource = { type = sr_helium_3 amount > 0 }
+				}
+			}
+			prev = {
+				custom_tooltip = {
+					fail_text = "requires_power_hub_absence"
+					planet = {
+						NOR = {
+							has_building = "building_power_hub_1"
+							has_building = "building_power_hub_2"
+							has_building = "building_akx_worm_1"
+						}
+					}
+				}
+			}
+			NOR = { has_building = building_helium_3_power_hub }
+		}
+		AND = {
+			prev = { planet = { cgm_colonizable_asteroid = yes } }
+			NOR = {
+				has_building = building_asteroidal_capital
+				has_building = building_capital_3
+				has_building = building_machine_capital_3
+			}
+		}
+		AND = {
+			prev = {
+				owner = {
+					has_technology = "tech_mine_dark_matter"
+					has_country_strategic_resource = { type = sr_dark_matter_fuel_rods amount > 0 }
+				}
+			}
+		}
+	}
+}
+ #this = planet
+ #prev = tile
+minerals_adjacency_any_building_available_cgm_planets = {
+	OR = {
+		AND = {
+			prev = { planet = { cgm_colonizable_asteroid = yes } }
+			NOR = {
+				has_building = building_asteroidal_capital
+				has_building = building_capital_3
+				has_building = building_machine_capital_3
+			}
+		}
+		AND = {
+			prev = {
+				owner = {
+					has_technology = "tech_mine_dark_matter"
+					has_country_strategic_resource = { type = sr_dark_matter_fuel_rods amount > 0 }
+				}
+			}
+		}
+	}
+}
+ #this = planet
+ #prev = tile
+food_adjacency_any_building_available_cgm_planets = {
+	OR = {
+		AND = {
+			prev = { planet = { cgm_colonizable_asteroid = yes } }
+			NOR = {
+				has_building = building_asteroidal_capital
+				has_building = building_capital_3
+				has_building = building_machine_capital_3
+			}
+		}
+		AND = {
+			prev = {
+				owner = {
+					has_technology = "tech_mine_dark_matter"
+					has_country_strategic_resource = { type = sr_dark_matter_fuel_rods amount > 0 }
+				}
+			}
+		}
+	}
+}
+ #this = planet
+ #prev = tile
+society_research_adjacency_any_building_available_cgm_planets = {
+	OR = {
+		AND = {
+			prev = { planet = { cgm_colonizable_asteroid = yes } }
+			NOR = {
+				has_building = building_asteroidal_capital
+				has_building = building_capital_3
+				has_building = building_machine_capital_3
+			}
+		}
+		AND = {
+			prev = {
+				owner = {
+					has_technology = "tech_mine_dark_matter"
+					has_country_strategic_resource = { type = sr_dark_matter_fuel_rods amount > 0 }
+				}
+			}
+		}
+	}
+}
+ #this = planet
+ #prev = tile
+physics_research_adjacency_any_building_available_cgm_planets = {
+	OR = {
+		AND = {
+			prev = { planet = { cgm_colonizable_asteroid = yes } }
+			NOR = {
+				has_building = building_asteroidal_capital
+				has_building = building_capital_3
+				has_building = building_machine_capital_3
+			}
+		}
+		AND = {
+			prev = {
+				owner = {
+					has_technology = "tech_mine_dark_matter"
+					has_country_strategic_resource = { type = sr_dark_matter_fuel_rods amount > 0 }
+				}
+			}
+		}
+	}
+}
+ #this = planet
+ #prev = tile
+engineering_research_adjacency_any_building_available_cgm_planets = {
+	OR = {
+		AND = {
+			prev = { planet = { cgm_colonizable_asteroid = yes } }
+			NOR = {
+				has_building = building_asteroidal_capital
+				has_building = building_capital_3
+				has_building = building_machine_capital_3
+			}
+		}
+		AND = {
+			prev = {
+				owner = {
+					has_technology = "tech_mine_dark_matter"
+					has_country_strategic_resource = { type = sr_dark_matter_fuel_rods amount > 0 }
+				}
+			}
+		}
+	}
+}

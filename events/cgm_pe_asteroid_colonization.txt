@@ -1,0 +1,188 @@
+namespace = cgm_asteroid_colonization
+
+ship_event = {
+	id = cgm_asteroid_colonization.1
+	is_triggered_only = yes
+	location = from
+	title = cgm_asteroidal_planet_found.name
+	desc = {
+		trigger = {
+			success_text = {			
+				text = cgm_asteroidal_planet_found.desc
+				from = { 
+					OR = {
+						is_planet_class = pc_asteroidal_planetoid
+						is_planet_class = pc_dwarf_planetoid
+					}	
+				}
+			}	
+			success_text = {			
+				text = cgm_ice_asteroidal_planet_found.desc
+				from = { is_planet_class = pc_ice_asteroidal_planetoid }
+			}		
+			success_text = {			
+				text = cgm_crystal_asteroidal_planet_found.desc
+				from = { is_planet_class = pc_crystal_asteroidal_planetoid }			
+			}	
+		}	
+	}		
+	picture = "GFX_evt_mining_station"		
+	immediate = { 
+		from = { generate_asteroidal_planetoid = yes } 
+	}		
+	option = { name = OK } 
+}
+ship_event = {
+	id = cgm_asteroid_colonization.11
+	is_triggered_only = yes
+	location = from
+	title = cgm_asteroidal_planet_found.name
+	desc = {
+		trigger = {
+			success_text = {			
+				text = cgm_asteroidal_planet_not_found.desc
+				from = { 
+					OR = {
+						is_planet_class = pc_asteroidal_planetoid
+						is_planet_class = pc_dwarf_planetoid
+						is_planet_class = pc_ice_asteroidal_planetoid
+						is_planet_class = pc_crystal_asteroidal_planetoid
+					}	
+				}
+			}
+		}	
+	}		
+	picture = "GFX_evt_mining_station"		
+	immediate = { 
+		#from = { generate_asteroidal_planetoid = yes } 
+	}		
+	option = { name = OK } 
+}
+	
+planet_event = { 
+	id = cgm_asteroid_colonization.2
+	hide_window = yes
+	is_triggered_only = yes
+	
+	immediate = { 
+		if = { 
+			limit = { 
+				OR = {
+					is_planet_class = pc_asteroidal_planetoid
+					is_planet_class = pc_dwarf_planetoid
+				}	
+			}
+			switch = {
+				trigger = has_planet_flag
+				tb_pc_asteroidal_carbometallic_rock@from = {					
+					add_modifier = { modifier = pc_asteroidal_carbometallic_rock_mined days = 3600 }
+				}	
+				tb_pc_asteroidal_mineral_rich_rock@from = {
+					add_modifier = { modifier = pc_asteroidal_mineral_rich_rock_mined days = 3600 }
+				}
+				tb_pc_asteroidal_energy_rich_rock@from = {
+					add_modifier = { modifier = pc_asteroidal_energy_rich_rock_mined days = 3600 }
+				}
+				tb_pc_asteroidal_mineral_ultra_rich_rock@from = {
+					add_modifier = { modifier = pc_asteroidal_mineral_ultra_rich_rock_mined days = 3600 }
+				}
+				tb_pc_asteroidal_energy_ultra_rich_rock@from = {
+					add_modifier = { modifier = pc_asteroidal_energy_ultra_rich_rock_mined days = 3600 }
+				}
+			}
+		}
+		else_if = { 
+			limit = { is_planet_class = pc_ice_asteroidal_planetoid }		
+			switch = {
+				trigger = has_planet_flag
+				tb_pc_ice_asteroidal_primordial_ice@from = { 
+					add_modifier = { modifier = pc_ice_asteroidal_primordial_ice_mined days = 3600 }
+				}
+				tb_pc_ice_asteroidal_frozen_exotic_matter@from = { 
+					add_modifier = { modifier = pc_ice_asteroidal_frozen_exotic_matter_mined days = 3600 }	
+				}
+			}
+		}	
+		else_if = { 
+			limit = { is_planet_class = pc_crystal_asteroidal_planetoid }
+			add_modifier = { modifier = pc_crystal_asteroidal_subspace_crystal_formation_mined days = 3600 }
+		}	
+	}
+}	
+
+ship_event = { 
+	id = cgm_asteroid_colonization.3
+	hide_window = yes
+	is_triggered_only = yes
+	
+	trigger = { 
+		has_global_flag = cgm_asteroid_colonization_enabled
+		from = { 
+			has_planet_flag = asteroidal_candidate 
+			OR = { 
+				is_planet_class = pc_asteroid
+				is_planet_class = pc_ice_asteroid			
+				is_planet_class = pc_large_asteroid_moon
+				#is_planet_class = pc_small_asteroid_moon
+				is_planet_class = pc_dwarf_planet_asteroid
+			}				
+		} 
+	}
+	
+	immediate = { 
+		from = {
+			random_list = { 
+				0 = { 		
+					modifier = { 
+						add = 10
+						has_global_flag = cgm_very_low_colonizable_asteroids
+					}								
+					modifier = { 
+						add = 20
+						has_global_flag = cgm_low_colonizable_asteroids
+					}				
+					modifier = { 
+						add = 30
+						has_global_flag = cgm_default_colonizable_asteroids
+					}	
+					modifier = { 
+						add = 40
+						has_global_flag = cgm_high_colonizable_asteroids
+					}					
+					modifier = { 
+						add = 50
+						has_global_flag = cgm_very_high_colonizable_asteroids
+					}
+					if = { 
+						limit = { root.owner = { is_ai = no } }
+						add_anomaly = cgm_colonizable_asteroidal_category
+						remove_planet_flag = asteroidal_candidate
+					}
+					else = { 
+						add_anomaly = cgm_colonizable_asteroidal_category_ai
+						remove_planet_flag = asteroidal_candidate
+					}
+				}
+				0 = { 
+					modifier = { 
+						add = 80
+						has_global_flag = cgm_very_low_colonizable_asteroids
+					}								
+					modifier = { 
+						add = 60
+						has_global_flag = cgm_low_colonizable_asteroids
+					}				
+					modifier = { 
+						add = 40
+						has_global_flag = cgm_default_colonizable_asteroids
+					}	
+					modifier = { 
+						add = 20
+						has_global_flag = cgm_high_colonizable_asteroids
+					}					
+					remove_planet_flag = asteroidal_candidate
+				}
+			}
+		}	
+	}	
+}

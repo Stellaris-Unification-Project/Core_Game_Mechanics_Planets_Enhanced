@@ -1,0 +1,1324 @@
+tech_helium_power = {
+	cost = @tier2cost1
+	area = physics
+	tier = 2
+	category = { industry }
+	weight = @tier2weight1
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 0
+			NOT = { 
+				any_system_within_border = { any_planet = { has_sr_helium_3 = yes } } 
+			}
+		}
+		modifier = {
+			factor = 1.5
+			research_leader = { area = physics has_trait = "leader_trait_expertise_industry" }
+		}
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_industry" }
+		}
+	}
+}
+tech_xerodine_hyperlane_stabilisation = {
+	cost = @tier3cost1
+	area = physics
+	tier = 3
+	category = { field_manipulation }
+	weight = @tier3weight1
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_country_flag = xerodine_found
+				any_system_within_border = { any_planet = { has_sr_xerodine = yes } } 
+			}
+		}
+		modifier = {
+			factor = 2
+			research_leader = { area = physics has_trait = "leader_trait_expertise_field_manipulation" }
+		}
+		modifier = {
+			factor = 0
+			has_global_flag = cgm_astrocartography_enabled
+			NOT = { has_technology = tech_astrocartography_2 }
+		}				
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_field_manipulation" }
+		}
+	}
+}
+tech_neodymium_integrity_field_generator = {
+	cost = @tier2cost2
+	area = engineering
+	tier = 2
+	category = { materials }
+	prerequisites = { "tech_mineral_processing_2" }
+	weight = @tier2weight2
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_country_flag = neodymium_found
+				any_system_within_border = { any_planet = { has_sr_neodymium = yes } } 
+			}
+		}
+		modifier = {
+			factor = 0
+			has_global_flag = cgm_astrocartography_enabled
+			NOT = { has_technology = tech_astrocartography_1 }
+		}		
+		modifier = {
+			factor = 2
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_materials" }
+		}
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 1.25
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_materials" }
+		}
+	}
+}
+tech_sorium_shield_multiplexer = {
+	cost = @tier3cost1
+	area = physics
+	tier = 3
+	category = { particles }
+	weight = @tier3weight1
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_country_flag = sorium_3_found
+				any_system_within_border = { any_planet = { has_sr_sorium_3 = yes } } 
+			}
+		}
+		modifier = {
+			factor = 1.5
+			research_leader = { area = physics has_trait = "leader_trait_expertise_particles" }
+		}
+		modifier = {
+			factor = 0
+			has_global_flag = cgm_astrocartography_enabled
+			NOT = { has_technology = tech_astrocartography_2 }
+		}						
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_particles" }
+		}
+	}
+}
+tech_neorite_targeting_array = {
+	cost = @tier3cost1
+	area = physics
+	tier = 3
+	category = { computing }
+	weight = @tier3weight1
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_country_flag = neorite_found
+				any_system_within_border = { any_planet = { has_sr_neorite = yes } } 
+			}
+		}
+		modifier = {
+			factor = 2
+			research_leader = { area = physics has_trait = "leader_trait_expertise_computing" }
+		}
+		modifier = {
+			factor = 0
+			has_global_flag = cgm_astrocartography_enabled
+			NOT = { has_technology = tech_astrocartography_2 }
+		}						
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_computing" }
+		}
+	}
+}
+tech_illum_spectral_emitters = {
+	cost = @tier3cost1
+	area = physics
+	tier = 3
+	category = { materials }
+	weight = @tier3weight1
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_country_flag = illum_found
+				any_system_within_border = { any_planet = { has_sr_illum = yes } } 
+			}
+		}
+		modifier = {
+			factor = 2
+			research_leader = { area = physics has_trait = "leader_trait_expertise_field_manipulation" }
+		}
+		modifier = {
+			factor = 0
+			has_global_flag = cgm_astrocartography_enabled
+			NOT = { has_technology = tech_astrocartography_2 }
+		}						
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_field_manipulation" }
+		}
+	}
+}
+tech_hyperfuel_reactor = {
+	cost = @tier2cost1
+	area = engineering
+	tier = 2
+	category = { industry }
+	weight = @tier2weight1
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_country_flag = hyperfuels_found
+				any_system_within_border = { any_planet = { has_sr_hyperfuels = yes } } 
+			}
+		}
+		modifier = {
+			factor = 0
+			has_global_flag = cgm_astrocartography_enabled
+			NOT = { has_technology = tech_astrocartography_1 }
+		}		
+		modifier = {
+			factor = 1.5
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_industry" }
+		}
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 1.25
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_industry" }
+		}
+	}
+}
+tech_pyronium_experimental_lab = {
+	cost = @tier2cost2
+	area = physics
+	tier = 2
+	category = { particles }
+	weight = @tier2weight2
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_country_flag = pyronium_found
+				any_system_within_border = { any_planet = { has_sr_pyronium = yes } } 
+			}
+		}
+		modifier = {
+			factor = 2
+			research_leader = { area = physics has_trait = "leader_trait_expertise_particles" }
+		}
+		modifier = {
+			factor = 0
+			has_global_flag = cgm_astrocartography_enabled
+			NOT = { has_technology = tech_astrocartography_1 }
+		}				
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_particles" }
+		}
+	}
+}
+tech_cryodine_purifier = {
+	cost = @tier2cost2
+	area = engineering
+	tier = 2
+	category = { materials }
+	weight = @tier2weight2
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_country_flag = cryodine_found
+				any_system_within_border = { any_planet = { has_sr_cryodine = yes } } 
+			}
+		}
+		modifier = {
+			factor = 2
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_materials" }
+		}
+		modifier = {
+			factor = 0
+			has_global_flag = cgm_astrocartography_enabled
+			NOT = { has_technology = tech_astrocartography_1 }
+		}				
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 1.25
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_materials" }
+		}
+	}
+}
+tech_selenemite_foundry = {
+	cost = @tier2cost2
+	area = engineering
+	tier = 2
+	category = { materials }
+	weight = @tier2weight2
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_country_flag = selenemite_found
+				any_system_within_border = { any_planet = { has_sr_selenemite = yes } } 
+			}
+		}	
+		modifier = {
+			factor = 0
+			has_global_flag = cgm_astrocartography_enabled
+			NOT = { has_technology = tech_astrocartography_1 }
+		}				
+		
+		modifier = {
+			factor = 2
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_materials" }
+		}
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 1.25
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_materials" }
+		}
+	}
+}
+tech_hyperdiamond_lapidary = {
+	cost = @tier2cost1
+	area = engineering
+	tier = 2
+	category = { industry }
+	weight = @tier2weight1
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_country_flag = hyper_diamond_found
+				any_system_within_border = { any_planet = { has_sr_hyper_diamond = yes } } 
+			}
+		}
+		modifier = {
+			factor = 1.5
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_industry" }
+		}
+		modifier = {
+			factor = 0
+			has_global_flag = cgm_astrocartography_enabled
+			NOT = { has_technology = tech_astrocartography_2 }
+		}						
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 1.25
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_industry" }
+		}
+	}
+}
+tech_cavorite_amalgamator = {
+	cost = @tier3cost1
+	area = engineering
+	tier = 3
+	category = { industry }
+	weight = @tier3weight1
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_country_flag = cavorite_found
+				any_system_within_border = { any_planet = { has_sr_cavorite = yes } } 
+			}
+		}
+		modifier = {
+			factor = 1.5
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_industry" }
+		}
+		modifier = {
+			factor = 0
+			has_global_flag = cgm_astrocartography_enabled
+			NOT = { has_technology = tech_astrocartography_2 }
+		}						
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 1.25
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_industry" }
+		}
+	}
+}
+tech_thullium_energy_processor = {
+	cost = @tier2cost2
+	area = physics
+	tier = 2
+	category = { industry }
+	weight = @tier2weight2
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_country_flag = thullium_found
+				any_system_within_border = { any_planet = { has_sr_thullium = yes } } 
+			}
+		}
+		modifier = {
+			factor = 1.5
+			research_leader = { area = physics has_trait = "leader_trait_expertise_industry" }
+		}
+		modifier = {
+			factor = 0
+			has_global_flag = cgm_astrocartography_enabled
+			NOT = { has_technology = tech_astrocartography_2 }
+		}						
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_industry" }
+		}
+	}
+}
+tech_lythuric_reactor = {
+	cost = @tier2cost1
+	area = physics
+	tier = 2
+	category = { industry }
+	weight = @tier2weight1
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_country_flag = lythuric_found
+				any_system_within_border = { any_planet = { has_sr_lythuric = yes } } 
+			}
+		}
+		modifier = {
+			factor = 1.5
+			research_leader = { area = physics has_trait = "leader_trait_expertise_industry" }
+		}
+		modifier = {
+			factor = 0
+			has_global_flag = cgm_astrocartography_enabled
+			NOT = { has_technology = tech_astrocartography_2 }
+		}
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_industry" }
+		}
+	}
+}
+tech_scritch_gravity_forge = {
+	cost = @tier5cost1
+	area = physics
+	tier = 5
+	category = { particles }
+	weight = @tier5weight1
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_country_flag = scritch_found
+				any_system_within_border = { any_planet = { has_sr_scritch = yes } } 
+			}
+		}
+		modifier = {
+			factor = 1.5
+			research_leader = { area = physics has_trait = "leader_trait_expertise_particles" }
+		}
+		modifier = {
+			factor = 0
+			has_global_flag = cgm_astrocartography_enabled
+			NOT = { has_technology = tech_astrocartography_3 }
+		}
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_particles" }
+		}
+	}
+}
+tech_xeno_archaeology = {
+	cost = @tier1cost3
+	area = society
+	tier = 1
+	category = { new_worlds }
+	weight = @tier1weight3
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 2
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_planet = {
+					any_tile = { has_resource = { type = sr_archeological_remains amount > 0 } }
+				}
+			}
+		}
+	}
+	ai_weight = {
+		factor = 4
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+	}
+}
+tech_bandersnatchi_herding = {
+	cost = @tier1cost3
+	area = society
+	tier = 1
+	category = { biology }
+	weight = @tier1weight3
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 2
+			research_leader = { area = society has_trait = "leader_trait_expertise_biology" }
+		}
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_planet = {
+					any_tile = { has_resource = { type = sr_bandersnatchi amount > 0 } }
+				}
+			}
+		}
+	}
+	ai_weight = {
+		factor = 4
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_biology" }
+		}
+	}
+}
+tech_mine_engos_vapor = {
+	cost = @tier1cost3
+	area = engineering
+	tier = 1
+	category = { industry }
+	weight = @tier1weight3
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 2
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_industry" }
+		}
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_planet = {
+					any_tile = { has_resource = { type = sr_engos_vapor amount > 0 } }
+				}
+			}
+		}
+	}
+	ai_weight = {
+		factor = 4
+		modifier = {
+			factor = 1.25
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_industry" }
+		}
+	}
+}
+tech_mine_pitharan_dust = {
+	cost = @tier1cost3
+	area = society
+	tier = 1
+	category = { new_worlds }
+	weight = @tier1weight3
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 2
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_planet = {
+					any_tile = { has_resource = { type = sr_pitharan_dust amount > 0 } }
+				}
+			}
+		}
+	}
+	ai_weight = {
+		factor = 4
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+	}
+}
+tech_mine_satramene_gas = {
+	cost = @tier1cost3
+	area = society
+	tier = 1
+	category = { statecraft }
+	weight = @tier1weight3
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 2
+			research_leader = { area = society has_trait = "leader_trait_expertise_statecraft" }
+		}
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_planet = {
+					any_tile = { has_resource = { type = sr_satramene_gas amount > 0 } }
+				}
+			}
+		}
+	}
+	ai_weight = {
+		factor = 4
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_statecraft" }
+		}
+	}
+}
+tech_hivaron_purification = {
+	cost = @tier1cost3
+	area = society
+	tier = 1
+	category = { new_worlds }
+	weight = @tier1weight3
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 2
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_planet = {
+					any_tile = { has_resource = { type = sr_hivaron amount > 0 } }
+				}
+			}
+		}
+	}
+	ai_weight = {
+		factor = 4
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+	}
+}
+tech_ironwood_tempering = {
+	cost = @tier1cost3
+	area = society
+	tier = 1
+	category = { biology }
+	weight = @tier1weight3
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 2
+			research_leader = { area = society has_trait = "leader_trait_expertise_biology" }
+		}
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_planet = {
+					any_tile = { has_resource = { type = sr_iron_wood amount > 0 } }
+				}
+			}
+		}
+	}
+	ai_weight = {
+		factor = 4
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_biology" }
+		}
+	}
+}
+tech_programmed_xna = {
+	cost = @tier1cost3
+	area = society
+	tier = 1
+	category = { biology }
+	weight = @tier1weight3
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 2
+			research_leader = { area = society has_trait = "leader_trait_expertise_biology" }
+		}
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_planet = {
+					any_tile = { has_resource = { type = sr_terraforming_bacteria amount > 0 } }
+				}
+			}
+		}
+	}
+	ai_weight = {
+		factor = 4
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_biology" }
+		}
+	}
+}
+tech_molecular_computing = {
+	cost = @tier1cost3
+	area = society
+	tier = 1
+	category = { biology }
+	weight = @tier1weight3
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 2
+			research_leader = { area = society has_trait = "leader_trait_expertise_biology" }
+		}
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_planet = {
+					any_tile = { has_resource = { type = sr_zinorine amount > 0 } }
+				}
+			}
+		}
+	}
+	ai_weight = {
+		factor = 4
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_biology" }
+		}
+	}
+}
+tech_ventium_enrichment = {
+	cost = @tier1cost3
+	area = society
+	tier = 1
+	category = { military_theory }
+	weight = @tier1weight3
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 2
+			research_leader = { area = society has_trait = "leader_trait_expertise_military_theory" }
+		}
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_planet = {
+					any_tile = { has_resource = { type = sr_ventium amount > 0 } }
+				}
+			}
+		}
+	}
+	ai_weight = {
+		factor = 4
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_military_theory" }
+		}
+	}
+}
+tech_blooming_ore_refining = {
+	cost = @tier1cost3
+	area = engineering
+	tier = 1
+	category = { industry }
+	weight = @tier1weight3
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 2
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_industry" }
+		}
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_planet = {
+					any_tile = { has_resource = { type = sr_blooming_ore amount > 0 } }
+				}
+			}
+		}
+	}
+	ai_weight = {
+		factor = 4
+		modifier = {
+			factor = 1.25
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_industry" }
+		}
+	}
+}
+tech_sactajenian_purification = {
+	cost = @tier1cost3
+	area = society
+	tier = 1
+	category = { biology }
+	weight = @tier1weight3
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight_modifier = {
+		factor = 2
+		modifier = {
+			factor = 2
+			research_leader = { area = society has_trait = "leader_trait_expertise_biology" }
+		}
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_planet = {
+					any_tile = { has_resource = { type = sr_iron_wood amount > 0 } }
+				}
+			}
+		}
+	}
+	ai_weight = {
+		factor = 4
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_biology" }
+		}
+	}
+}
+tech_aurantiacum_x_stabilization = {
+	cost = @tier5cost1
+	area = physics
+	tier = 5
+	category = { field_manipulation }
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight = @tier5weight1
+	weight_modifier = { factor = 0 }
+}
+tech_elder_compounds_extraction = {
+	cost = @tier5cost1
+	area = physics
+	tier = 5
+	category = { particles }
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight = @tier5weight1
+	weight_modifier = { factor = 0 }
+}
+tech_precursor_data_protocols = {
+	cost = @tier5cost1
+	area = physics
+	tier = 5
+	category = { computing }
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight = @tier5weight1
+	weight_modifier = { factor = 0 }
+}
+tech_gigalife_processing = {
+	cost = @tier5cost1
+	area = society
+	tier = 5
+	category = { new_worlds }
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight = @tier5weight1
+	weight_modifier = { factor = 0 }
+}
+tech_lifetap = {
+	cost = @tier5cost1
+	area = society
+	tier = 5
+	category = { biology }
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight = @tier5weight1
+	weight_modifier = { factor = 0 }
+}
+tech_thybidium_refining = {
+	cost = @tier5cost1
+	area = physics
+	tier = 5
+	category = { industry }
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight = @tier5weight1
+	weight_modifier = { factor = 0 }
+}
+tech_euratite_transmutation = {
+	cost = @tier5cost1
+	area = physics
+	tier = 5
+	category = { particles }
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight = @tier5weight1
+	weight_modifier = { factor = 0 }
+}
+tech_gravitronic_manipulation = {
+	cost = @tier5cost1
+	area = engineering
+	tier = 5
+	category = { materials }
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight = @tier5weight1
+	weight_modifier = { factor = 0 }
+}
+tech_precursor_nanonics = {
+	cost = @tier5cost1
+	area = society
+	tier = 5
+	category = { biology }
+	potential = { NOT = { has_global_flag = cgm_resources_disabled } }
+	weight = @tier5weight1
+	weight_modifier = { factor = 0 }
+}
+ ### Terraforming Technologies
+tech_ecological_adaptation = {
+	cost = @tier3cost2
+	area = society
+	tier = 3
+	category = { new_worlds }
+	prerequisites = { "tech_terrestrial_sculpting" }
+	weight = @tier3weight2
+	feature_flags = { terraform_inhabited }
+	modifier = { max_energy = 5000 }
+	weight_modifier = {
+		modifier = { factor = 1.25 has_tradition = tr_expansion_adopt }
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+		modifier = { factor = 3 has_ascension_perk = ap_world_shaper }
+	}
+	ai_weight = {
+		weight = 3
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+		modifier = { factor = 0 income < 100 }
+		modifier = { factor = 2 income > 250 }
+	}
+}
+tech_advanced_terraforming = {
+	cost = @tier3cost1
+	area = society
+	tier = 3
+	category = { new_worlds }
+	prerequisites = { "tech_terrestrial_sculpting" }
+	potential = { has_global_flag = cgm_uninhabitable_terraforming_mechanics_enabled }
+	weight = @tier3weight1
+	prereqfor_desc = { custom = { title = "enables_uninhabitable_terraformation" desc = "enables_uninhabitable_terraformation_desc" } }
+	modifier = { max_energy = 5000 }
+	weight_modifier = {
+		factor = 1.25
+		modifier = { factor = 1.25 has_tradition = tr_expansion_adopt }
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+		modifier = { factor = 3 has_ascension_perk = ap_world_shaper }
+		modifier = { factor = 2 has_country_sr_terraform_gases = yes }
+		modifier = { factor = 2 has_country_sr_terraform_liquids = yes }
+		modifier = { factor = 2 has_country_sr_meta_organics = yes }
+	}
+	ai_weight = {
+		weight = 2
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+		modifier = { factor = 3 has_ascension_perk = ap_world_shaper }
+		modifier = { factor = 2 has_country_sr_terraform_gases = yes }
+		modifier = { factor = 2 has_country_sr_terraform_liquids = yes }
+		modifier = { factor = 2 has_country_sr_meta_organics = yes }
+	}
+}
+tech_cgm_asteroid_colonization = {
+	cost = @tier2cost1
+	area = society
+	tier = 2
+	category = { new_worlds }
+	weight = @tier2weight1
+	prereqfor_desc = { custom = { title = "enables_asteroid_colonization" desc = "enables_asteroid_colonization_desc" } }
+	potential = { has_global_flag = cgm_asteroid_colonization_enabled }
+	weight_modifier = {
+		factor = 1.25
+		modifier = { factor = 1.25 has_tradition = tr_expansion_adopt }
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+	}
+	ai_weight = {
+		weight = 2
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+	}
+}
+ ###planetary projects technologies
+tech_tectonic_engineering = {
+	cost = @tier3cost1
+	area = society
+	tier = 3
+	category = { new_worlds }
+	prerequisites = { "tech_terrestrial_sculpting" }
+	weight = @tier3weight1
+	potential = { has_global_flag = cgm_planetary_projects_mechanics_enabled }
+	prereqfor_desc = { custom = { title = "enables_tectonic_engineering_projects" desc = "enables_tectonic_engineering_projects_desc" } }
+	weight_modifier = {
+		modifier = { factor = 1.25 has_tradition = tr_expansion_adopt }
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+		modifier = { factor = 3 has_ascension_perk = ap_world_shaper }
+	}
+	ai_weight = {
+		weight = 3
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+		modifier = { factor = 0 income < 100 }
+		modifier = { factor = 2 income > 250 }
+	}
+}
+tech_soil_harvesting = {
+	cost = @tier3cost1
+	area = society
+	tier = 3
+	category = { biology }
+	prerequisites = { "tech_terrestrial_sculpting" }
+	weight = @tier3weight1
+	potential = { has_global_flag = cgm_planetary_projects_mechanics_enabled is_machine_empire = no }
+	prereqfor_desc = { custom = { title = "enables_soil_harvesting_projects" desc = "enables_soil_harvesting_projects_desc" } }
+	weight_modifier = {
+		modifier = { factor = 1.25 has_tradition = tr_expansion_adopt }
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_biology" }
+		}
+		modifier = { factor = 3 has_ascension_perk = ap_world_shaper }
+	}
+	ai_weight = {
+		weight = 3
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_biology" }
+		}
+		modifier = { factor = 0 income < 100 }
+		modifier = { factor = 2 income > 250 }
+	}
+}
+tech_deep_core_mining = {
+	cost = @tier3cost1
+	area = engineering
+	tier = 3
+	category = { industry }
+	prerequisites = { "tech_terrestrial_sculpting" }
+	weight = @tier3weight1
+	potential = { has_global_flag = cgm_planetary_projects_mechanics_enabled }
+	prereqfor_desc = { custom = { title = "enables_deep_core_mining" desc = "enables_deep_core_mining_desc" } }
+	weight_modifier = {
+		modifier = { factor = 1.25 has_tradition = tr_expansion_adopt }
+		modifier = {
+			factor = 1.25
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_industry" }
+		}
+		modifier = { factor = 3 has_ascension_perk = ap_world_shaper }
+	}
+	ai_weight = {
+		weight = 3
+		modifier = {
+			factor = 1.25
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_industry" }
+		}
+		modifier = { factor = 0 income < 100 }
+		modifier = { factor = 2 income > 250 }
+	}
+}
+tech_geothermal_tap = {
+	cost = @tier3cost1
+	area = physics
+	tier = 3
+	category = { industry }
+	prerequisites = { "tech_terrestrial_sculpting" }
+	weight = @tier3weight1
+	potential = { has_global_flag = cgm_planetary_projects_mechanics_enabled }
+	prereqfor_desc = { custom = { title = "enables_geothermal_tap" desc = "enables_geothermal_tap_desc" } }
+	weight_modifier = {
+		modifier = { factor = 1.25 has_tradition = tr_expansion_adopt }
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_industry" }
+		}
+		modifier = { factor = 3 has_ascension_perk = ap_world_shaper }
+	}
+	ai_weight = {
+		weight = 3
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_industry" }
+		}
+		modifier = { factor = 0 income < 100 }
+		modifier = { factor = 2 income > 250 }
+	}
+}
+tech_advanced_tectonic_engineering = {
+	cost = @tier4cost1
+	area = society
+	tier = 4
+	category = { new_worlds }
+	prerequisites = { "tech_tectonic_engineering" }
+	weight = @tier4weight1
+	potential = { has_global_flag = cgm_planetary_projects_mechanics_enabled }
+	prereqfor_desc = { custom = { title = "improves_tectonic_engineering_projects" desc = "improves_tectonic_engineering_projects_desc" } }
+	weight_modifier = {
+		modifier = { factor = 1.25 has_tradition = tr_expansion_adopt }
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+		modifier = { factor = 3 has_ascension_perk = ap_world_shaper }
+	}
+	ai_weight = {
+		weight = 3
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_new_worlds" }
+		}
+		modifier = { factor = 0 income < 100 }
+		modifier = { factor = 2 income > 250 }
+	}
+}
+tech_advanced_soil_harvesting = {
+	cost = @tier3cost1
+	area = society
+	tier = 3
+	category = { biology }
+	prerequisites = { "tech_soil_harvesting" }
+	weight = @tier3weight1
+	potential = { has_global_flag = cgm_planetary_projects_mechanics_enabled is_machine_empire = no }
+	prereqfor_desc = { custom = { title = "improves_soil_harvesting_projects" desc = "improves_soil_harvesting_projects_desc" } }
+	weight_modifier = {
+		modifier = { factor = 1.25 has_tradition = tr_expansion_adopt }
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_biology" }
+		}
+		modifier = { factor = 3 has_ascension_perk = ap_world_shaper }
+	}
+	ai_weight = {
+		weight = 3
+		modifier = {
+			factor = 1.25
+			research_leader = { area = society has_trait = "leader_trait_expertise_biology" }
+		}
+		modifier = { factor = 0 income < 100 }
+		modifier = { factor = 2 income > 250 }
+	}
+}
+tech_advanced_deep_core_mining = {
+	cost = @tier3cost1
+	area = engineering
+	tier = 3
+	category = { industry }
+	prerequisites = { "tech_deep_core_mining" }
+	weight = @tier3weight1
+	potential = { has_global_flag = cgm_planetary_projects_mechanics_enabled }
+	prereqfor_desc = { custom = { title = "improves_deep_core_mining" desc = "improves_deep_core_mining_desc" } }
+	weight_modifier = {
+		modifier = { factor = 1.25 has_tradition = tr_expansion_adopt }
+		modifier = {
+			factor = 1.25
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_industry" }
+		}
+		modifier = { factor = 3 has_ascension_perk = ap_world_shaper }
+	}
+	ai_weight = {
+		weight = 3
+		modifier = {
+			factor = 1.25
+			research_leader = { area = engineering has_trait = "leader_trait_expertise_industry" }
+		}
+		modifier = { factor = 0 income < 100 }
+		modifier = { factor = 2 income > 250 }
+	}
+}
+tech_advanced_geothermal_tap = {
+	cost = @tier3cost1
+	area = physics
+	tier = 3
+	category = { industry }
+	prerequisites = { "tech_geothermal_tap" }
+	weight = @tier3weight1
+	potential = { has_global_flag = cgm_planetary_projects_mechanics_enabled }
+	prereqfor_desc = { custom = { title = "improves_geothermal_tap" desc = "improves_geothermal_tap_desc" } }
+	weight_modifier = {
+		modifier = { factor = 1.25 has_tradition = tr_expansion_adopt }
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_industry" }
+		}
+		modifier = { factor = 3 has_ascension_perk = ap_world_shaper }
+	}
+	ai_weight = {
+		weight = 3
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_industry" }
+		}
+		modifier = { factor = 0 income < 100 }
+		modifier = { factor = 2 income > 250 }
+	}
+}
+tech_astrocartography_1 = {
+	cost = @tier1cost3
+	area = physics
+	tier = 1
+	category = { computing }
+	weight = @tier1weight3
+	potential = { has_global_flag = cgm_astrocartography_enabled }
+	prereqfor_desc = { custom = { title = "reveals_tier_1_resources" desc = "reveals_tier_1_resources_desc" } }
+	weight_modifier = {
+		factor = 1.25
+		modifier = { factor = 1.25 has_tradition = tr_expansion_adopt }
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_computing" }
+		}
+	}
+	ai_weight = {
+		weight = 3
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_computing" }
+		}
+	}
+}
+tech_astrocartography_2 = {
+	cost = @tier2cost3
+	area = physics
+	tier = 2
+	category = { computing }
+	prerequisites = { "tech_astrocartography_1" }
+	weight = @tier2weight3
+	potential = { has_global_flag = cgm_astrocartography_enabled }
+	prereqfor_desc = { custom = { title = "reveals_tier_2_resources" desc = "reveals_tier_2_resources_desc" } }
+	weight_modifier = {
+		factor = 1.25
+		modifier = { factor = 1.25 has_tradition = tr_expansion_adopt }
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_computing" }
+		}
+	}
+	ai_weight = {
+		weight = 3
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_computing" }
+		}
+	}
+}
+tech_astrocartography_3 = {
+	cost = @tier3cost3
+	area = physics
+	tier = 3
+	category = { computing }
+	prerequisites = { "tech_astrocartography_2" }
+	weight = @tier3weight3
+	potential = { has_global_flag = cgm_astrocartography_enabled }
+	prereqfor_desc = { custom = { title = "reveals_tier_3_resources" desc = "reveals_tier_3_resources_desc" } }
+	weight_modifier = {
+		factor = 1.25
+		modifier = { factor = 1.25 has_tradition = tr_expansion_adopt }
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_computing" }
+		}
+	}
+	ai_weight = {
+		weight = 3
+		modifier = {
+			factor = 1.25
+			research_leader = { area = physics has_trait = "leader_trait_expertise_computing" }
+		}
+	}
+}

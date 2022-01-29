@@ -1,0 +1,112 @@
+#specialization modifiers
+
+cgm_geothermal_tap_stage_0 = { icon_frame = 4 icon = "gfx/interface/icons/planet_modifiers/cgm_geothermal_tap_stage_0.dds" static_planet_resource_minerals_add = -2.5 }     
+cgm_geothermal_tap_stage_1 = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_geothermal_tap_stage_1.dds" static_planet_resource_minerals_add = -2.5 static_planet_resource_energy_add = 15 }
+cgm_geothermal_tap_stage_2 = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_geothermal_tap_stage_2.dds" static_planet_resource_minerals_add = -5 static_planet_resource_energy_add = 30 }
+cgm_geothermal_tap_stage_3 = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_geothermal_tap_stage_3.dds" static_planet_resource_minerals_add = -7.5 static_planet_resource_energy_add = 45 }
+cgm_deep_core_mining_stage_0 = { icon_frame = 4 icon = "gfx/interface/icons/planet_modifiers/cgm_deep_core_mining_stage_0.dds" static_planet_resource_energy_add = -2.5 }
+cgm_deep_core_mining_stage_1 = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_deep_core_mining_stage_1.dds" static_planet_resource_energy_add = -5 static_planet_resource_minerals_add = 15 }
+cgm_deep_core_mining_stage_2 = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_deep_core_mining_stage_2.dds" static_planet_resource_energy_add = -10 static_planet_resource_minerals_add = 30 }
+cgm_deep_core_mining_stage_3 = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_deep_core_mining_stage_3.dds" static_planet_resource_energy_add = -15 static_planet_resource_minerals_add = 45 }
+cgm_tectonic_engineering = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_tectonic_engineering.dds" static_planet_resource_energy_add = -10 static_planet_resource_minerals_add = -10 }
+
+cgm_harvest_1_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 0.25 static_planet_resource_food_add = 5 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_2_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 0.5 static_planet_resource_food_add = 10 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_3_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 0.75 static_planet_resource_food_add = 15 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_4_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 1 static_planet_resource_food_add = 20 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_5_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 1.25 static_planet_resource_food_add = 25 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_6_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 1.5 static_planet_resource_food_add = 30 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_7_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 1.75 static_planet_resource_food_add = 35 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_8_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 2 static_planet_resource_food_add = 40 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_9_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 2.25 static_planet_resource_food_add = 45 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_10_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 2.5 static_planet_resource_food_add = 50 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_11_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 2.75 static_planet_resource_food_add = 55 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_12_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 3 static_planet_resource_food_add = 60 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_13_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 3.25 static_planet_resource_food_add = 65 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_14_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 3.5 static_planet_resource_food_add = 70 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_15_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 3.75 static_planet_resource_food_add = 75 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_16_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 4 static_planet_resource_food_add = 80 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_17_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 4.25 static_planet_resource_food_add = 85 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_18_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 4.5 static_planet_resource_food_add = 90 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_19_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 4.75 static_planet_resource_food_add = 95 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_20_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 5 static_planet_resource_food_add = 100 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_21_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 5.25 static_planet_resource_food_add = 105 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_22_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 5.5 static_planet_resource_food_add = 110 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_23_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 5.75 static_planet_resource_food_add = 115 static_planet_resource_influence_add = -0.25 }
+cgm_harvest_24_tile = { icon_frame = 7 icon = "gfx/interface/icons/planet_modifiers/cgm_harvest.dds" static_planet_resource_sr_terraforming_agents_add = 6 static_planet_resource_food_add = 120 static_planet_resource_influence_add = -0.25 }
+
+
+#resource modifiers
+
+add_1_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 1 }
+add_2_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 2 }
+add_3_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 3 }
+add_4_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 4 }
+add_5_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 5 }
+add_6_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 6 }
+add_7_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 7 }
+add_8_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 8 }
+add_9_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 9 }
+add_10_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 10 }
+add_11_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 11 }
+add_12_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 12 }
+add_13_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 13 }
+add_14_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 14 }
+add_15_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 15 }
+add_16_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 16 }
+add_17_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 17 }
+add_18_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 18 }
+add_19_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 19 }
+add_20_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 20 }
+add_21_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 21 }
+add_22_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 22 }
+add_23_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 23 }
+add_24_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 24 }
+add_25_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 25 }
+add_26_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 26 }
+add_27_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 27 }
+add_28_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 28 }
+add_29_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 29 }
+add_30_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 30 }
+add_31_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 31 }
+add_32_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 32 }
+add_33_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 33 }
+add_34_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 34 }
+add_35_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 35 }
+add_36_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 36 }
+add_37_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 37 }
+add_38_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 38 }
+add_39_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 39 }
+add_40_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 40 }
+add_41_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 41 }
+add_42_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 42 }
+add_43_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 43 }
+add_44_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 44 }
+add_45_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 45 }
+add_46_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 46 }
+add_47_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 47 }
+add_48_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 48 }
+add_49_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 49 }
+add_50_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 50 }
+add_51_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 51 }
+add_52_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 52 }
+add_53_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 53 }
+add_54_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 54 }
+add_55_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 55 }
+add_56_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 56 }
+add_57_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 57 }
+add_58_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 58 }
+add_59_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 59 }
+add_60_monthly_terraforming_agent = { country_resource_sr_terraforming_agents_add = 60 }
+
+pc_asteroidal_carbometallic_rock_mined = { icon_frame = 1 icon = "gfx/interface/icons/planet_modifiers/asteroidal_mining.dds" static_planet_resource_minerals_add = 2 }
+pc_asteroidal_mineral_rich_rock_mined = { icon_frame = 1 icon = "gfx/interface/icons/planet_modifiers/asteroidal_mining.dds" static_planet_resource_minerals_add = 4 }
+pc_asteroidal_energy_rich_rock_mined = { icon_frame = 1 icon = "gfx/interface/icons/planet_modifiers/asteroidal_mining.dds" static_planet_resource_energy_add = 4 }
+pc_asteroidal_mineral_ultra_rich_rock_mined = { icon_frame = 1 icon = "gfx/interface/icons/planet_modifiers/asteroidal_mining.dds" static_planet_resource_minerals_add = 8 }
+pc_asteroidal_energy_ultra_rich_rock_mined = { icon_frame = 1 icon = "gfx/interface/icons/planet_modifiers/asteroidal_mining.dds" static_planet_resource_energy_add = 8 }
+pc_ice_asteroidal_primordial_ice_mined = { icon_frame = 1 icon = "gfx/interface/icons/planet_modifiers/ice_asteroidal_mining.dds" static_planet_resource_energy_add = 2 static_planet_resource_sr_terraform_liquids_add = 0.5 } 
+pc_ice_asteroidal_frozen_exotic_matter_mined = { icon_frame = 1 icon = "gfx/interface/icons/planet_modifiers/ice_asteroidal_mining.dds" static_planet_resource_energy_add = 4 static_planet_resource_physics_research_add = 6 } 
+pc_crystal_asteroidal_subspace_crystal_formation_mined = { icon_frame = 1 icon = "gfx/interface/icons/planet_modifiers/crystal_asteroidal_mining.dds" static_planet_resource_engineering_research_add = 4 static_planet_resource_physics_research_add = 4 } 
+geothermal_depletion = { icon_frame = 3 pop_environment_tolerance = -10 }
+hollowed_core = { icon_frame = 3 pop_environment_tolerance = -10 } 
+depleted_world = { icon_frame = 3 pop_environment_tolerance = -10 }

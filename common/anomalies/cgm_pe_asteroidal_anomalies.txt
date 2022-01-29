@@ -1,0 +1,37 @@
+cgm_colonizable_asteroidal_category = {
+	desc = colonizable_asteroidal_category_desc
+	picture = GFX_evt_drilling_for_gas
+	level = 1		
+	spawn_chance = {
+		modifier = { factor = 0 }
+	}
+	on_success = {
+		2 = {
+			anomaly_event = cgm_asteroid_colonization.1
+			max_once = no
+		}	
+		#3 = {
+		#	anomaly_event = cgm_asteroid_colonization.11
+		#	max_once = no
+		#}
+	}
+}
+cgm_colonizable_asteroidal_category_ai = {
+	desc = colonizable_asteroidal_category_desc
+	picture = GFX_evt_drilling_for_gas
+	level = 1		
+	should_ai_use = yes
+	spawn_chance = {
+		modifier = { factor = 0 }
+	}
+	on_success = {
+		2 = {
+			anomaly_event = cgm_asteroid_colonization.1
+			max_once = no
+		}	
+		#3 = {
+		#	anomaly_event = cgm_asteroid_colonization.11
+		#	max_once = no
+		#}
+	}
+}

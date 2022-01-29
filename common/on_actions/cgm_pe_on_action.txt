@@ -1,0 +1,78 @@
+on_game_start = { 
+	events = { 
+		00_cgm_pe_planet_spawn_engine_events.1
+	}
+}	
+
+on_monthly_pulse = { 
+	events = { 
+		cgm_pe_update_events.1
+		cgm_pe_resource_events.1
+		cgm_pe_colonization_automation.1
+	}	
+}
+on_press_begin = {
+	events = {
+		cgm_pe_spawn_engine.0
+	}
+}
+on_blocker_cleared = {
+	events = {
+		cgm_asteroid_colonization.2
+	}
+}
+on_colonized = {
+	events = {		
+		cgm_pe_resource_events.2
+		cgm_pe_resource_events.3
+		cgm_pe_resource_events.4
+		cgm_pe_resource_events.5
+		cgm_pe_resource_events.6
+		cgm_pe_resource_events.7
+		cgm_pe_resource_events.8
+		cgm_pe_resource_events.9
+		cgm_pe_resource_events.10
+	}
+}
+
+on_survey = { 
+	events = { 
+		cgm_pe_survey_events.1
+		cgm_asteroid_colonization.3
+	}
+}	
+
+on_tech_increased = {
+	events = {
+		cgm_pe_survey_events.3
+	}
+}	
+
+on_planet_transfer = {
+	events = {
+		cgm_pe_resource_events.2
+		cgm_pe_resource_events.3
+		cgm_pe_resource_events.4
+		cgm_pe_resource_events.5
+		cgm_pe_resource_events.6
+		cgm_pe_resource_events.7
+		cgm_pe_resource_events.8
+		cgm_pe_resource_events.9
+		cgm_pe_resource_events.10
+		cgm_pe_terraforming_events.4
+	}	
+}
+on_planet_conquer = {
+	events = {	
+		cgm_pe_resource_events.2
+		cgm_pe_resource_events.3
+		cgm_pe_resource_events.4
+		cgm_pe_resource_events.5
+		cgm_pe_resource_events.6
+		cgm_pe_resource_events.7
+		cgm_pe_resource_events.8
+		cgm_pe_resource_events.9
+		cgm_pe_resource_events.10	
+		cgm_pe_terraforming_events.4
+	}	
+}		

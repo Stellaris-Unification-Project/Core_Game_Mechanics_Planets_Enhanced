@@ -1,0 +1,1464 @@
+ ## this is the main resource spawning effect. It is called by the menu event in the after field.
+cgm_spawn_engine = {
+	if = { 
+		limit = {
+			OR = { 
+				has_global_flag = cgm_new_worlds_enabled
+				has_global_flag = cgm_new_worlds_disabled_planetary_diversity_enabled
+				has_global_flag = cgm_new_worlds_enabled_planetary_diversity_enabled
+			}
+		}
+		every_planet = { 
+			limit = { 
+				cgm_planet_engine_gate_conditions = yes
+				is_star = no 
+				planetary_diversity_special_planet = no				
+			}	
+			if = { 
+				limit = { 
+					has_global_flag = cgm_pe_prescripted_planets_and_species_adjustment_enabled
+				}	
+				prescripted_uninhabitable_planet_size_readjustment = yes				
+				prescripted_asteroid_size_readjustment = yes
+				prescripted_inhabitable_planet_size_readjustment = yes				
+			}				
+			if = { 
+				limit = {
+					OR = { 
+						has_global_flag = cgm_new_worlds_enabled				
+						has_global_flag = cgm_new_worlds_enabled_planetary_diversity_enabled									
+					}
+				}
+				cgm_new_worlds_regular_planet_init = yes
+			}
+			else_if = { 
+				limit = { habitable_planet = yes }
+				planetary_diversity_regular_planet_init = yes				
+			}			
+			if = { 
+				limit = { 
+					has_global_flag = cgm_pe_prescripted_planets_and_species_adjustment_enabled
+					exists = owner
+					owner = { is_country_type = primitive } 
+				}	
+				cgm_new_worlds_species_change_table = yes
+				if = { 
+					limit = { is_ideal_planet_class = { who = owner status = no } }
+					change_owner_species_to_this_planet_preference = yes			
+				}	
+			}	
+			every_country = {  
+				limit ={
+					exists = capital_scope
+					NOT = {	exists = home_planet }
+				}
+				species = { set_species_homeworld = prev.capital_scope }
+            }	
+		}
+	}	
+	if = {
+		limit = { NOT = { has_global_flag = cgm_resources_disabled } }
+		while = {
+			limit = {
+				NAND = {
+					has_global_flag = unique_sr1 
+					has_global_flag = unique_sr2 
+					has_global_flag = unique_sr3 
+					has_global_flag = unique_sr4 
+					has_global_flag = unique_sr5 
+					has_global_flag = unique_sr6 
+					has_global_flag = unique_sr7 
+					has_global_flag = unique_sr8 
+					has_global_flag = unique_sr9 
+				}
+			}
+			random_planet = {
+				limit = {
+					NOR = { 
+						exists = owner
+						exists = space_owner
+					}
+					habitable_planet = yes
+					any_tile = { has_pop = no }
+					solar_system = {
+						NOR = {
+							has_star_flag = empire_cluster
+							has_star_flag = sol_system
+							has_star_flag = deneb_system
+							has_star_flag = custom_system
+							has_star_flag = floating_system
+							has_star_flag = crystal_system
+							has_star_flag = city_system
+							has_star_flag = eilistraee_system
+							has_star_flag = tulshar_system
+							has_star_flag = elven_system
+							has_star_flag = lunari_system
+							has_star_flag = elven_ring_system
+							any_planet = { has_planet_flag = unique_sr }
+							any_neighbor_system = { ignore_hyperlanes = no any_planet = { has_planet_flag = unique_sr } }
+							any_neighbor_system = { ignore_hyperlanes = yes any_planet = { has_planet_flag = unique_sr } }
+						}
+					}
+				}
+				save_event_target_as = unique_resource_candidate
+				cgm_pe_unique_sr_spawn_table = yes
+			}
+		}
+	}
+	if = { 
+		limit = { NOT = { has_global_flag = cgm_no_capital_planet_resize } }
+		every_playable_country = { 
+			capital_scope = { 
+				if = { 
+					limit = { 
+						is_homeworld = yes
+						habitable_planet = yes
+					}
+					if = { 
+						limit = { has_global_flag = cgm_very_large_capital_planet_size }
+						while = { 
+							limit = { planet_size < 23 }
+							random_list = { 
+								33.3 = { change_planet_size = 1 }
+								33.3 = { change_planet_size = 2 }
+								33.3 = { change_planet_size = 3 }
+							}
+						}
+					}	
+					else_if = { 
+						limit = { has_global_flag = cgm_large_capital_planet_size }
+						while = { 
+							limit = { planet_size < 19 }
+							random_list = { 
+								33.3 = { change_planet_size = 1 }
+								33.3 = { change_planet_size = 2 }
+								33.3 = { change_planet_size = 3 }
+							}
+						}
+					}					
+					else_if = { 
+						limit = { has_global_flag = cgm_small_capital_planet_size }
+						while = { 
+							limit = { planet_size > 15 }
+							random_list = { 
+								33.3 = { change_planet_size = -1 }
+								33.3 = { change_planet_size = -2 }
+								33.3 = { change_planet_size = -3 }
+							}
+						}
+					}										
+					else_if = { 
+						limit = { has_global_flag = cgm_very_small_capital_planet_size }
+						while = { 
+							limit = { planet_size > 11 }
+							random_list = { 
+								33.3 = { change_planet_size = -1 }
+								33.3 = { change_planet_size = -2 }
+								33.3 = { change_planet_size = -3 }
+							}
+						}
+					}															
+				}
+			}
+		}	
+	}				
+	every_planet = {
+		limit = { 
+			is_asteroid = yes
+			has_global_flag = cgm_asteroid_colonization_enabled
+			has_global_flag = cgm_pe_configure_planets_prescripted_balance_disabled			
+		}	
+		prescripted_asteroid_size_readjustment = yes
+	}		
+	every_planet = {
+		limit = {
+			OR = {
+				is_capital = no
+				AND = { 
+					exists = owner 
+					owner = { is_ai = yes }
+				}
+			}
+			habitable_structure = no
+			planet_is_not_virtual = yes
+			solar_system = {
+				NOR = {
+					any_planet = { exists = owner owner = { is_country_type = default } is_capital = yes }
+					has_star_flag = cgm_ignored_system
+					has_star_flag = sol_system
+					has_star_flag = custom_system
+					has_star_flag = floating_system
+					has_star_flag = crystal_system
+					has_star_flag = city_system
+					has_star_flag = empire_home_system
+					has_star_flag = sol
+					has_star_flag = primitive_sol
+					has_star_flag = eilistraee_system
+					has_star_flag = tulshar_system
+					has_star_flag = elven_system
+					has_star_flag = lunari_system
+					has_star_flag = elven_ring_system
+				}
+			}
+		}
+		if = { 
+			limit = {
+				NOT = { has_global_flag = cgm_resources_disabled }
+				is_colonizable = no
+				has_strategic_resource = no
+			}
+			random_list = {
+				96 = { }
+				4 = {
+					 #save_event_target_as = orbital_resource_candidate
+					cgm_pe_orbital_sr_spawn_table = yes
+					modifier = { factor = 0.25 has_global_flag = cgm_very_low_strategic_resources }
+					modifier = { factor = 0.5 has_global_flag = cgm_low_strategic_resources }
+					modifier = { factor = 1.5 has_global_flag = cgm_high_strategic_resources }
+					modifier = { factor = 2 has_global_flag = cgm_very_high_strategic_resources }
+				}
+			}
+		}	
+		else_if = {
+			limit = {
+				NOT = { has_global_flag = cgm_resources_disabled }
+				is_colonizable = no
+				any_tile = { 
+					OR = {
+						has_resource = { type = sr_pitharan amount > 0 }
+						has_resource = { type = sr_engos amount > 0 }
+						has_resource = { type = sr_satramene amount > 0 }
+					}
+				}	
+			}
+			if = {
+				limit = { has_deposit_for = shipclass_mining_station }
+				random_tile = { limit = { is_orbital_tile = yes } set_deposit = d_vast_energy_deposit }				
+			}
+			else = {
+				random_tile = { limit = { is_orbital_tile = yes } set_deposit = d_rich_physics_deposit }
+			}
+		}
+		else_if = { 
+			limit = { 
+				NOT = { has_global_flag = cgm_resources_disabled }
+				is_colonizable = yes
+				any_tile = { 
+					OR = {
+						has_resource = { type = sr_betharian amount > 0 }
+						has_resource = { type = sr_alien_pets amount > 0 }
+					}
+				}	
+			}
+			every_tile = { 
+				limit = { 
+					OR = {
+						has_resource = { type = sr_betharian amount > 0 }
+						has_resource = { type = sr_alien_pets amount > 0 }
+					}
+					has_building = no
+				}
+				clear_deposits = yes
+			}	
+		}	
+		if = {
+			limit = { OR = { is_colonizable = yes habitable_planet = yes } }
+			while = { limit = { planet_size > 25 } change_planet_size = -1 }
+			switch = {
+				trigger = planet_size
+				5 = { set_variable = { which = planet_size_var value = 5 } }
+				6 = { set_variable = { which = planet_size_var value = 6 } }
+				7 = { set_variable = { which = planet_size_var value = 7 } }
+				8 = { set_variable = { which = planet_size_var value = 8 } }
+				9 = { set_variable = { which = planet_size_var value = 9 } }
+				10 = { set_variable = { which = planet_size_var value = 10 } }
+				11 = { set_variable = { which = planet_size_var value = 11 } }
+				12 = { set_variable = { which = planet_size_var value = 12 } }
+				13 = { set_variable = { which = planet_size_var value = 13 } }
+				14 = { set_variable = { which = planet_size_var value = 14 } }
+				15 = { set_variable = { which = planet_size_var value = 15 } }
+				16 = { set_variable = { which = planet_size_var value = 16 } }
+				17 = { set_variable = { which = planet_size_var value = 17 } }
+				18 = { set_variable = { which = planet_size_var value = 18 } }
+				19 = { set_variable = { which = planet_size_var value = 19 } }
+				20 = { set_variable = { which = planet_size_var value = 20 } }
+				21 = { set_variable = { which = planet_size_var value = 21 } }
+				22 = { set_variable = { which = planet_size_var value = 22 } }
+				23 = { set_variable = { which = planet_size_var value = 23 } }
+				24 = { set_variable = { which = planet_size_var value = 24 } }
+				25 = { set_variable = { which = planet_size_var value = 25 } }
+			}
+			if = {
+				limit = { NOT = { has_global_flag = no_planet_resize } }
+				set_variable = { which = planet_resize_factor value = planet_size_var }
+				random_list = {
+					25 = {
+						multiply_variable = { which = planet_resize_factor value = 1.4 }
+						modifier = { factor = 0 has_global_flag = cgm_very_small_planet_size }
+						modifier = { factor = 0 has_global_flag = cgm_small_planet_size }
+						modifier = { factor = 1 has_global_flag = cgm_large_planet_size }
+						modifier = { factor = 2 has_global_flag = cgm_very_large_planet_size }
+					}
+					25 = {
+						multiply_variable = { which = planet_resize_factor value = 1.2 }
+						modifier = { factor = 0 has_global_flag = cgm_very_small_planet_size }
+						modifier = { factor = 0 has_global_flag = cgm_small_planet_size }
+						modifier = { factor = 2 has_global_flag = cgm_large_planet_size }
+						modifier = { factor = 1 has_global_flag = cgm_very_large_planet_size }
+					}
+					25 = {
+						multiply_variable = { which = planet_resize_factor value = 0.8 }
+						modifier = { factor = 1 has_global_flag = cgm_very_small_planet_size }
+						modifier = { factor = 2 has_global_flag = cgm_small_planet_size }
+						modifier = { factor = 0 has_global_flag = cgm_large_planet_size }
+						modifier = { factor = 0 has_global_flag = cgm_very_large_planet_size }
+					}
+					25 = {
+						multiply_variable = { which = planet_resize_factor value = 0.6 }
+						modifier = { factor = 2 has_global_flag = cgm_very_small_planet_size }
+						modifier = { factor = 1 has_global_flag = cgm_small_planet_size }
+						modifier = { factor = 0 has_global_flag = cgm_large_planet_size }
+						modifier = { factor = 0 has_global_flag = cgm_very_large_planet_size }
+					}
+				}
+				while = {
+					limit = {
+						check_variable = { which = planet_resize_factor value > planet_size_var }
+						planet_size < 25
+						OR = { 
+							AND = { 
+								is_moon = no
+								planet_size < 25
+							}
+							AND = { 
+								is_moon = yes
+								is_asteroid = no
+								OR = { 
+									AND = { 
+										is_gas_giant_moon = yes
+										planet_size < 16
+									}	
+									AND = { 
+										is_gas_giant_moon = no
+										planet_size < 11
+									}					
+								}	
+							}
+							AND = { 
+								is_moon = yes
+								is_asteroid = yes
+								planet_size < 6 
+							}					
+						}					
+					}
+					change_planet_size = 1
+					change_variable = { which = planet_size_var value = 1 }
+				}
+				while = {
+					limit = {
+						check_variable = { which = planet_resize_factor value < planet_size_var }
+						OR = { 
+							AND = { 
+								is_moon = no
+								planet_size > 10
+							}
+							AND = { 
+								is_moon = yes
+								is_asteroid = no
+								OR = { 
+									AND = { 
+										is_gas_giant_moon = yes
+										planet_size > 10
+									}	
+									AND = { 
+										is_gas_giant_moon = no
+										planet_size > 6
+									}					
+								}	
+							}
+							AND = { 
+								is_moon = yes
+								is_asteroid = yes
+								planet_size > 4
+							}							
+						}	
+					}
+					change_planet_size = -1
+					change_variable = { which = planet_size_var value = -1 }
+				}
+			}
+			if = {
+				limit = { NOT = { has_global_flag = cgm_resources_disabled } }
+				set_variable = { which = sr_points value = 0 }
+				every_tile = {
+					limit = { has_any_tile_strategic_resource = yes }
+					prev = { change_variable = { which = sr_points value = -1 } }
+				}
+				random_list = {
+					40 = {
+						change_variable = { which = sr_points value = 0 }
+						modifier = { factor = 1.5 has_global_flag = cgm_very_low_strategic_resources }
+						modifier = { factor = 1.25 has_global_flag = cgm_low_strategic_resources }
+						modifier = { factor = 0.75 has_global_flag = cgm_high_strategic_resources }
+						modifier = { factor = 0.5 has_global_flag = cgm_very_high_strategic_resources }
+					}
+					30 = {
+						change_variable = { which = sr_points value = 1 }
+						modifier = { factor = 0.5 has_global_flag = cgm_very_low_strategic_resources }
+						modifier = { factor = 0.75 has_global_flag = cgm_low_strategic_resources }
+						modifier = { factor = 1.25 has_global_flag = cgm_high_strategic_resources }
+						modifier = { factor = 1.5 has_global_flag = cgm_very_high_strategic_resources }
+					}
+					15 = {
+						change_variable = { which = sr_points value = 2 }
+						modifier = { factor = 0.5 has_global_flag = cgm_very_low_strategic_resources }
+						modifier = { factor = 0.75 has_global_flag = cgm_low_strategic_resources }
+						modifier = { factor = 1.25 has_global_flag = cgm_high_strategic_resources }
+						modifier = { factor = 1.5 has_global_flag = cgm_very_high_strategic_resources }
+					}
+					10 = {
+						change_variable = { which = sr_points value = 3 }
+						modifier = { factor = 0.5 has_global_flag = cgm_very_low_strategic_resources }
+						modifier = { factor = 0.75 has_global_flag = cgm_low_strategic_resources }
+						modifier = { factor = 1.25 has_global_flag = cgm_high_strategic_resources }
+						modifier = { factor = 1.5 has_global_flag = cgm_very_high_strategic_resources }
+					}
+					4 = {
+						change_variable = { which = sr_points value = 4 }
+						modifier = { factor = 0.5 has_global_flag = cgm_very_low_strategic_resources }
+						modifier = { factor = 0.75 has_global_flag = cgm_low_strategic_resources }
+						modifier = { factor = 1.25 has_global_flag = cgm_high_strategic_resources }
+						modifier = { factor = 1.5 has_global_flag = cgm_very_high_strategic_resources }
+					}
+					1 = {
+						change_variable = { which = sr_points value = 5 }
+						modifier = { factor = 0.5 has_global_flag = cgm_very_low_strategic_resources }
+						modifier = { factor = 0.75 has_global_flag = cgm_low_strategic_resources }
+						modifier = { factor = 1.25 has_global_flag = cgm_high_strategic_resources }
+						modifier = { factor = 1.5 has_global_flag = cgm_very_high_strategic_resources }
+					}
+				}
+				if = {
+					limit = { check_variable = { which = sr_points value > 0 } }
+					while = {
+						count = sr_points
+						if = {
+							limit = { any_tile = { has_deposit = no has_building = no } }
+							random_tile = {
+								limit = { has_deposit = no has_building = no }
+								cgm_pe_planetary_sr_spawn_table = yes
+							}
+						}	
+						else_if = {
+							limit = { any_tile = { has_building = no has_regular_vanilla_deposit = yes } }
+							random_tile = { limit = { has_building = no } cgm_pe_planetary_sr_spawn_table = yes }
+						}	
+						else_if = {
+							limit = { any_tile = { has_regular_vanilla_deposit = yes } }
+							random_tile = { limit = { has_regular_vanilla_deposit = yes } cgm_pe_planetary_sr_spawn_table = yes }
+						}						
+					}
+				}
+			}
+			if = {
+				limit = { NOT = { has_global_flag = cgm_tile_blockers_disabled } }
+				every_tile = { 
+					limit = { has_blocker = yes has_regular_vanilla_blocker = yes }
+					remove_blocker = yes
+					cgm_pe_tile_blocker_spawn_table = yes
+				}	
+				if = { 
+					limit = { 
+						exists = owner
+						owner = { 
+							OR = { 
+								is_country_type = fallen_empire
+								is_country_type = awakened_fallen_empire
+							}
+						}
+						is_planet_class = pc_gaia
+					}
+					random_list = {
+						50 = { }
+						50 = { 
+							random_tile = {
+								limit = { has_building = no has_pop = no }
+								if = { 
+									limit = { has_blocker = yes }
+									remove_blocker = yes
+								}
+								set_blocker = tb_fe_submerged_city
+							}
+						}
+					}
+				}	
+				set_variable = { which = tb_points value = planet_size_var }
+				random_list = {
+					20 = {
+						multiply_variable = { which = tb_points value = 0.8 }
+						modifier = { factor = 0 has_global_flag = cgm_very_low_tile_blockers }
+						modifier = { factor = 0.25 has_global_flag = cgm_low_tile_blockers }
+						modifier = { factor = 0.75 has_global_flag = cgm_default_tile_blockers }
+						modifier = { factor = 1.5 has_global_flag = cgm_high_tile_blockers }
+						modifier = { factor = 2.5 has_global_flag = cgm_very_high_tile_blockers }
+					}
+					20 = {
+						multiply_variable = { which = tb_points value = 0.65 }
+						modifier = { factor = 0 has_global_flag = cgm_very_low_tile_blockers }
+						modifier = { factor = 0.5 has_global_flag = cgm_low_tile_blockers }
+						modifier = { factor = 1 has_global_flag = cgm_default_tile_blockers }
+						modifier = { factor = 2 has_global_flag = cgm_high_tile_blockers }
+						modifier = { factor = 1.5 has_global_flag = cgm_very_high_tile_blockers }
+					}
+					20 = {
+						multiply_variable = { which = tb_points value = 0.5 }
+						modifier = { factor = 0 has_global_flag = cgm_very_low_tile_blockers }
+						modifier = { factor = 1.5 has_global_flag = cgm_low_tile_blockers }
+						modifier = { factor = 2 has_global_flag = cgm_default_tile_blockers }
+						modifier = { factor = 1.5 has_global_flag = cgm_high_tile_blockers }
+						modifier = { factor = 0 has_global_flag = cgm_very_high_tile_blockers }
+					}
+					20 = {
+						multiply_variable = { which = tb_points value = 0.35 }
+						modifier = { factor = 1.5 has_global_flag = cgm_very_low_tile_blockers }
+						modifier = { factor = 2 has_global_flag = cgm_low_tile_blockers }
+						modifier = { factor = 1 has_global_flag = cgm_default_tile_blockers }
+						modifier = { factor = 0.5 has_global_flag = cgm_high_tile_blockers }
+						modifier = { factor = 0 has_global_flag = cgm_very_high_tile_blockers }
+					}
+					20 = {
+						multiply_variable = { which = tb_points value = 0.2 }
+						modifier = { factor = 2.5 has_global_flag = cgm_very_low_tile_blockers }
+						modifier = { factor = 1.5 has_global_flag = cgm_low_tile_blockers }
+						modifier = { factor = 0.75 has_global_flag = cgm_default_tile_blockers }
+						modifier = { factor = 0.25 has_global_flag = cgm_high_tile_blockers }
+						modifier = { factor = 0 has_global_flag = cgm_very_high_tile_blockers }
+					}
+				}
+				divide_variable = { which = tb_points value = 1000 }
+				multiply_variable = { which = tb_points value = 1000 }
+				every_tile = {
+					limit = { has_blocker = yes }
+					prev = { change_variable = { which = tb_points value = -1 } }
+				}
+				if = {
+					limit = { check_variable = { which = tb_points value > 0 } }
+					while = {
+						count = tb_points
+						random_tile = {
+							limit = { has_building = no has_blocker = no has_pop = no }
+							cgm_pe_tile_blocker_spawn_table = yes
+						}
+					}
+				}	
+				else_if = {
+					limit = { check_variable = { which = tb_points value < 0 } }
+					while = {
+						limit = {
+							check_variable = { which = tb_points value < 0 }
+							any_tile = { has_regular_vanilla_blocker = yes }
+						}
+						random_tile = { limit = { has_regular_vanilla_blocker = yes } remove_blocker = yes }
+						change_variable = { which = tb_points value = 1 }
+					}
+				}	
+			}
+			if = {
+				limit = { NOT = { has_global_flag = cgm_no_deposit_num_change } }
+				set_variable = { which = dep_points value = planet_size_var }
+				random_list = {
+					20 = {
+						multiply_variable = { which = dep_points value = 0.8 }
+						modifier = { factor = 0 has_global_flag = cgm_very_low_deposits }
+						modifier = { factor = 0.25 has_global_flag = cgm_low_deposits }
+						modifier = { factor = 0.75 has_global_flag = cgm_default_deposits }
+						modifier = { factor = 1.5 has_global_flag = cgm_high_deposits }
+						modifier = { factor = 2.5 has_global_flag = cgm_very_high_deposits }
+					}
+					20 = {
+						multiply_variable = { which = dep_points value = 0.65 }
+						modifier = { factor = 0 has_global_flag = cgm_very_low_deposits }
+						modifier = { factor = 0.5 has_global_flag = cgm_low_deposits }
+						modifier = { factor = 1 has_global_flag = cgm_default_deposits }
+						modifier = { factor = 2 has_global_flag = cgm_high_deposits }
+						modifier = { factor = 1.5 has_global_flag = cgm_very_high_deposits }
+					}
+					20 = {
+						multiply_variable = { which = dep_points value = 0.5 }
+						modifier = { factor = 0 has_global_flag = cgm_very_low_deposits }
+						modifier = { factor = 1.5 has_global_flag = cgm_low_deposits }
+						modifier = { factor = 2 has_global_flag = cgm_default_deposits }
+						modifier = { factor = 1.5 has_global_flag = cgm_high_deposits }
+						modifier = { factor = 0 has_global_flag = cgm_very_high_deposits }
+					}
+					20 = {
+						multiply_variable = { which = dep_points value = 0.35 }
+						modifier = { factor = 1.5 has_global_flag = cgm_very_low_deposits }
+						modifier = { factor = 2 has_global_flag = cgm_low_deposits }
+						modifier = { factor = 1 has_global_flag = cgm_default_deposits }
+						modifier = { factor = 0.5 has_global_flag = cgm_high_deposits }
+						modifier = { factor = 0 has_global_flag = cgm_very_high_deposits }
+					}
+					20 = {
+						multiply_variable = { which = dep_points value = 0.2 }
+						modifier = { factor = 2.5 has_global_flag = cgm_very_low_deposits }
+						modifier = { factor = 1.5 has_global_flag = cgm_low_deposits }
+						modifier = { factor = 0.75 has_global_flag = cgm_default_deposits }
+						modifier = { factor = 0.25 has_global_flag = cgm_high_deposits }
+						modifier = { factor = 0 has_global_flag = cgm_very_high_deposits }
+					}
+				}
+				divide_variable = { which = dep_points value = 1000 }
+				multiply_variable = { which = dep_points value = 1000 }
+				every_tile = {
+					limit = { is_orbital_tile = no has_deposit = yes }
+					prev = { change_variable = { which = dep_points value = -1 } }
+				}
+				if = {
+					limit = { check_variable = { which = dep_points value > 0 } }
+					while = {
+						count = dep_points
+						random_tile = {
+							limit = {
+								is_orbital_tile = no
+								has_building = no
+								has_deposit = no
+								has_pop = no
+							}
+							cgm_shared_regular_deposit_spawn_table = yes
+						}
+					}
+				}	
+				else_if = {
+					limit = { check_variable = { which = dep_points value < 0 } }
+					while = {
+						limit = {
+							check_variable = { which = dep_points value < 0 }
+							any_tile = { has_regular_vanilla_deposit = yes }
+						}
+						random_tile = { limit = { has_regular_vanilla_deposit = yes } clear_deposits = yes }
+						change_variable = { which = dep_points value = 1 }
+					}
+				}				
+			}
+			if = { 
+				limit = { NOT = { has_global_flag = cgm_no_deposit_size_change } } 
+				every_tile = { 
+					limit = { has_regular_vanilla_deposit = yes }
+					cgm_shared_regular_deposit_spawn_table = yes
+				}
+			}	
+			event_target:cgm_pe_variable_storage = {
+				while = { 
+					count = num_of_asteroidal_candidates
+					random_system = { 
+						limit = { 
+							any_planet = { 
+								OR = { 
+									is_planet_class = pc_asteroid
+									is_planet_class = pc_ice_asteroid			
+									is_planet_class = pc_large_asteroid_moon
+									is_planet_class = pc_small_asteroid_moon
+									is_planet_class = pc_dwarf_planet_asteroid
+								}				
+								NOT = { has_planet_flag = asteroidal_candidate }				
+								planet_size > 4											
+							}
+						}	
+						random_system_planet = { 
+							limit = { 
+								OR = { 
+									is_planet_class = pc_asteroid
+									is_planet_class = pc_ice_asteroid			
+									is_planet_class = pc_large_asteroid_moon
+									is_planet_class = pc_small_asteroid_moon
+									is_planet_class = pc_dwarf_planet_asteroid
+								}				
+								NOT = { has_planet_flag = asteroidal_candidate }				
+								planet_size > 4			
+							} 		
+							set_planet_flag = asteroidal_candidate
+						}
+					}	
+				}	
+			}				
+			if = { 
+				limit = { has_global_flag = cgm_game_start_auto_exploration }
+				every_playable_country = {
+					limit = { is_ai = no }
+					give_technology = { message = no tech = tech_cgm_automated_exploration_feature }
+				}	
+			}	
+			every_planet = { 
+				limit = { NOT = { any_tile = { has_blocker = no } } }
+				random_tile = { 
+					limit = { has_blocker = yes } 
+					remove_blocker = yes
+				}
+			}				
+		}
+	}
+}
+
+cgm_set_terraformer = {
+	while = { limit = { planet_size > 25 } change_planet_size = -1 }
+	random_tile = {
+		limit = { has_deposit = no has_blocker = no num_adjacent_tiles < 3 }
+		set_building = building_terraformer_inactive
+	}
+	set_planet_flag = terraformer_inactive
+	switch = {
+		trigger = planet_size
+		5 = { set_variable = { which = planet_size_var value = 5 } }
+		6 = { set_variable = { which = planet_size_var value = 6 } }
+		7 = { set_variable = { which = planet_size_var value = 7 } }
+		8 = { set_variable = { which = planet_size_var value = 8 } }
+		9 = { set_variable = { which = planet_size_var value = 9 } }
+		10 = { set_variable = { which = planet_size_var value = 10 } }
+		11 = { set_variable = { which = planet_size_var value = 11 } }
+		12 = { set_variable = { which = planet_size_var value = 12 } }
+		13 = { set_variable = { which = planet_size_var value = 13 } }
+		14 = { set_variable = { which = planet_size_var value = 14 } }
+		15 = { set_variable = { which = planet_size_var value = 15 } }
+		16 = { set_variable = { which = planet_size_var value = 16 } }
+		17 = { set_variable = { which = planet_size_var value = 17 } }
+		18 = { set_variable = { which = planet_size_var value = 18 } }
+		19 = { set_variable = { which = planet_size_var value = 19 } }
+		20 = { set_variable = { which = planet_size_var value = 20 } }
+		21 = { set_variable = { which = planet_size_var value = 21 } }
+		22 = { set_variable = { which = planet_size_var value = 22 } }
+		23 = { set_variable = { which = planet_size_var value = 23 } }
+		24 = { set_variable = { which = planet_size_var value = 24 } }
+		25 = { set_variable = { which = planet_size_var value = 25 } }
+	}
+	set_variable = { which = sr_points value = 0 }
+	random_list = {
+		80 = {
+			change_variable = { which = sr_points value = 0 }
+			modifier = { factor = 1.5 has_global_flag = cgm_very_low_strategic_resources }
+			modifier = { factor = 1.25 has_global_flag = cgm_low_strategic_resources }
+			modifier = { factor = 0.75 has_global_flag = cgm_high_strategic_resources }
+			modifier = { factor = 0.5 has_global_flag = cgm_very_high_strategic_resources }
+		}
+		15 = {
+			change_variable = { which = sr_points value = 1 }
+			modifier = { factor = 0.5 has_global_flag = cgm_very_low_strategic_resources }
+			modifier = { factor = 0.75 has_global_flag = cgm_low_strategic_resources }
+			modifier = { factor = 1.25 has_global_flag = cgm_high_strategic_resources }
+			modifier = { factor = 1.5 has_global_flag = cgm_very_high_strategic_resources }
+		}
+		5 = {
+			change_variable = { which = sr_points value = 2 }
+			modifier = { factor = 0.5 has_global_flag = cgm_very_low_strategic_resources }
+			modifier = { factor = 0.75 has_global_flag = cgm_low_strategic_resources }
+			modifier = { factor = 1.25 has_global_flag = cgm_high_strategic_resources }
+			modifier = { factor = 1.5 has_global_flag = cgm_very_high_strategic_resources }
+		}
+	}
+	if = {
+		limit = { check_variable = { which = sr_points value > 0 } }
+		while = {
+			count = sr_points
+			if = {
+				limit = { any_tile = { has_deposit = no has_building = no } }
+				random_tile = {
+					limit = { has_deposit = no has_building = no }
+					cgm_pe_planetary_sr_spawn_table = yes
+				}
+			}				
+		}
+	}
+	set_variable = { which = tb_points value = planet_size_var }
+	random_list = {
+		33.3 = {
+			multiply_variable = { which = tb_points value = 0.65 }
+		}
+		33.3 = {
+			multiply_variable = { which = tb_points value = 0.5 }			
+		}
+		33.3 = {
+			multiply_variable = { which = tb_points value = 0.35 }
+		}
+	}
+	divide_variable = { which = tb_points value = 1000 }
+	multiply_variable = { which = tb_points value = 1000 }
+	while = {
+		count = tb_points
+		random_tile = {
+			limit = { has_building = no has_blocker = no has_pop = no }
+			if = { 
+				limit = { prev = { is_planet_class_pc_barren_terraforming = yes } }
+				random_list = {
+					50 = { set_blocker = tb_pc_barren_terraforming_dust_steppe }
+					50 = { set_blocker = tb_pc_barren_terraforming_inactive_volcano }
+				}
+			}
+			else_if = { 
+				limit = { prev = { is_planet_class_pc_barren_cold_terraforming = yes } }
+				random_list = {
+					50 = { set_blocker = tb_pc_barren_terraforming_rugged_land }
+					50 = { set_blocker = tb_pc_barren_terraforming_wind_mountains }
+				}					
+			}	
+			else_if = { 
+				limit = { prev = { is_planet_class_pc_molten_terraforming = yes } }
+				random_list = {
+					50 = { set_blocker = tb_pc_molten_terraforming_magma_river }
+					50 = { set_blocker = tb_pc_molten_terraforming_pyroclastic_terrain }
+				}					
+			}				
+			else_if = { 
+				limit = { prev = { is_planet_class_pc_toxic_terraforming = yes } }
+				random_list = {
+					50 = { set_blocker = tb_pc_toxic_sulphoric_flora }
+					50 = { set_blocker = tb_pc_toxic_terraforming_noxious_concentrations }
+				}					
+			}		
+			else_if = { 
+				limit = { prev = { is_planet_class_pc_frozen_terraforming = yes } }
+				random_list = {
+					50 = { set_blocker = tb_pc_frozen_terraforming_deep_valley }
+					50 = { set_blocker = tb_pc_frozen_terraforming_frozen_desolation }
+				}					
+			}					
+			else_if = { 
+				limit = { prev = { is_planet_class_pc_hothouse_terraforming = yes } }
+				random_list = {
+					50 = { set_blocker = tb_pc_greenhouse_hot_terraforming_rugged_terrain }
+					50 = { set_blocker = tb_pc_greenhouse_hot_terraforming_stormfield }
+				}					
+			}					
+			else_if = { 
+				limit = { prev = { is_planet_class_pc_greenhouse_cold_terraforming = yes } }
+				random_list = {
+					50 = { set_blocker = tb_pc_greenhouse_cold_terraforming_rugged_land }
+					50 = { set_blocker = tb_pc_greenhouse_cold_terraforming_sufuric_vents }
+				}					
+			}									
+			else_if = { 
+				limit = { prev = { is_planet_class_pc_greenhouse_hot_terraforming = yes } }
+				random_list = {
+					50 = { set_blocker = tb_pc_greenhouse_hot_terraforming_rugged_terrain }
+					50 = { set_blocker = tb_pc_greenhouse_hot_terraforming_stormfield }
+				}					
+			}									
+		}
+	}
+	set_variable = { which = dep_points value = planet_size_var }
+	random_list = {
+		20 = {
+			multiply_variable = { which = dep_points value = 0.8 }
+			modifier = { factor = 0 has_global_flag = cgm_very_low_deposits }
+			modifier = { factor = 0.25 has_global_flag = cgm_low_deposits }
+			modifier = { factor = 0.75 has_global_flag = cgm_default_deposits }
+			modifier = { factor = 1.5 has_global_flag = cgm_high_deposits }
+			modifier = { factor = 2.5 has_global_flag = cgm_very_high_deposits }
+		}
+		20 = {
+			multiply_variable = { which = dep_points value = 0.65 }
+			modifier = { factor = 0 has_global_flag = cgm_very_low_deposits }
+			modifier = { factor = 0.5 has_global_flag = cgm_low_deposits }
+			modifier = { factor = 1 has_global_flag = cgm_default_deposits }
+			modifier = { factor = 2 has_global_flag = cgm_high_deposits }
+			modifier = { factor = 1.5 has_global_flag = cgm_very_high_deposits }
+		}
+		20 = {
+			multiply_variable = { which = dep_points value = 0.5 }
+			modifier = { factor = 0 has_global_flag = cgm_very_low_deposits }
+			modifier = { factor = 1.5 has_global_flag = cgm_low_deposits }
+			modifier = { factor = 2 has_global_flag = cgm_default_deposits }
+			modifier = { factor = 1.5 has_global_flag = cgm_high_deposits }
+			modifier = { factor = 0 has_global_flag = cgm_very_high_deposits }
+		}
+		20 = {
+			multiply_variable = { which = dep_points value = 0.35 }
+			modifier = { factor = 1.5 has_global_flag = cgm_very_low_deposits }
+			modifier = { factor = 2 has_global_flag = cgm_low_deposits }
+			modifier = { factor = 1 has_global_flag = cgm_default_deposits }
+			modifier = { factor = 0.5 has_global_flag = cgm_high_deposits }
+			modifier = { factor = 0 has_global_flag = cgm_very_high_deposits }
+		}
+		20 = {
+			multiply_variable = { which = dep_points value = 0.2 }
+			modifier = { factor = 2.5 has_global_flag = cgm_very_low_deposits }
+			modifier = { factor = 1.5 has_global_flag = cgm_low_deposits }
+			modifier = { factor = 0.75 has_global_flag = cgm_default_deposits }
+			modifier = { factor = 0.25 has_global_flag = cgm_high_deposits }
+			modifier = { factor = 0 has_global_flag = cgm_very_high_deposits }
+		}
+	}
+	divide_variable = { which = dep_points value = 1000 }
+	multiply_variable = { which = dep_points value = 1000 }
+	every_tile = {
+		limit = { has_deposit = yes }
+		prev = { change_variable = { which = dep_points value = -1 } }
+	}
+	if = {
+		limit = { check_variable = { which = dep_points value > 0 } }
+		while = {
+			count = dep_points
+			random_tile = {
+				limit = { has_building = no has_deposit = no has_pop = no }
+				cgm_shared_regular_deposit_spawn_table = yes
+			}
+		}
+	}	
+	else_if = {
+		limit = { check_variable = { which = dep_points value < 0 } }
+		while = {
+			limit = {
+				check_variable = { which = dep_points value < 0 }
+				any_tile = { has_regular_vanilla_deposit = yes }
+			}
+			random_tile = { limit = { has_regular_vanilla_deposit = yes } clear_deposits = yes }
+			change_variable = { which = dep_points value = 1 }
+		}
+	}
+	set_planet_flag = cgm_terraforming_planet
+	set_variable = { which = cgm_terraforming_years value = 0 }
+	set_variable = { which = tb_points_transport value = tb_points }
+	multiply_variable = { which = tb_points_transport value = 3 }
+	set_variable = { which = planet_size_var_transport value = planet_size_var }
+	multiply_variable = { which = planet_size_var_transport value = 2 }
+	set_variable = { which = planet_terraforming_points value = planet_size_var_transport }
+	change_variable = { which = planet_terraforming_points value = tb_points_transport }
+	planet_event = { id = cgm_pe_terraforming_events.1 days = 360 }
+}
+ #the effects below run on tile scope
+
+roll_terraformer_catastrophe = {
+	random_list = { 
+		0 = { 
+			planet_event = { id = cgm_pe_terraforming_events.3 }	
+			modifier = { add = 2.5 check_variable = { which = years_terraformer_inactive value = 1 } }
+			modifier = { add = 5 check_variable = { which = years_terraformer_inactive value = 2 } }
+			modifier = { add = 7.5 check_variable = { which = years_terraformer_inactive value = 3 } }
+			modifier = { add = 10 check_variable = { which = years_terraformer_inactive value = 4 } }
+			modifier = { add = 12.5 check_variable = { which = years_terraformer_inactive value = 5 } }
+			modifier = { add = 15 check_variable = { which = years_terraformer_inactive value = 6 } }
+			modifier = { add = 17.5 check_variable = { which = years_terraformer_inactive value = 7 } }
+			modifier = { add = 20 check_variable = { which = years_terraformer_inactive value = 8 } }
+			modifier = { add = 22.5 check_variable = { which = years_terraformer_inactive value = 9 } }
+			modifier = { add = 25 check_variable = { which = years_terraformer_inactive value = 10 } }
+			modifier = { add = 27.5 check_variable = { which = years_terraformer_inactive value = 11 } }
+			modifier = { add = 30 check_variable = { which = years_terraformer_inactive value = 12 } }
+			modifier = { add = 32.5 check_variable = { which = years_terraformer_inactive value = 13 } }
+			modifier = { add = 35 check_variable = { which = years_terraformer_inactive value = 14 } }
+			modifier = { add = 37.5 check_variable = { which = years_terraformer_inactive value = 15 } }
+			modifier = { add = 40 check_variable = { which = years_terraformer_inactive value = 16 } }
+			modifier = { add = 42.5 check_variable = { which = years_terraformer_inactive value = 17 } }
+			modifier = { add = 45 check_variable = { which = years_terraformer_inactive value = 18 } }
+			modifier = { add = 47.5 check_variable = { which = years_terraformer_inactive value = 19 } }
+			modifier = { add = 50 check_variable = { which = years_terraformer_inactive value = 20 } }
+			modifier = { add = 52.5 check_variable = { which = years_terraformer_inactive value = 21 } }
+			modifier = { add = 55 check_variable = { which = years_terraformer_inactive value = 22 } }
+			modifier = { add = 57.5 check_variable = { which = years_terraformer_inactive value = 23 } }
+			modifier = { add = 60 check_variable = { which = years_terraformer_inactive value = 24 } }
+			modifier = { add = 62.5 check_variable = { which = years_terraformer_inactive value = 25 } }
+			modifier = { add = 65 check_variable = { which = years_terraformer_inactive value = 26 } }
+			modifier = { add = 67.5 check_variable = { which = years_terraformer_inactive value = 27 } }
+			modifier = { add = 70 check_variable = { which = years_terraformer_inactive value = 28 } }
+			modifier = { add = 72.5 check_variable = { which = years_terraformer_inactive value = 29 } }
+			modifier = { add = 75 check_variable = { which = years_terraformer_inactive value = 30 } }
+			modifier = { add = 77.5 check_variable = { which = years_terraformer_inactive value = 31 } }
+			modifier = { add = 80 check_variable = { which = years_terraformer_inactive value = 32 } }
+			modifier = { add = 82.5 check_variable = { which = years_terraformer_inactive value = 33 } }
+			modifier = { add = 85 check_variable = { which = years_terraformer_inactive value = 34 } }
+			modifier = { add = 87.5 check_variable = { which = years_terraformer_inactive value = 35 } }
+			modifier = { add = 90 check_variable = { which = years_terraformer_inactive value = 36 } }
+			modifier = { add = 92.5 check_variable = { which = years_terraformer_inactive value = 37 } }
+			modifier = { add = 95 check_variable = { which = years_terraformer_inactive value = 38 } }
+			modifier = { add = 97.5 check_variable = { which = years_terraformer_inactive value = 39 } }
+			modifier = { add = 100 check_variable = { which = years_terraformer_inactive value = 40 } }
+			modifier = { add = 100 check_variable = { which = years_terraformer_inactive value > 40 } }
+		}	
+		100 = { 
+			break = yes 
+			modifier = { add = -2.5 check_variable = { which = years_terraformer_inactive value = 1 } }
+			modifier = { add = -5 check_variable = { which = years_terraformer_inactive value = 2 } }
+			modifier = { add = -7.5 check_variable = { which = years_terraformer_inactive value = 3 } }
+			modifier = { add = -10 check_variable = { which = years_terraformer_inactive value = 4 } }
+			modifier = { add = -12.5 check_variable = { which = years_terraformer_inactive value = 5 } }
+			modifier = { add = -15 check_variable = { which = years_terraformer_inactive value = 6 } }
+			modifier = { add = -17.5 check_variable = { which = years_terraformer_inactive value = 7 } }
+			modifier = { add = -20 check_variable = { which = years_terraformer_inactive value = 8 } }
+			modifier = { add = -22.5 check_variable = { which = years_terraformer_inactive value = 9 } }
+			modifier = { add = -25 check_variable = { which = years_terraformer_inactive value = 10 } }
+			modifier = { add = -27.5 check_variable = { which = years_terraformer_inactive value = 11 } }
+			modifier = { add = -30 check_variable = { which = years_terraformer_inactive value = 12 } }
+			modifier = { add = -32.5 check_variable = { which = years_terraformer_inactive value = 13 } }
+			modifier = { add = -35 check_variable = { which = years_terraformer_inactive value = 14 } }
+			modifier = { add = -37.5 check_variable = { which = years_terraformer_inactive value = 15 } }
+			modifier = { add = -40 check_variable = { which = years_terraformer_inactive value = 16 } }
+			modifier = { add = -42.5 check_variable = { which = years_terraformer_inactive value = 17 } }
+			modifier = { add = -45 check_variable = { which = years_terraformer_inactive value = 18 } }
+			modifier = { add = -47.5 check_variable = { which = years_terraformer_inactive value = 19 } }
+			modifier = { add = -50 check_variable = { which = years_terraformer_inactive value = 20 } }
+			modifier = { add = -52.5 check_variable = { which = years_terraformer_inactive value = 21 } }
+			modifier = { add = -55 check_variable = { which = years_terraformer_inactive value = 22 } }
+			modifier = { add = -57.5 check_variable = { which = years_terraformer_inactive value = 23 } }
+			modifier = { add = -60 check_variable = { which = years_terraformer_inactive value = 24 } }
+			modifier = { add = -62.5 check_variable = { which = years_terraformer_inactive value = 25 } }
+			modifier = { add = -65 check_variable = { which = years_terraformer_inactive value = 26 } }
+			modifier = { add = -67.5 check_variable = { which = years_terraformer_inactive value = 27 } }
+			modifier = { add = -70 check_variable = { which = years_terraformer_inactive value = 28 } }
+			modifier = { add = -72.5 check_variable = { which = years_terraformer_inactive value = 29 } }
+			modifier = { add = -75 check_variable = { which = years_terraformer_inactive value = 30 } }
+			modifier = { add = -77.5 check_variable = { which = years_terraformer_inactive value = 31 } }
+			modifier = { add = -80 check_variable = { which = years_terraformer_inactive value = 32 } }
+			modifier = { add = -82.5 check_variable = { which = years_terraformer_inactive value = 33 } }
+			modifier = { add = -85 check_variable = { which = years_terraformer_inactive value = 34 } }
+			modifier = { add = -87.5 check_variable = { which = years_terraformer_inactive value = 35 } }
+			modifier = { add = -90 check_variable = { which = years_terraformer_inactive value = 36 } }
+			modifier = { add = -92.5 check_variable = { which = years_terraformer_inactive value = 37 } }
+			modifier = { add = -95 check_variable = { which = years_terraformer_inactive value = 38 } }
+			modifier = { add = -97.5 check_variable = { which = years_terraformer_inactive value = 39 } }
+			modifier = { add = -100 check_variable = { which = years_terraformer_inactive value = 40 } }
+			modifier = { add = -100 check_variable = { which = years_terraformer_inactive value > 40 } }
+		}
+	}
+}	
+generate_catastrophe = { 
+	set_variable = { which = pops_killed value = 0 }
+	set_variable = { which = buildings_destroyed value = 0 }
+	set_variable = { which = catastrophe_blockers_spawned value = 0 }
+	if = { 
+		limit = { any_tile = { has_building = yes has_pop = yes } }
+		random_tile = { 
+			limit = { has_terraformer = no has_building = yes has_pop = yes }
+			kill_pop = yes
+			remove_building = yes
+			if = { 
+				limit = { prev = { has_planet_flag = cgm_geothermal_tap } }
+				set_blocker = tb_catastrophe_mega_geyser
+			}
+			else_if = { 
+				limit = { prev = { has_planet_flag = cgm_deep_core_mining } }
+				random_list = { 
+					50 = { set_blocker = tb_catastrophe_erupting_volcano_1 }
+					50 = { set_blocker = tb_catastrophe_erupting_volcano_2 }
+				}	
+			}
+			else_if = { 
+				limit = { prev = { has_planet_flag = cgm_tectonic_engineering } }
+				set_blocker = tb_catastrophe_tectonic_fracture
+			}	
+			else_if = { 
+				limit = { prev = { has_planet_flag = cgm_terraforming_planet } }
+				set_blocker = tb_catastrophe_tectonic_fracture ##rework this later
+			}					
+			prev = { change_variable = { which = pops_killed value = 1 } }
+			prev = { change_variable = { which = buildings_destroyed value = 1 } }
+			prev = { change_variable = { which = catastrophe_blockers_spawned value = 1 } }				
+			every_neighboring_tile = { 
+				if = { 
+					limit = { has_terraformer = no has_pop = yes has_building = yes }
+					random_list = { 
+						33.3 = { 
+							kill_pop = yes 
+							set_ruined = yes 
+							prevprev = { change_variable = { which = pops_killed value = 1 } }
+							prevprev = { change_variable = { which = buildings_destroyed value = 1 } }
+						} 	
+						33.3 = { 
+							kill_pop = yes 
+							remove_building = yes 
+							set_blocker = tb_lava_flows
+							prevprev = { change_variable = { which = pops_killed value = 1 } }
+							prevprev = { change_variable = { which = buildings_destroyed value = 1 } }
+							prevprev = { change_variable = { which = catastrophe_blockers_spawned value = 1 } }
+						} 
+						33.3 = { } 
+					}	
+				}	
+				else_if = { 
+					limit = { has_pop = yes has_building = no }
+					random_list = { 
+						33.3 = { 
+							kill_pop = yes
+							prevprev = { change_variable = { which = pops_killed value = 1 } }
+						} 	
+						33.3 = { 
+							kill_pop = yes 
+							set_blocker = tb_lava_flows
+							prevprev = { change_variable = { which = pops_killed value = 1 } }
+							prevprev = { change_variable = { which = catastrophe_blockers_spawned value = 1 } }
+						} 
+						33.3 = { } 
+					}					
+				}	
+				else_if = { 
+					limit = { has_terraformer = no has_pop = no has_building = yes }
+					random_list = { 
+						33.3 = { 
+							set_ruined = yes
+							prevprev = { change_variable = { which = buildings_destroyed value = 1 } }
+						} 	
+						33.3 = { 
+							set_ruined = yes 
+							set_blocker = tb_lava_flows
+							prevprev = { change_variable = { which = buildings_destroyed value = 1 } }
+							prevprev = { change_variable = { which = catastrophe_blockers_spawned value = 1 } }									
+						} 
+						33.3 = { } 
+					}													
+				}
+				else_if = { 
+					limit = { has_pop = no has_building = no has_blocker = yes }
+					random_list = { 
+						50 = { } 	
+						50 = {
+							remove_blocker = yes 
+							set_blocker = tb_lava_flows
+							prevprev = { change_variable = { which = catastrophe_blockers_spawned value = 1 } }									
+						} 
+					}													
+				}								
+				else = { 
+					random_list = { 
+						50 = { } 	
+						50 = { 
+							set_blocker = tb_lava_flows
+							prevprev = { change_variable = { which = catastrophe_blockers_spawned value = 1 } }								
+						} 
+					}	
+				}	
+			}	
+		}
+	}
+	else = {		
+		random_tile = { 
+			limit = { has_building = no has_pop = yes }
+			kill_pop = yes
+			if = { 
+				limit = { prev = { has_planet_flag = cgm_geothermal_tap } }
+				set_blocker = tb_catastrophe_mega_geyser
+			}
+			else_if = { 
+				limit = { prev = { has_planet_flag = cgm_deep_core_mining } }
+				random_list = { 
+					50 = { set_blocker = tb_catastrophe_erupting_volcano_1 }
+					50 = { set_blocker = tb_catastrophe_erupting_volcano_2 }
+				}	
+			}
+			else_if = { 
+				limit = { prev = { has_planet_flag = cgm_tectonic_engineering } }
+				set_blocker = tb_catastrophe_tectonic_fracture
+			}	
+			else_if = { 
+				limit = { prev = { has_planet_flag = cgm_terraforming_planet } }
+				set_blocker = tb_catastrophe_tectonic_fracture ##rework this later
+			}					
+			prev = { change_variable = { which = pops_killed value = 1 } }
+			prev = { change_variable = { which = buildings_destroyed value = 1 } }
+			prev = { change_variable = { which = catastrophe_blockers_spawned value = 1 } }				
+			every_neighboring_tile = { 
+				if = { 
+					limit = { has_terraformer = no has_pop = yes has_building = yes }
+					random_list = { 
+						33.3 = { 
+							kill_pop = yes 
+							set_ruined = yes 
+							prevprev = { change_variable = { which = pops_killed value = 1 } }
+							prevprev = { change_variable = { which = buildings_destroyed value = 1 } }
+						} 	
+						33.3 = { 
+							kill_pop = yes 
+							remove_building = yes 
+							set_blocker = tb_lava_flows
+							prevprev = { change_variable = { which = pops_killed value = 1 } }
+							prevprev = { change_variable = { which = buildings_destroyed value = 1 } }
+							prevprev = { change_variable = { which = catastrophe_blockers_spawned value = 1 } }
+						} 
+						33.3 = { } 
+					}	
+				}	
+				else_if = { 
+					limit = { has_pop = yes has_building = no }
+					random_list = { 
+						33.3 = { 
+							kill_pop = yes
+							prevprev = { change_variable = { which = pops_killed value = 1 } }
+						} 	
+						33.3 = { 
+							kill_pop = yes 
+							set_blocker = tb_lava_flows
+							prevprev = { change_variable = { which = pops_killed value = 1 } }
+							prevprev = { change_variable = { which = catastrophe_blockers_spawned value = 1 } }
+						} 
+						33.3 = { } 
+					}					
+				}	
+				else_if = { 
+					limit = { has_terraformer = no has_pop = no has_building = yes }
+					random_list = { 
+						33.3 = { 
+							set_ruined = yes
+							prevprev = { change_variable = { which = buildings_destroyed value = 1 } }
+						} 	
+						33.3 = { 
+							set_ruined = yes 
+							set_blocker = tb_lava_flows
+							prevprev = { change_variable = { which = buildings_destroyed value = 1 } }
+							prevprev = { change_variable = { which = catastrophe_blockers_spawned value = 1 } }									
+						} 
+						33.3 = { } 
+					}													
+				}
+				else_if = { 
+					limit = { has_pop = no has_building = no has_blocker = yes }
+					random_list = { 
+						50 = { } 	
+						50 = {
+							remove_blocker = yes 
+							set_blocker = tb_lava_flows
+							prevprev = { change_variable = { which = catastrophe_blockers_spawned value = 1 } }									
+						} 
+					}													
+				}								
+				else = { 
+					random_list = { 
+						50 = { } 	
+						50 = { 
+							set_blocker = tb_lava_flows
+							prevprev = { change_variable = { which = catastrophe_blockers_spawned value = 1 } }								
+						} 
+					}	
+				}	
+			}	
+		}
+	}	
+}
+
+update_terraforming_time = { 
+	set_variable = { which = remaining_terraforming_time value = planet_terraforming_points }
+	if = { 
+		limit = { has_planet_flag = increased_terraformer_speed }
+		divide_variable = { which = remaining_terraforming_time value = 1.5 }
+	}
+	else_if = { 
+		limit = { has_planet_flag = maximal_terraformer_speed }
+		divide_variable = { which = remaining_terraforming_time value = 2.25 }
+	}		
+}	
+
+calculate_available_terraforming_points = { 
+	if = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 1 } } set_variable = { which =  country_terraforming_points value = 1 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 2 } } set_variable = { which =  country_terraforming_points value = 2 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 3 } } set_variable = { which =  country_terraforming_points value = 3 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 4 } } set_variable = { which =  country_terraforming_points value = 4 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 5 } } set_variable = { which =  country_terraforming_points value = 5 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 6 } } set_variable = { which =  country_terraforming_points value = 6 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 7 } } set_variable = { which =  country_terraforming_points value = 7 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 8 } } set_variable = { which =  country_terraforming_points value = 8 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 9 } } set_variable = { which =  country_terraforming_points value = 9 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 10 } } set_variable = { which =  country_terraforming_points value = 10 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 11 } } set_variable = { which =  country_terraforming_points value = 11 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 12 } } set_variable = { which =  country_terraforming_points value = 12 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 13 } } set_variable = { which =  country_terraforming_points value = 13 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 14 } } set_variable = { which =  country_terraforming_points value = 14 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 15 } } set_variable = { which =  country_terraforming_points value = 15 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 16 } } set_variable = { which =  country_terraforming_points value = 16 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 17 } } set_variable = { which =  country_terraforming_points value = 17 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 18 } } set_variable = { which =  country_terraforming_points value = 18 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 19 } } set_variable = { which =  country_terraforming_points value = 19 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 20 } } set_variable = { which =  country_terraforming_points value = 20 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 21 } } set_variable = { which =  country_terraforming_points value = 21 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 22 } } set_variable = { which =  country_terraforming_points value = 22 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 23 } } set_variable = { which =  country_terraforming_points value = 23 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 24 } } set_variable = { which =  country_terraforming_points value = 24 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 25 } } set_variable = { which =  country_terraforming_points value = 25 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 26 } } set_variable = { which =  country_terraforming_points value = 26 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 27 } } set_variable = { which =  country_terraforming_points value = 27 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 28 } } set_variable = { which =  country_terraforming_points value = 28 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 29 } } set_variable = { which =  country_terraforming_points value = 29 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 30 } } set_variable = { which =  country_terraforming_points value = 30 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 31 } } set_variable = { which =  country_terraforming_points value = 31 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 32 } } set_variable = { which =  country_terraforming_points value = 32 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 33 } } set_variable = { which =  country_terraforming_points value = 33 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 34 } } set_variable = { which =  country_terraforming_points value = 34 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 35 } } set_variable = { which =  country_terraforming_points value = 35 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 36 } } set_variable = { which =  country_terraforming_points value = 36 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 37 } } set_variable = { which =  country_terraforming_points value = 37 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 38 } } set_variable = { which =  country_terraforming_points value = 38 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 39 } } set_variable = { which =  country_terraforming_points value = 39 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 40 } } set_variable = { which =  country_terraforming_points value = 40 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 41 } } set_variable = { which =  country_terraforming_points value = 41 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 42 } } set_variable = { which =  country_terraforming_points value = 42 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 43 } } set_variable = { which =  country_terraforming_points value = 43 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 44 } } set_variable = { which =  country_terraforming_points value = 44 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 45 } } set_variable = { which =  country_terraforming_points value = 45 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 46 } } set_variable = { which =  country_terraforming_points value = 46 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 47 } } set_variable = { which =  country_terraforming_points value = 47 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 48 } } set_variable = { which =  country_terraforming_points value = 48 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 49 } } set_variable = { which =  country_terraforming_points value = 49 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 50 } } set_variable = { which =  country_terraforming_points value = 50 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 51 } } set_variable = { which =  country_terraforming_points value = 51 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 52 } } set_variable = { which =  country_terraforming_points value = 52 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 53 } } set_variable = { which =  country_terraforming_points value = 53 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 54 } } set_variable = { which =  country_terraforming_points value = 54 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 55 } } set_variable = { which =  country_terraforming_points value = 55 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 56 } } set_variable = { which =  country_terraforming_points value = 56 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 57 } } set_variable = { which =  country_terraforming_points value = 57 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 58 } } set_variable = { which =  country_terraforming_points value = 58 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 59 } } set_variable = { which =  country_terraforming_points value = 59 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 60 } } set_variable = { which =  country_terraforming_points value = 60 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 61 } } set_variable = { which =  country_terraforming_points value = 61 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 62 } } set_variable = { which =  country_terraforming_points value = 62 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 63 } } set_variable = { which =  country_terraforming_points value = 63 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 64 } } set_variable = { which =  country_terraforming_points value = 64 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 65 } } set_variable = { which =  country_terraforming_points value = 65 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 66 } } set_variable = { which =  country_terraforming_points value = 66 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 67 } } set_variable = { which =  country_terraforming_points value = 67 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 68 } } set_variable = { which =  country_terraforming_points value = 68 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 69 } } set_variable = { which =  country_terraforming_points value = 69 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 70 } } set_variable = { which =  country_terraforming_points value = 70 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 71 } } set_variable = { which =  country_terraforming_points value = 71 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 72 } } set_variable = { which =  country_terraforming_points value = 72 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 73 } } set_variable = { which =  country_terraforming_points value = 73 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 74 } } set_variable = { which =  country_terraforming_points value = 74 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 75 } } set_variable = { which =  country_terraforming_points value = 75 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 76 } } set_variable = { which =  country_terraforming_points value = 76 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 77 } } set_variable = { which =  country_terraforming_points value = 77 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 78 } } set_variable = { which =  country_terraforming_points value = 78 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 79 } } set_variable = { which =  country_terraforming_points value = 79 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 80 } } set_variable = { which =  country_terraforming_points value = 80 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 81 } } set_variable = { which =  country_terraforming_points value = 81 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 82 } } set_variable = { which =  country_terraforming_points value = 82 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 83 } } set_variable = { which =  country_terraforming_points value = 83 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 84 } } set_variable = { which =  country_terraforming_points value = 84 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 85 } } set_variable = { which =  country_terraforming_points value = 85 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 86 } } set_variable = { which =  country_terraforming_points value = 86 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 87 } } set_variable = { which =  country_terraforming_points value = 87 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 88 } } set_variable = { which =  country_terraforming_points value = 88 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 89 } } set_variable = { which =  country_terraforming_points value = 89 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 90 } } set_variable = { which =  country_terraforming_points value = 90 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 91 } } set_variable = { which =  country_terraforming_points value = 91 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 92 } } set_variable = { which =  country_terraforming_points value = 92 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 93 } } set_variable = { which =  country_terraforming_points value = 93 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 94 } } set_variable = { which =  country_terraforming_points value = 94 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 95 } } set_variable = { which =  country_terraforming_points value = 95 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 96 } } set_variable = { which =  country_terraforming_points value = 96 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 97 } } set_variable = { which =  country_terraforming_points value = 97 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 98 } } set_variable = { which =  country_terraforming_points value = 98 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 99 } } set_variable = { which =  country_terraforming_points value = 99 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 100 } } set_variable = { which =  country_terraforming_points value = 100 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 101 } } set_variable = { which =  country_terraforming_points value = 101 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 102 } } set_variable = { which =  country_terraforming_points value = 102 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 103 } } set_variable = { which =  country_terraforming_points value = 103 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 104 } } set_variable = { which =  country_terraforming_points value = 104 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 105 } } set_variable = { which =  country_terraforming_points value = 105 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 106 } } set_variable = { which =  country_terraforming_points value = 106 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 107 } } set_variable = { which =  country_terraforming_points value = 107 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 108 } } set_variable = { which =  country_terraforming_points value = 108 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 109 } } set_variable = { which =  country_terraforming_points value = 109 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 110 } } set_variable = { which =  country_terraforming_points value = 110 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 111 } } set_variable = { which =  country_terraforming_points value = 111 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 112 } } set_variable = { which =  country_terraforming_points value = 112 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 113 } } set_variable = { which =  country_terraforming_points value = 113 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 114 } } set_variable = { which =  country_terraforming_points value = 114 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 115 } } set_variable = { which =  country_terraforming_points value = 115 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 116 } } set_variable = { which =  country_terraforming_points value = 116 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 117 } } set_variable = { which =  country_terraforming_points value = 117 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 118 } } set_variable = { which =  country_terraforming_points value = 118 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 119 } } set_variable = { which =  country_terraforming_points value = 119 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 120 } } set_variable = { which =  country_terraforming_points value = 120 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 121 } } set_variable = { which =  country_terraforming_points value = 121 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 122 } } set_variable = { which =  country_terraforming_points value = 122 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 123 } } set_variable = { which =  country_terraforming_points value = 123 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 124 } } set_variable = { which =  country_terraforming_points value = 124 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 125 } } set_variable = { which =  country_terraforming_points value = 125 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 126 } } set_variable = { which =  country_terraforming_points value = 126 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 127 } } set_variable = { which =  country_terraforming_points value = 127 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 128 } } set_variable = { which =  country_terraforming_points value = 128 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 129 } } set_variable = { which =  country_terraforming_points value = 129 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 130 } } set_variable = { which =  country_terraforming_points value = 130 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 131 } } set_variable = { which =  country_terraforming_points value = 131 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 132 } } set_variable = { which =  country_terraforming_points value = 132 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 133 } } set_variable = { which =  country_terraforming_points value = 133 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 134 } } set_variable = { which =  country_terraforming_points value = 134 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 135 } } set_variable = { which =  country_terraforming_points value = 135 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 136 } } set_variable = { which =  country_terraforming_points value = 136 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 137 } } set_variable = { which =  country_terraforming_points value = 137 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 138 } } set_variable = { which =  country_terraforming_points value = 138 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 139 } } set_variable = { which =  country_terraforming_points value = 139 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 140 } } set_variable = { which =  country_terraforming_points value = 140 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 141 } } set_variable = { which =  country_terraforming_points value = 141 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 142 } } set_variable = { which =  country_terraforming_points value = 142 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 143 } } set_variable = { which =  country_terraforming_points value = 143 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 144 } } set_variable = { which =  country_terraforming_points value = 144 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 145 } } set_variable = { which =  country_terraforming_points value = 145 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 146 } } set_variable = { which =  country_terraforming_points value = 146 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 147 } } set_variable = { which =  country_terraforming_points value = 147 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 148 } } set_variable = { which =  country_terraforming_points value = 148 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 149 } } set_variable = { which =  country_terraforming_points value = 149 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 150 } } set_variable = { which =  country_terraforming_points value = 150 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 151 } } set_variable = { which =  country_terraforming_points value = 151 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 152 } } set_variable = { which =  country_terraforming_points value = 152 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 153 } } set_variable = { which =  country_terraforming_points value = 153 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 154 } } set_variable = { which =  country_terraforming_points value = 154 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 155 } } set_variable = { which =  country_terraforming_points value = 155 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 156 } } set_variable = { which =  country_terraforming_points value = 156 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 157 } } set_variable = { which =  country_terraforming_points value = 157 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 158 } } set_variable = { which =  country_terraforming_points value = 158 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 159 } } set_variable = { which =  country_terraforming_points value = 159 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 160 } } set_variable = { which =  country_terraforming_points value = 160 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 161 } } set_variable = { which =  country_terraforming_points value = 161 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 162 } } set_variable = { which =  country_terraforming_points value = 162 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 163 } } set_variable = { which =  country_terraforming_points value = 163 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 164 } } set_variable = { which =  country_terraforming_points value = 164 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 165 } } set_variable = { which =  country_terraforming_points value = 165 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 166 } } set_variable = { which =  country_terraforming_points value = 166 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 167 } } set_variable = { which =  country_terraforming_points value = 167 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 168 } } set_variable = { which =  country_terraforming_points value = 168 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 169 } } set_variable = { which =  country_terraforming_points value = 169 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 170 } } set_variable = { which =  country_terraforming_points value = 170 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 171 } } set_variable = { which =  country_terraforming_points value = 171 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 172 } } set_variable = { which =  country_terraforming_points value = 172 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 173 } } set_variable = { which =  country_terraforming_points value = 173 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 174 } } set_variable = { which =  country_terraforming_points value = 174 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 175 } } set_variable = { which =  country_terraforming_points value = 175 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 176 } } set_variable = { which =  country_terraforming_points value = 176 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 177 } } set_variable = { which =  country_terraforming_points value = 177 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 178 } } set_variable = { which =  country_terraforming_points value = 178 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 179 } } set_variable = { which =  country_terraforming_points value = 179 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 180 } } set_variable = { which =  country_terraforming_points value = 180 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 181 } } set_variable = { which =  country_terraforming_points value = 181 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 182 } } set_variable = { which =  country_terraforming_points value = 182 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 183 } } set_variable = { which =  country_terraforming_points value = 183 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 184 } } set_variable = { which =  country_terraforming_points value = 184 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 185 } } set_variable = { which =  country_terraforming_points value = 185 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 186 } } set_variable = { which =  country_terraforming_points value = 186 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 187 } } set_variable = { which =  country_terraforming_points value = 187 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 188 } } set_variable = { which =  country_terraforming_points value = 188 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 189 } } set_variable = { which =  country_terraforming_points value = 189 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 190 } } set_variable = { which =  country_terraforming_points value = 190 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 191 } } set_variable = { which =  country_terraforming_points value = 191 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 192 } } set_variable = { which =  country_terraforming_points value = 192 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 193 } } set_variable = { which =  country_terraforming_points value = 193 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 194 } } set_variable = { which =  country_terraforming_points value = 194 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 195 } } set_variable = { which =  country_terraforming_points value = 195 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 196 } } set_variable = { which =  country_terraforming_points value = 196 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 197 } } set_variable = { which =  country_terraforming_points value = 197 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 198 } } set_variable = { which =  country_terraforming_points value = 198 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 199 } } set_variable = { which =  country_terraforming_points value = 199 } }
+	else_If = { limit = { has_country_strategic_resource = { type = sr_terraforming_agents amount = 200 } } set_variable = { which =  country_terraforming_points value = 200 } }
+	###
+	set_variable = { which = available_terraforming_agents value = country_terraforming_points }
+	every_owned_planet = { 
+		limit = { has_planet_flag = terraformer_active }
+		switch = {
+			trigger = has_building
+			building_terraformer_baseline = { 
+				prev = { subtract_variable = { which = available_terraforming_agents value = 1 } }
+			}			
+			building_terraformer_increased = { 
+				prev = { subtract_variable = { which = available_terraforming_agents value = 2 } }
+			}	
+			building_terraformer_maximal = { 
+				prev = { subtract_variable = { which = available_terraforming_agents value = 3 } }
+			}	
+		}											
+	}
+	log = "Available Terraforming Points: [this.available_terraforming_agents]"
+}	

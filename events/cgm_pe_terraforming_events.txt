@@ -1,0 +1,431 @@
+namespace = cgm_pe_terraforming_events
+
+planet_event = { 
+	id = cgm_pe_terraforming_events.1
+	is_triggered_only = yes
+	hide_window = yes
+	
+	trigger = { 
+		has_planet_flag = cgm_terraforming_planet
+		exists = owner
+	}
+	
+	immediate = { 
+		if = { 
+			limit = { has_planet_flag = terraformer_active }
+			if = { 
+				limit = { check_variable = { which = planet_terraforming_points value > 0 }	}
+				if = { 
+					limit = { check_variable = { which = tb_points value > 0 } }
+					random_list = { 
+						33.3 = { 
+							random_tile = { 
+								limit = { has_cgm_terraforming_blocker = yes }
+								remove_blocker = yes
+								change_variable = { which = tb_points value = -1 }								
+							}	
+							modifier = { factor = 1.5 has_planet_flag = increased_terraformer_speed }
+							modifier = { factor = 2.25 has_planet_flag = maximal_terraformer_speed }
+						}
+						66.6 = { }
+					}	
+				}		
+				if = { 
+					limit = { has_planet_flag = baseline_terraformer_speed }
+					change_variable = { which = planet_terraforming_points value = -1 }						
+				}
+				else_if = { 
+					limit = { has_planet_flag = increased_terraformer_speed }
+					change_variable = { which = planet_terraforming_points value = -1.5 }					
+				}
+				else = { 
+					change_variable = { which = planet_terraforming_points value = -2.25 }					
+				}		
+				if = { 
+					limit = { check_variable = { which = planet_terraforming_points value > 0 }	}
+					update_terraforming_time = yes
+					planet_event = { id = cgm_pe_terraforming_events.1 days = 300 random = 100 }
+				}
+				else = { 
+					set_variable = { which = remaining_terraforming_time value = 0 }
+					update_terraforming_time = yes
+					planet_event = { id = cgm_pe_terraforming_events.2 } 
+				}					
+			}
+			else = { 
+				set_variable = { which = remaining_terraforming_time value = 0 }
+				update_terraforming_time = yes
+				planet_event = { id = cgm_pe_terraforming_events.2 }	
+			}										
+		}	
+		else = { 
+			set_planet_flag = terraformer_inactive
+			planet_event = { id = cgm_pe_terraforming_events.1 days = 300 random = 100 }								
+			if = { 
+				limit = { check_variable = { which = years_terraformer_inactive value > 0 } }
+				change_variable = { which = years_terraformer_inactive value = 1 }
+			}
+			else = { set_variable = { which = years_terraformer_inactive value = 1 } }	
+			roll_terraformer_catastrophe = yes 					
+		}			
+	}
+}	
+
+planet_event = {
+	id = cgm_pe_terraforming_events.2
+	is_triggered_only = yes
+	picture = GFX_evt_alien_planet
+	title = cgm_terraforming_successful.title
+	desc = cgm_terraforming_successful.desc	
+	
+	immediate = { 
+		remove_planet_flag = terraformer_active
+		remove_planet_flag = baseline_terraformer_speed
+		remove_planet_flag = increased_terraformer_speed
+		remove_planet_flag = maximal_terraformer_speed
+		remove_planet_flag = cgm_terraforming_planet
+		set_planet_flag = cgm_terraformed_planet		
+		random_tile = {
+			limit = { has_terraformer = yes }
+			remove_building = yes										
+		}		
+		if = { 
+			limit = { is_planet_class_pc_barren_terraforming = yes }
+			change_pc = pc_arid
+		}
+		else_if = { 	
+			limit = { is_planet_class_pc_barren_cold_terraforming = yes }
+			change_pc = pc_tundra
+		}	
+		else_if = { 	
+			limit = { is_planet_class_pc_molten_terraforming = yes }
+			change_pc = pc_desert
+		}		
+		else_if = { 	
+			limit = { is_planet_class_pc_toxic_terraforming = yes }
+			change_pc = pc_continental
+		}			
+		else_if = { 	
+			limit = { is_planet_class_pc_frozen_terraforming = yes }
+			change_pc = pc_arctic
+		}	
+		else_if = { 	
+			limit = { is_planet_class_pc_hothouse_terraforming = yes }
+			change_pc = pc_desert
+		}			
+		else_if = { 	
+			limit = { is_planet_class_pc_geomorteus_terraforming = yes }
+			change_pc = pc_desert
+		}			
+		else_if = { 	
+			limit = { is_planet_class_pc_geomorteus_terraforming = yes }
+			change_pc = pc_tundra
+		}					
+		else_if = { 	
+			limit = { is_planet_class_pc_greenhouse_hot_terraforming = yes }
+			change_pc = pc_tropical
+		}			
+		else_if = { 	
+			limit = { is_planet_class_pc_greenhouse_cold_terraforming = yes }
+			change_pc = pc_ocean
+		}			
+	}
+	option = { name = OK }
+}	
+
+planet_event = {
+	id = cgm_pe_terraforming_events.3
+	is_triggered_only = yes
+	title = cgm_terraforming_catastrophe.title
+	desc = cgm_terraforming_catastrophe.desc
+	picture = GFX_evt_nuclear_explosion
+	immediate = { generate_catastrophe = yes }
+	option = { name = OK }
+}	
+
+planet_event = {
+	id = cgm_pe_terraforming_events.4
+	is_triggered_only = yes
+	hide_window = yes	
+	immediate = { 
+		remove_planet_flag = increased_terraformer_speed
+		remove_planet_flag = maximal_terraformer_speed
+		remove_planet_flag = baseline_terraformer_speed	
+		remove_planet_flag = terraformer_active
+		set_planet_flag = terraformer_inactive	
+		random_tile = { 
+			limit = { has_terraformer = yes } 
+			switch = { 
+				trigger = has_building 
+				building_terraformer_baseline = { 
+					prev.owner = { 
+						change_variable = { which = available_terraforming_points value = 1 } 
+					}
+				}	
+				building_terraformer_increased = { 
+					prev.owner = { 
+						change_variable = { which = available_terraforming_points value = 2 } 
+					}
+				}					
+				building_terraformer_maximal = { 
+					prev.owner = { 
+						change_variable = { which = available_terraforming_points value = 3 } 
+					}
+				}										
+			}				
+			remove_building = yes
+			set_building = building_terraformer_inactive			
+		}			
+		update_terraforming_time = yes
+	}
+}	
+
+planet_event = { #terraforming menu initation
+	id = cgm_pe_terraforming_events.5
+	is_triggered_only = yes
+	hide_window = yes
+	
+	immediate = { 
+		owner = { 
+			calculate_available_terraforming_points = yes
+		}	
+		update_terraforming_time = yes
+		planet_event = { id = cgm_pe_terraforming_events.6 }
+	}	
+}
+planet_event = { #terraforming menu
+	id = cgm_pe_terraforming_events.6
+	is_triggered_only = yes	
+	title = cgm_terraforming_menu.title
+	desc = {
+		trigger = { has_planet_flag = terraformer_inactive }
+		text = cgm_terraforming_menu_terraformer_deactivated.desc
+	}	
+	desc = {
+		trigger = { has_planet_flag = terraformer_active }
+		text = cgm_terraforming_menu_terraformer_activate.desc
+	}		
+	picture = GFX_evt_cgm_terraforming
+	location = root	
+	
+	option = {
+		name = deactivate_terraformer
+		trigger = { 
+			has_planet_flag = terraformer_active
+		}	
+		allow = {
+		}
+		hidden_effect = { 
+			if = { 
+				limit = { has_building = building_terraformer_baseline }
+				remove_planet_flag = baseline_terraformer_speed
+				owner = { change_variable = { which = available_terraforming_points value = 1 } }
+			}	
+			else_if = { 
+				limit = { has_building = building_terraformer_increased }
+				remove_planet_flag = increased_terraformer_speed
+				owner = { change_variable = { which = available_terraforming_points value = 2 } }
+			}				
+			else = { 				
+				remove_planet_flag = maximal_terraformer_speed
+				owner = { change_variable = { which = available_terraforming_points value = 3 } }
+			}				
+			random_tile = { 
+				limit = { has_terraformer = yes } 
+				remove_building = yes
+				set_building = building_terraformer_inactive
+			}	
+			remove_planet_flag = terraformer_active
+			set_planet_flag = terraformer_inactive									
+			update_terraforming_time = yes
+			planet_event = { id = cgm_pe_terraforming_events.6 }
+		}	
+	}	
+	option = { 
+		name = baseline_terraformer_speed
+		trigger = { 
+			NOT = { has_planet_flag = baseline_terraformer_speed }		
+			OR = { 
+				has_building = building_terraformer_inactive
+				has_building = building_terraformer_maximal
+				has_building = building_terraformer_increased
+			}	
+		}
+		allow = {
+			custom_tooltip = {
+				fail_text = "requires_1_sr_terraforming_agents"			
+				owner = { 
+					OR = { 
+						check_variable = { which = available_terraforming_points value > 0 } 
+						AND = { 
+							check_variable = { which = available_terraforming_points value > -1 } 	
+							prev = { has_building = building_terraformer_increased }
+						}	
+						AND = { 
+							check_variable = { which = available_terraforming_points value > -2 } 	
+							prev = { has_building = building_terraformer_maximal }
+						}						
+					}
+				}	
+			}	
+		}
+		hidden_effect = { 
+			remove_planet_flag = increased_terraformer_speed
+			remove_planet_flag = maximal_terraformer_speed				
+			remove_planet_flag = terraformer_inactive
+			set_planet_flag = terraformer_active						
+			set_planet_flag = baseline_terraformer_speed 
+			random_tile = { 
+				limit = { has_terraformer = yes } 
+				switch = { 
+					trigger = has_building 
+					building_terraformer_inactive = { 
+						prev.owner = { 
+							change_variable = { which = available_terraforming_points value = -1 } 
+						}
+					}						
+					building_terraformer_increased = { 
+						prev.owner = { 
+							change_variable = { which = available_terraforming_points value = 1 } 
+						}
+					}	
+					building_terraformer_maximal = { 
+						prev.owner = { 
+							change_variable = { which = available_terraforming_points value = 2 } 
+						}
+					}					
+				}	
+				remove_building = yes
+				set_building = building_terraformer_baseline
+			}	
+			update_terraforming_time = yes	
+			planet_event = { id = cgm_pe_terraforming_events.6 }
+		}
+	}	
+	option = { 
+		name = increased_terraformer_speed
+		trigger = { 
+			NOT = { has_planet_flag = increased_terraformer_speed }		
+			OR = { 
+				has_building = building_terraformer_inactive
+				has_building = building_terraformer_maximal
+				has_building = building_terraformer_baseline
+			}	
+		}
+		allow = {
+			custom_tooltip = {
+				fail_text = "requires_2_sr_terraforming_agents"			
+				owner = { 
+					OR = { 
+						check_variable = { which = available_terraforming_points value > 1 } 
+						AND = { 
+							check_variable = { which = available_terraforming_points value > 0 } 	
+							prev = { has_building = building_terraformer_baseline }
+						}	
+						AND = { 
+							check_variable = { which = available_terraforming_points value > -1 } 	
+							prev = { has_building = building_terraformer_maximal }
+						}						
+					}
+				}	
+			}	
+		}
+		hidden_effect = { 
+			remove_planet_flag = baseline_terraformer_speed
+			remove_planet_flag = maximal_terraformer_speed
+			remove_planet_flag = terraformer_inactive
+			set_planet_flag = terraformer_active			
+			set_planet_flag = increased_terraformer_speed 
+			random_tile = { 
+				limit = { has_terraformer = yes }
+				switch = { 
+					trigger = has_building 
+					building_terraformer_inactive = { 
+						prev.owner = { 
+							change_variable = { which = available_terraforming_points value = -2 } 
+						}
+					}											
+					building_terraformer_baseline = { 
+						prev.owner = { 
+							change_variable = { which = available_terraforming_points value = -1 } 
+						}
+					}	
+					building_terraformer_maximal = { 
+						prev.owner = { 
+							change_variable = { which = available_terraforming_points value = 1 } 
+						}
+					}					
+				}	
+				remove_building = yes
+				set_building = building_terraformer_increased								
+			}	
+			update_terraforming_time = yes
+			planet_event = { id = cgm_pe_terraforming_events.6 }
+		}	
+	}		
+	option = { 
+		name = maximal_terraformer_speed
+		trigger = { 
+			NOT = { has_planet_flag = maximal_terraformer_speed }		
+			OR = { 
+				has_building = building_terraformer_inactive
+				has_building = building_terraformer_increased
+				has_building = building_terraformer_baseline
+			}	
+		}
+		allow = {
+			custom_tooltip = {
+				fail_text = "requires_3_sr_terraforming_agents"			
+				OR = { 
+					check_variable = { which = available_terraforming_points value > 2 } 
+					AND = { 
+						check_variable = { which = available_terraforming_points value > 0 } 	
+						prev = { has_building = building_terraformer_increased }
+					}	
+					AND = { 
+						check_variable = { which = available_terraforming_points value > 1 } 	
+						prev = { has_building = building_terraformer_baseline }
+					}						
+				}
+			}	
+		}
+		hidden_effect = { 
+			remove_planet_flag = baseline_terraformer_speed
+			remove_planet_flag = increased_terraformer_speed
+			remove_planet_flag = terraformer_inactive
+			set_planet_flag = terraformer_active			
+			set_planet_flag = maximal_terraformer_speed 
+			random_tile = { 
+				limit = { has_terraformer = yes } 				
+				switch = { 
+					trigger = has_building 
+					building_terraformer_inactive = { 
+						prev.owner = { 
+							change_variable = { which = available_terraforming_points value = -3 } 
+						}
+					}											
+					building_terraformer_baseline = { 
+						prev.owner = { 
+							change_variable = { which = available_terraforming_points value = -2 } 
+						}
+					}	
+					building_terraformer_increased = { 
+						prev.owner = { 
+							change_variable = { which = available_terraforming_points value = -1 } 
+						}
+					}					
+				}	
+				remove_building = yes
+				set_building = building_terraformer_maximal
+			}
+			update_terraforming_time = yes	
+			planet_event = { id = cgm_pe_terraforming_events.6 }
+		}		
+	}	
+	option = { 
+		name = OK
+		hidden_effect = { update_terraforming_time = yes } 
+	}	
+}		
+	
+	

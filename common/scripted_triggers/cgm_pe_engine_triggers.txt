@@ -1,0 +1,915 @@
+### Flag Triggers
+real_space_enabled = { has_global_flag = has_real_space_mod }
+planetary_diversity_enabled = { has_global_flag = planetary_diversity_active }
+gpm_enabled = { has_global_flag = guillis_planet_modifiers_active }
+gse_enabled = { has_global_flag = gigastructures_enabled }
+new_worlds_enabled = { has_global_flag = cgm_new_worlds_enabled }
+cgm_new_worlds_enabled = { has_global_flag = cgm_new_worlds_enabled }
+#cgm buildings - flags
+new_building_content_enabled = { has_global_flag = new_building_content_active }
+### Allow Requirement Triggers
+
+requires_capital_1 = {
+	custom_tooltip = {
+		fail_text = "requires_building_capital_1"
+		planet = {
+			OR = { 
+				has_capital_1 = yes 
+				has_capital_2 = yes 
+				has_capital_3 = yes
+			}
+		}
+	}
+}
+
+requires_starport = {
+	custom_tooltip = { 
+		fail_text = "requires_starport" 
+		has_starbase_size >= starbase_starport
+	}
+}
+
+requires_archeological_remains = { custom_tooltip = { text = "requires_archeological_remains" tile = { has_resource = { type = sr_archeological_remains amount > 0 } } } }
+requires_chromium = { custom_tooltip = { text = "requires_chromium" tile = { has_resource = { type = sr_chromium amount > 0 } } } }
+requires_bandersnatchi = { custom_tooltip = { text = "requires_bandersnatchi" tile = { has_resource = { type = sr_bandersnatchi amount > 0 } } } }
+requires_engos_vapor = { custom_tooltip = { text = "requires_engos_vapor" tile = { has_resource = { type = sr_engos_vapor amount > 0 } } } }
+requires_pitharan_dust = { custom_tooltip = { text = "requires_pitharan_dust" tile = { has_resource = { type = sr_pitharan_dust amount > 0 } } } }
+requires_satramene_gas = { custom_tooltip = { text = "requires_satramene_gas" tile = { has_resource = { type = sr_satramene_gas amount > 0 } } } }
+requires_exotic_spices = { custom_tooltip = { text = "requires_exotic_spices" tile = { has_resource = { type = sr_exotic_spices amount > 0 } } } }
+requires_hivaron = { custom_tooltip = { text = "requires_hivaron" tile = { has_resource = { type = sr_hivaron amount > 0 } } } }
+requires_iron_wood = { custom_tooltip = { text = "requires_iron_wood" tile = { has_resource = { type = sr_iron_wood amount > 0 } } } }
+requires_lithium = { custom_tooltip = { text = "requires_lithium" tile = { has_resource = { type = sr_lithium amount > 0 } } } }
+requires_precious_metals = { custom_tooltip = { text = "requires_precious_metals" tile = { has_resource = { type = sr_precious_metals amount > 0 } } } }
+requires_terraforming_bacteria = { custom_tooltip = { text = "requires_terraforming_bacteria" tile = { has_resource = { type = sr_terraforming_bacteria amount > 0 } } } }
+requires_zinorine = { custom_tooltip = { text = "requires_zinorine" tile = { has_resource = { type = sr_zinorine amount > 0 } } } }
+requires_ventium = { custom_tooltip = { text = "requires_ventium" tile = { has_resource = { type = sr_ventium amount > 0 } } } }
+requires_blooming_ore = { custom_tooltip = { text = "requires_blooming_ore" tile = { has_resource = { type = sr_blooming_ore amount > 0 } } } }
+requires_sactajenian = { custom_tooltip = { text = "requires_sactajenian" tile = { has_resource = { type = sr_sactajenian amount > 0 } } } }
+requires_aurantiacum_x = { custom_tooltip = { text = "requires_aurantiacum_x" tile = { has_resource = { type = sr_aurantiacum_x amount > 0 } } } }
+requires_elder_compounds = { custom_tooltip = { text = "requires_elder_compounds" tile = { has_resource = { type = sr_elder_compounds amount > 0 } } } }
+requires_precursor_data_cache = { custom_tooltip = { text = "requires_precursor_data_cache" tile = { has_resource = { type = sr_precursor_data_cache amount > 0 } } } }
+requires_gigalife = { custom_tooltip = { text = "requires_gigalife" tile = { has_resource = { type = sr_gigalife amount > 0 } } } }
+requires_ever_blossom = { custom_tooltip = { text = "requires_ever_blossom" tile = { has_resource = { type = sr_ever_blossom amount > 0 } } } }
+requires_thybidium = { custom_tooltip = { text = "requires_thybidium" tile = { has_resource = { type = sr_thybidium amount > 0 } } } }
+requires_euratite = { custom_tooltip = { text = "requires_euratite" tile = { has_resource = { type = sr_euratite amount > 0 } } } }
+requires_altair_stone = { custom_tooltip = { text = "requires_altair_stone" tile = { has_resource = { type = sr_altair_stone amount > 0 } } } }
+requires_precursor_nanites = { custom_tooltip = { text = "requires_precursor_nanites" tile = { has_resource = { type = sr_precursor_nanites amount > 0 } } } }
+
+advanced_terraforming_condition = {
+	custom_tooltip = { 
+		fail_text = "requires_cgm_uninhabitable_terraforming_mechanics_enabled"
+		has_global_flag = cgm_uninhabitable_terraforming_mechanics_enabled
+	}	
+	custom_tooltip = { 
+		fail_text = "requires_advanced_terraforming_technology"
+		has_technology = "tech_advanced_terraforming"
+	}	
+	custom_tooltip = { 
+		fail_text = "requires_1_sr_terraforming_agents"	
+		has_country_strategic_resource = { type = sr_terraforming_agents amount > 0.99 }
+	}	
+	custom_tooltip = { 
+		fail_text = "requires_terraforming_candidate"	
+		from = { has_modifier = terraforming_candidate } 
+	}		
+}	
+astrocartography_disabled_or_level_1 = {
+	OR = { 
+		AND = { 
+			hidden_trigger = { exists = this }
+			this = { 
+				OR = { 
+					has_global_flag = cgm_astrocartography_disabled
+					AND = { 
+						has_global_flag = cgm_astrocartography_enabled
+						has_technology = "tech_astrocartography_1"
+					}
+				}
+			}	
+		}
+		hidden_trigger = { NOT = { exists = this } }
+	}	
+}	
+astrocartography_disabled_or_level_2 = {
+	OR = { 
+		AND = { 
+			hidden_trigger = { exists = this }
+			this = { 
+				OR = { 
+					has_global_flag = cgm_astrocartography_disabled
+					AND = { 
+						has_global_flag = cgm_astrocartography_enabled
+						has_technology = "tech_astrocartography_2"
+					}
+				}
+			}	
+		}
+		hidden_trigger = { NOT = { exists = this } }
+	}	
+}
+astrocartography_disabled_or_level_3 = {
+	OR = { 
+		AND = { 
+			hidden_trigger = { exists = this }
+			this = { 
+				OR = { 
+					has_global_flag = cgm_astrocartography_disabled
+					AND = { 
+						has_global_flag = cgm_astrocartography_enabled
+						has_technology = "tech_astrocartography_3"
+					}
+				}
+			}	
+		}
+		hidden_trigger = { NOT = { exists = this } }
+	}	
+}
+### Owner Triggers
+is_machine_empire = { has_authority = auth_machine_intelligence }
+is_servitor = { has_government = gov_machine_servitor }
+is_assimilator = { has_government = gov_machine_assimilator }
+is_terminator = { has_government = gov_machine_terminator }
+is_hive_mind_empire = { has_authority = auth_hive_mind }
+is_synth_empire = { has_country_flag = synthetic_age }
+is_gestalt_consciousness = { has_ethic = ethic_gestalt_consciousness }
+is_devouring_swarm = { has_valid_civic = civic_hive_devouring_swarm }
+is_fanatic_purifier = { has_valid_civic = civic_fanatic_purifiers }
+is_exterminator = {
+	OR = { 
+		has_valid_civic = civic_fanatic_purifiers
+		has_valid_civic = civic_hive_devouring_swarm
+		has_government = gov_machine_terminator
+	}
+}	
+has_pursuit_of_profit = {
+	OR = { has_non_swapped_tradition = tr_prosperity_pursuit_of_profit has_swapped_tradition = tr_prosperity_pursuit_of_profit_machine }
+}
+# With exists = owner check
+owner_is_machine_empire = {
+	exists = owner
+	owner = { has_authority = auth_machine_intelligence }
+}
+owner_is_hive_mind_empire = {
+	exists = owner
+	owner = { has_authority = auth_hive_mind }
+}
+owner_is_spiritualist = {
+	exists = owner
+	owner = {
+		OR = { has_ethic = ethic_spiritualist has_ethic = ethic_fanatic_spiritualist }
+	}
+}
+owner_is_militarist = {
+	exists = owner
+	owner = { 
+		OR = { has_ethic = ethic_militarist has_ethic = ethic_fanatic_militarist }
+	}	
+}
+owner_is_materialist = {
+	exists = owner
+	owner = { 
+		OR = { has_ethic = ethic_materialist has_ethic = ethic_fanatic_materialist }
+	}	
+}
+owner_is_pacifist = {
+	exists = owner
+	owner = { 
+		OR = { has_ethic = ethic_pacifist has_ethic = ethic_fanatic_pacifist }
+	}	
+}
+owner_is_xenophile = {
+	exists = owner
+	owner = { 
+		OR = { has_ethic = ethic_xenophile has_ethic = ethic_fanatic_xenophile }
+	}	
+}
+owner_is_authoritarian = {
+	exists = owner
+	owner = { 	
+		OR = { has_ethic = ethic_fanatic_authoritarian has_ethic = ethic_authoritarian }
+	}	
+}
+owner_is_egalitarian = {
+	exists = owner
+	owner = { 
+		OR = { has_ethic = ethic_fanatic_egalitarian has_ethic = ethic_egalitarian }
+	}	
+}
+owner_is_xenophobe = {
+	exists = owner
+	owner = {
+		OR = { has_ethic = ethic_fanatic_xenophobe has_ethic = ethic_xenophobe }
+	}
+}
+owner_is_organic_or_servitor = {
+	exists = owner
+	owner = { 
+		OR = { is_machine_empire = no is_servitor = yes }
+	}	
+}
+owner_is_servitor = {
+	exists = owner
+	owner = { has_government = gov_machine_servitor }
+}
+owner_is_gestalt_consciousness = {
+	exists = owner
+	owner = { has_ethic = ethic_gestalt_consciousness }
+}
+owner_is_synth_empire = {
+	exists = owner
+	owner = { has_country_flag = synthetic_age }
+}
+
+### Allow Triggers
+
+allows_robots = { 
+	OR = { 
+		AND = { 
+			is_ai = no 
+			OR = { 
+				has_policy_flag = robots_allowed
+		
+				is_synth_empire = yes
+			}	
+		}
+		AND = { 
+			is_ai = yes
+			OR = { 
+				AND = { 
+					has_policy_flag = robots_allowed
+					has_ai_personality_behaviour = robot_exploiter
+				}
+				AND = { 
+					has_policy_flag = robots_allowed
+					has_ai_personality_behaviour = robot_liberator	
+				}	
+				is_synth_empire = yes	
+			}
+		}
+	}	
+}
+
+owner_allows_robots = { 
+	exists = owner
+	owner = { allows_robots = yes }
+}
+
+### Planet Triggers
+in_sector = { sector_controlled = yes }
+is_habitat = { is_planet_class = pc_habitat }
+is_machine_world = { is_planet_class = pc_machine }
+is_gaia_world = { is_planet_class = pc_gaia }
+is_tomb_world = { is_planet_class = pc_nuked }
+is_special = {
+	OR = { is_ringworld = yes is_planet_class = pc_habitat is_planet_class = pc_machine is_planet_class = pc_gaia is_planet_class = pc_nuked }
+}
+is_fallen_empire_planet = {
+	owner = {
+		OR = { is_country_type = fallen_empire is_country_type = awakened_fallen_empire }
+	}
+}
+is_primitive_planet = {
+	owner = { is_country_type = primitive }
+}
+is_gas_giant_moon = { has_planet_flag = gas_giant_moon }
+is_broken_megastructure = {
+	OR = {
+		is_planet_class = pc_ringworld_habitable_damaged
+		is_planet_class = pc_ringworld_tech_damaged
+		is_planet_class = pc_ringworld_seam_damaged
+		has_planet_flag = has_ruined_megastructure			 
+	}
+}
+
+# with planet scope
+planet_in_sector = {
+	planet = { sector_controlled = yes }
+}
+planet_is_habitat = {
+	planet = { is_planet_class = pc_habitat }
+}
+planet_is_machine_world = {
+	planet = { is_planet_class = pc_machine }
+}
+planet_is_ringworld = {
+	planet = { is_ringworld = yes }
+}
+planet_is_gaia_world = {
+	planet = { is_planet_class = pc_gaia }
+}
+planet_is_tomb_world = {
+	planet = { is_planet_class = pc_nuked }
+}
+planet_is_homeworld = {
+	planet = { is_homeworld = yes }
+}
+planet_is_capital = {
+	planet = { is_capital = yes }
+}
+planet_is_artificial = {
+	planet = {
+		OR = {
+			is_planet_class = pc_habitat
+			is_planet_class_pc_squareworld_habitable = yes
+			is_ringworld = yes
+		}
+	}
+}
+planet_is_special = {
+	planet = {
+		OR = { is_planet_class = pc_habitat is_planet_class = pc_machine is_planet_class = pc_gaia is_planet_class = pc_nuked is_ringworld = yes }
+	}
+}
+planet_is_fallen_empire_planet = {
+	planet = {
+		owner = {
+			OR = { is_country_type = fallen_empire is_country_type = awakened_fallen_empire }
+		}
+	}
+}
+planet_is_primitive_planet = {
+	planet = {
+		owner = { is_country_type = primitive }
+	}
+}
+planet_has_robots = { 
+	planet = { any_owned_pop = { is_robot_pop = yes } }
+}	
+planet_is_not_virtual = {
+	OR = { 
+		gse_enabled = no
+		AND = { 
+			gse_enabled = yes
+			planet = { is_planet_class_pc_virtual_world = no } 
+		}	
+	}
+}	
+
+### Capital checks
+
+has_capital_building = {
+	OR = { 
+		has_capital_0 = yes 
+		has_capital_1 = yes 
+		has_capital_2 = yes 
+		has_capital_3 = yes
+		has_building = building_hab_capital
+		has_building = building_asteroidal_capital
+	}
+}
+has_capital_0 = {
+	OR = { has_building = building_colony_shelter has_building = building_deployment_post }
+}
+has_capital_1 = {
+	OR = { has_building = building_capital_1 has_building = building_machine_capital_1 has_building = building_asteroidal_capital }
+}
+has_capital_2 = {
+	OR = { has_building = building_capital_2 has_building = building_machine_capital_2 }
+}
+has_capital_3 = {
+	OR = { has_building = "building_capital_3" has_building = "building_machine_capital_3" }
+}
+has_hab_capital = { has_building = building_hab_capital }
+
+### Resource and Deposit Triggers
+has_regular_vanilla_planet_modifier = {
+	OR = {
+		has_modifier = hazardous_weather
+		has_modifier = dangerous_wildlife
+		has_modifier = weak_magnetic_field
+		has_modifier = strong_magnetic_field
+		has_modifier = unstable_tectonics
+		has_modifier = tidal_locked
+		has_modifier = chthonian_planet
+		has_modifier = asteroid_impacts
+		has_modifier = extensive_moon_system
+		has_modifier = carbon_world
+		has_modifier = wild_storms
+		has_modifier = low_gravity
+		has_modifier = high_gravity
+		has_modifier = mineral_rich
+		has_modifier = ultra_rich
+		has_modifier = mineral_poor
+		has_modifier = titanic_life
+		has_modifier = asteroid_belt
+		has_modifier = natural_beauty
+		has_modifier = atmospheric_aphrodisiac
+		has_modifier = atmospheric_hallucinogen
+		has_modifier = lush_planet
+		has_modifier = bleak_planet
+		has_modifier = irradiated_planet
+	}
+}	
+
+has_regular_vanilla_blocker = {
+	OR = {		  
+		has_blocker = tb_mountain_range
+		has_blocker = tb_active_volcano
+		has_blocker = tb_dangerous_wildlife
+		has_blocker = tb_dense_jungle
+		has_blocker = tb_quicksand_basin
+		has_blocker = tb_noxious_swamp
+		has_blocker = tb_massive_glacier
+		has_blocker = tb_toxic_kelp
+		has_blocker = tb_deep_sinkhole 
+		has_blocker = tb_radioactive_wasteland
+		has_blocker = tb_city_ruins		
+		has_blocker = tb_crater
+
+	}
+}	
+
+has_vanilla_capital_blocker = { 
+	OR = { 
+		has_blocker = tb_slums
+		has_blocker = tb_failing_infrastructure
+		has_blocker = tb_decrepit_dwellings
+		has_blocker = tb_exterminators_ruins
+		has_blocker = tb_former_battlefield
+	}
+}	
+
+has_regular_vanilla_deposit = {
+	OR = {
+		has_deposit = d_mineral_deposit
+		has_deposit = d_rich_mineral_deposit
+		has_deposit = d_vast_mineral_deposit
+		has_deposit = d_immense_mineral_deposit
+		has_deposit = d_energy_deposit
+		has_deposit = d_rich_energy_deposit
+		has_deposit = d_vast_energy_deposit
+		has_deposit = d_immense_energy_deposit				
+		has_deposit = d_farmland_deposit 
+		has_deposit = d_rich_farmland_deposit
+		has_deposit = d_vast_farmland_deposit
+		has_deposit = d_immense_farmland_deposit
+		has_deposit = d_mineral_energy_deposit
+		has_deposit = d_rich_mineral_energy_deposit
+		has_deposit = d_mineral_food_deposit
+		has_deposit = d_rich_food_mineral_deposit
+		has_deposit = d_society_deposit
+		has_deposit = d_rich_society_deposit
+		has_deposit = d_vast_society_deposit
+		has_deposit = d_immense_society_deposit
+		has_deposit = d_physics_deposit
+		has_deposit = d_rich_physics_deposit
+		has_deposit = d_vast_physics_deposit
+		has_deposit = d_immense_physics_deposit
+		has_deposit = d_engineering_deposit
+		has_deposit = d_rich_engineering_deposit
+		has_deposit = d_vast_engineering_deposit
+		has_deposit = d_immense_engineering_deposit
+	}
+}
+
+has_vanilla_orbital_special_resource_deposit = {
+	OR = {
+		# Gases
+		has_deposit = d_lythuric_deposit_1
+		has_deposit = d_lythuric_deposit_2
+		has_deposit = d_lythuric_deposit_3
+		has_deposit = d_satramene_deposit_1
+		has_deposit = d_satramene_deposit_2
+		has_deposit = d_satramene_deposit_3
+		has_deposit = d_engos_deposit_1
+		has_deposit = d_engos_deposit_2
+		has_deposit = d_engos_deposit_3
+		# Crystals
+		has_deposit = d_teldar_deposit_1
+		has_deposit = d_teldar_deposit_2
+		has_deposit = d_teldar_deposit_3
+		has_deposit = d_yurantic_deposit_1
+		has_deposit = d_yurantic_deposit_2
+		has_deposit = d_yurantic_deposit_3
+		has_deposit = d_aldar_deposit_1
+		has_deposit = d_aldar_deposit_2
+		has_deposit = d_aldar_deposit_3
+		# Dust
+		has_deposit = d_pitharan_deposit_1
+		has_deposit = d_pitharan_deposit_2
+		has_deposit = d_pitharan_deposit_3
+		has_deposit = d_zro_deposit_1
+		has_deposit = d_zro_deposit_2
+		has_deposit = d_zro_deposit_3
+		# Ores
+		has_deposit = d_garanthium_deposit_1
+		has_deposit = d_garanthium_deposit_2
+		has_deposit = d_garanthium_deposit_3
+		has_deposit = d_orillium_deposit_1
+		has_deposit = d_orillium_deposit_2
+		has_deposit = d_orillium_deposit_3
+		# Other
+		has_deposit = d_terraforming_gas_deposit_1
+		has_deposit = d_terraforming_gas_deposit_2
+		has_deposit = d_terraforming_gas_deposit_3
+		has_deposit = d_terraforming_fluid_deposit_1
+		has_deposit = d_terraforming_fluid_deposit_2
+		has_deposit = d_terraforming_fluid_deposit_3
+		has_deposit = d_neutronium_deposit_1
+		has_deposit = d_neutronium_deposit_2
+		has_deposit = d_neutronium_deposit_3
+		has_deposit = d_dark_matter_deposit_1
+		has_deposit = d_dark_matter_deposit_2
+		has_deposit = d_dark_matter_deposit_3
+		# Event
+		has_deposit = d_living_metal_deposit
+		has_deposit = d_worm_deposit
+		has_deposit = d_marauder_deposit
+		has_deposit = d_marauder_deposit_2
+	}
+}	
+		
+has_vanilla_planetary_special_resource_deposit = {		
+	OR = {
+		has_deposit = d_betharian_deposit
+		has_deposit = d_alien_pets_deposit
+	}
+}		
+
+has_vanilla_orbital_strategic_resource = {
+	OR = {
+		has_resource = { type = sr_pitharan amount > 0 }
+		has_resource = { type = sr_engos amount > 0 }
+		has_resource = { type = sr_satramene amount > 0 }
+		has_resource = { type = sr_terraform_gases amount > 0 }
+		has_resource = { type = sr_terraform_liquids amount > 0 }
+		has_resource = { type = sr_garanthium amount > 0 }
+		has_resource = { type = sr_lythuric amount > 0 }
+		has_resource = { type = sr_teldar amount > 0 }
+		has_resource = { type = sr_yurantic amount > 0 }
+		has_resource = { type = sr_aldar amount > 0 }
+		has_resource = { type = sr_orillium amount > 0 }
+		has_resource = { type = sr_neutronium amount > 0 }
+		has_resource = { type = sr_living_metal amount > 0 }
+		has_resource = { type = sr_zro amount > 0 }
+		has_resource = { type = sr_dark_matter amount > 0 }
+	}
+}	
+
+has_vanilla_planetary_strategic_resource = {
+	OR = {
+		has_resource = { type = sr_betharian amount > 0 }
+		has_resource = { type = sr_alien_pets amount > 0 }
+	}
+}
+
+
+has_standard_resource = {
+	OR = {
+		has_resource = { type = energy amount > 0 }
+		has_resource = { type = minerals amount > 0 }
+		has_resource = { type = food amount > 0 }
+		has_resource = { type = unity amount > 0 }
+		has_resource = { type = society_research amount > 0 }
+		has_resource = { type = physics_research amount > 0 }
+		has_resource = { type = engineering_research amount > 0 }
+	}
+}	
+
+has_any_tile_strategic_resource = {
+	OR = {
+		has_resource = { type = sr_betharian amount > 0 }
+		has_resource = { type = sr_alien_pets amount > 0 }
+		has_planets_enhanced_planetary_strategic_resources = yes
+		has_alphamod_planetary_strategic_resources = yes
+		has_astrogeology_planetary_strategic_resources = yes
+		has_planetary_diversity_planetary_strategic_resources = yes
+		has_apsr_resource_local = yes
+		has_expandedsr_strategic_resources = yes
+		has_stnh_strategic_resource = yes
+	}
+}
+
+has_cgm_terraforming_blocker = {
+	OR = { 
+		has_blocker = tb_pc_barren_terraforming_dust_steppe 
+		has_blocker = tb_pc_barren_terraforming_inactive_volcano 
+		has_blocker = tb_pc_barren_terraforming_rugged_land 
+		has_blocker = tb_pc_barren_terraforming_wind_mountains 
+		has_blocker = tb_pc_greenhouse_cold_terraforming_rugged_land 
+		has_blocker = tb_pc_greenhouse_cold_terraforming_sufuric_vents 
+		has_blocker = tb_pc_frozen_terraforming_deep_valley 
+		has_blocker = tb_pc_frozen_terraforming_frozen_desolation 
+		has_blocker = tb_pc_greenhouse_hot_terraforming_rugged_terrain 
+		has_blocker = tb_pc_greenhouse_hot_terraforming_stormfield 
+		has_blocker = tb_pc_molten_terraforming_magma_river 
+		has_blocker = tb_pc_molten_terraforming_pyroclastic_terrain 
+		has_blocker = tb_pc_toxic_sulphoric_flora 
+		has_blocker = tb_pc_toxic_terraforming_noxious_concentrations
+	}	
+}
+
+has_terraformer = { 
+	OR = { 
+		has_building = building_terraformer
+		has_building = building_terraformer_inactive
+		has_building = building_terraformer_baseline
+		has_building = building_terraformer_increased
+		has_building = building_terraformer_maximal
+	}
+}	
+
+###Star and Solar System triggers
+regular_star_system = {
+	planet = { 
+		solar_system = {
+			any_planet = {
+				NOR = {
+					has_planet_flag = system_star_2
+					has_planet_flag = system_star_3
+				}
+			}	
+		}		
+	}	
+}
+
+has_cgm_unique_resource = {
+	has_resource = { type = sr_aurantiacum_x amount > 0 } 
+	has_resource = { type = sr_elder_compounds amount > 0 } 
+	has_resource = { type = sr_precursor_data_cache amount > 0 } 
+	has_resource = { type = sr_gigalife amount > 0 } 
+	has_resource = { type = sr_ever_blossom amount > 0 } 
+	has_resource = { type = sr_thybidium amount > 0 } 
+	has_resource = { type = sr_euratite amount > 0 } 
+	has_resource = { type = sr_altair_stone amount > 0 } 
+}	
+
+binary_star_system = {
+	planet = { 
+		solar_system = {
+			any_planet = {
+				has_planet_flag = system_star_2
+				NOT = {	has_planet_flag = system_star_3	}
+			}	
+		}		
+	}	
+}
+
+ternary_star_system = {
+	planet = { 
+		solar_system = {
+			any_planet = {
+				has_planet_flag = system_star_3
+			}	
+		}		
+	}	
+}
+
+### Vanilla Star Classes and Star Planet Classes - these triggers will always have an effect
+
+is_presapient_pop = {
+	OR = {
+		is_species_class = PRE_FUN
+		is_species_class = PRE_MOL
+		is_species_class = PRE_ART
+		is_species_class = PRE_AVI
+		is_species_class = PRE_REP
+		is_species_class = PRE_MAM
+	}
+}	
+
+is_arthropoid = {
+	OR = {	
+		is_species_class = PRE_ART
+		is_species_class = ART
+	}
+}
+is_mammalian = {
+	OR = {
+		is_species_class = PRE_MAM
+		is_species_class = MAM
+	}
+}	
+
+is_avian = {
+	OR = {
+		is_species_class = PRE_AVI
+		is_species_class = AVI
+	}
+}
+
+is_reptilian = {
+	OR = {
+		is_species_class = PRE_REP
+		is_species_class = REP
+	}
+}
+
+is_fungoid = {
+	OR = {
+		is_species_class = PRE_FUN
+		is_species_class = FUN
+	}
+}
+
+is_molluscoid = {
+	OR = {
+		is_species_class = PRE_MOL
+		is_species_class = MOL
+	}
+}
+
+is_humanoid = {
+	is_species_class = HUM	
+}
+
+is_plantoid = {
+	is_species_class = PLANT	
+}
+
+is_free_planetary_tile = {
+	has_building = no	
+	has_deposit = no
+	has_blocker = no
+}
+
+### solar system and planet triggers
+
+is_presapient_planet = {
+	any_owned_pop = { is_presapient_pop = yes }
+}	
+
+is_sol_system_planet = {
+	solar_system = { 
+		OR = {
+			has_star_flag = sol_system
+			has_star_flag = sol
+		}
+	}
+}	
+
+### Star and Solar System triggers
+
+orbits_cold_star = {
+    OR = {
+        solar_system_is_star_class_sc_m = yes
+		solar_system_is_star_class_sc_m_giant = yes
+		solar_system_is_star_class_sc_l = yes
+		solar_system_is_star_class_sc_t = yes
+		solar_system_is_star_class_sc_y = yes
+		solar_system_is_star_class_sc_d = yes
+		solar_system_is_star_class_sc_c_giant = yes
+		solar_system_is_star_class_sc_s_giant = yes
+		solar_system_is_star_class_sc_binary_m_m = yes
+		solar_system_is_star_class_sc_binary_mg_m = yes
+		solar_system_is_star_class_sc_binary_m_l = yes
+		solar_system_is_star_class_sc_binary_m_t = yes
+		solar_system_is_star_class_sc_binary_m_y = yes
+		solar_system_is_star_class_sc_binary_m_d = yes
+		solar_system_is_star_class_sc_binary_ms_d = yes
+		solar_system_is_star_class_sc_trinary_m_l_t = yes
+		solar_system_is_star_class_sc_trinary_m_t_t = yes
+		solar_system_is_star_class_sc_trinary_m_t_y = yes
+		solar_system_is_star_class_sc_trinary_m_m_d = yes
+	}
+}
+
+orbits_ideal_star = {
+    OR = {
+		solar_system_is_star_class_sc_k = yes
+		solar_system_is_star_class_sc_g = yes
+		solar_system_is_star_class_sc_binary_4 = yes
+		solar_system_is_star_class_sc_binary_6 = yes
+		solar_system_is_star_class_sc_binary_7 = yes
+		solar_system_is_star_class_sc_binary_8 = yes
+		solar_system_is_star_class_sc_trinary_1 = yes
+		solar_system_is_star_class_sc_trinary_3 = yes
+		solar_system_is_star_class_sc_g_giant = yes
+        solar_system_is_star_class_sc_k_giant = yes
+		solar_system_is_star_class_sc_binary_g_g = yes
+		solar_system_is_star_class_sc_binary_g_k = yes
+		solar_system_is_star_class_sc_binary_gg_g = yes
+		solar_system_is_star_class_sc_binary_gg_k = yes
+		solar_system_is_star_class_sc_binary_k_k = yes
+		solar_system_is_star_class_sc_binary_k_m = yes
+		solar_system_is_star_class_sc_binary_kg_k = yes
+		solar_system_is_star_class_sc_binary_kg_g = yes
+		solar_system_is_star_class_sc_binary_kg_m = yes
+		solar_system_is_star_class_sc_binary_mg_g = yes
+		solar_system_is_star_class_sc_binary_mg_k = yes
+		solar_system_is_star_class_sc_binary_g_l = yes
+		solar_system_is_star_class_sc_binary_k_l = yes
+		solar_system_is_star_class_sc_binary_g_t = yes
+		solar_system_is_star_class_sc_binary_g_y = yes
+		solar_system_is_star_class_sc_binary_k_y = yes
+		solar_system_is_star_class_sc_binary_g_d = yes
+		solar_system_is_star_class_sc_binary_k_d = yes
+		solar_system_is_star_class_sc_trinary_g_m_m = yes
+		solar_system_is_star_class_sc_trinary_g_g_g = yes
+		solar_system_is_star_class_sc_trinary_g_k_k = yes
+		solar_system_is_star_class_sc_trinary_gg_f_m = yes
+		solar_system_is_star_class_sc_trinary_gs_f_k = yes
+		solar_system_is_star_class_sc_trinary_k_k_m = yes
+		solar_system_is_star_class_sc_trinary_k_k_k = yes
+		solar_system_is_star_class_sc_trinary_ks_m_m = yes
+		solar_system_is_star_class_sc_trinary_m_m_m = yes
+		solar_system_is_star_class_sc_trinary_mg_g_k = yes
+		solar_system_is_star_class_sc_trinary_g_l_t = yes
+		solar_system_is_star_class_sc_trinary_g_t_t = yes
+		solar_system_is_star_class_sc_trinary_g_t_y = yes
+		solar_system_is_star_class_sc_trinary_k_l_t = yes
+		solar_system_is_star_class_sc_trinary_k_t_t = yes
+		solar_system_is_star_class_sc_trinary_k_t_y = yes
+		solar_system_is_star_class_sc_trinary_g_k_d = yes
+		solar_system_is_star_class_sc_trinary_k_m_d = yes
+		solar_system_is_star_class_sc_paired_g_g_k_k = yes
+		solar_system_is_star_class_sc_paired_g_k_m_m = yes
+		solar_system_is_star_class_sc_paired_g_k_k_t = yes
+	}
+}
+
+orbits_hot_star = {
+    OR = {
+        solar_system_is_star_class_sc_f = yes
+		solar_system_is_star_class_sc_a = yes
+		solar_system_is_star_class_sc_binary_9 = yes
+		solar_system_is_star_class_sc_binary_10 = yes
+        solar_system_is_star_class_sc_a_super = yes
+		solar_system_is_star_class_sc_binary_a_a = yes
+		solar_system_is_star_class_sc_binary_a_g = yes
+		solar_system_is_star_class_sc_binary_a_k = yes
+		solar_system_is_star_class_sc_binary_a_m = yes
+		solar_system_is_star_class_sc_binary_f_f = yes
+		solar_system_is_star_class_sc_binary_gg_f = yes
+		solar_system_is_star_class_sc_binary_kg_a = yes
+		solar_system_is_star_class_sc_binary_a_l = yes
+		solar_system_is_star_class_sc_binary_f_l = yes
+		solar_system_is_star_class_sc_binary_f_t = yes
+		solar_system_is_star_class_sc_binary_f_y = yes
+		solar_system_is_star_class_sc_binary_a_d = yes
+		solar_system_is_star_class_sc_binary_f_d = yes
+		solar_system_is_star_class_sc_trinary_a_a_a = yes
+		solar_system_is_star_class_sc_trinary_a_f_g = yes
+		solar_system_is_star_class_sc_trinary_a_a_m = yes
+		solar_system_is_star_class_sc_trinary_as_k_m = yes
+		solar_system_is_star_class_sc_trinary_as_gg_m = yes
+		solar_system_is_star_class_sc_trinary_f_f_f = yes
+		solar_system_is_star_class_sc_trinary_f_k_k = yes
+		solar_system_is_star_class_sc_trinary_f_k_m = yes
+		solar_system_is_star_class_sc_trinary_fs_f_f = yes
+		solar_system_is_star_class_sc_trinary_mg_a_f = yes
+		solar_system_is_star_class_sc_trinary_a_l_t = yes
+		solar_system_is_star_class_sc_trinary_a_t_y = yes
+		solar_system_is_star_class_sc_trinary_f_l_t = yes
+		solar_system_is_star_class_sc_trinary_f_t_y = yes
+		solar_system_is_star_class_sc_trinary_a_f_d = yes
+		solar_system_is_star_class_sc_trinary_as_g_d = yes
+		solar_system_is_star_class_sc_trinary_f_k_d = yes
+		solar_system_is_star_class_sc_trinary_fs_f_d = yes
+		solar_system_is_star_class_sc_trinary_mg_a_d = yes
+		solar_system_is_star_class_sc_trinary_ms_f_d = yes
+		solar_system_is_star_class_sc_paired_a_a_f_f = yes
+		solar_system_is_star_class_sc_paired_f_f_m_l = yes
+		solar_system_is_star_class_sc_paired_fs_g_m_y = yes   
+    }
+}
+
+orbits_nonideal_star = {
+	NOR = {
+		orbits_hot_star = yes
+		orbits_ideal_star = yes
+		orbits_cold_star = yes
+	}
+}
+
+orbits_collapsed_star = { # This one is a bit different, the trigger should check if there is any type of collapsed star in the system, not just the primary star, can be used for spawning broken worlds or special resources in systems with a collapsed star present
+	OR = {
+		solar_system = { any_planet = { is_planet_class_pc_black_hole = yes } }
+		solar_system = { any_planet = { is_planet_class_pc_neutron_star = yes } }
+		solar_system = { any_planet = { is_planet_class_pc_pulsar = yes } }
+		solar_system = { any_planet = { is_planet_class_pc_collapsar = yes } }
+		solar_system = { any_planet = { is_planet_class_pc_magnetar = yes } }
+	}
+}
+
+colonization_candidate_prerequisite = { 	
+	has_planet_flag = cgm_colonization_target
+	is_colonizable = yes 
+	is_colony = no 		
+	has_owner = no
+	is_under_colonization = no		
+	NOR = { 
+		exists = owner					
+		has_planet_flag = colonizer_assigned
+		has_modifier = holy_planet
+	}												
+	can_colonize = { who = root status = yes }
+	OR = { 
+		habitability = { who = event_target:cgm_colonizing_species value > 0.19 }
+		cgm_planet = yes
+	}	
+	NOT = { has_planet_flag = colonizer_assigned }
+	check_variable = { which = colonization_value value > 25 }	
+}	
+
+cgm_non_planetary_project_planet = {
+	custom_tooltip = {
+		text = "cgm_non_planetary_project_planet"
+		NOR = { 
+			has_planet_flag = cgm_deep_core_mining
+			has_planet_flag = cgm_geothermal_tap
+			has_planet_flag = cgm_tectonic_engineering
+			has_planet_flag = cgm_harvest
+		}
+	}
+}	

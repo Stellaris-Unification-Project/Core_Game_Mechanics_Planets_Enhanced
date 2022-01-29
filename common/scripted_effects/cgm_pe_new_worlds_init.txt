@@ -1,0 +1,104 @@
+cgm_new_worlds_regular_planet_init = {
+	if = {
+		limit = { is_vanilla_uninhabitable_planet = yes }
+		cgm_new_worlds_gas_giant_moon_check = yes 				# Assigns gas_giant_moon flag to any planet orbiting pc_gas_giant
+		cgm_new_worlds_planet_spawn_table_uninhabitable = yes	# Converts vanilla uninhabitables
+		cgm_new_worlds_gas_giant_moon_check = yes				# Checks again, to assign gas_giant_moon flag to any planet orbiting pc_ice_giant and pc_gas_giant_hot as well
+		prescripted_gas_giant_size_readjustment = yes			# Readjusts gas/ice giants' sizes, as some may have been converted from pc_molten or pc_frozen								
+	}
+	else_if = { 
+		limit = { 
+			is_vanilla_habitable_planet = yes 
+			NOT = { has_planet_flag = prescripted_ideal }
+		}		
+		cgm_new_worlds_planet_spawn_table_inhabitable = yes
+	}		
+	if = { 
+		limit = { is_colonizable = yes }
+		while = { 
+			limit = { planet_size > 25 }
+			change_planet_size = -1
+		}
+	}		
+	if = { 
+		limit = { 
+			any_tile = { 
+				has_deposit = yes 
+				has_regular_vanilla_deposit = yes 
+			} 
+		}
+		every_tile = {
+			limit = { 
+				has_deposit = yes
+				has_regular_vanilla_deposit = yes 
+			} 
+			cgm_shared_regular_deposit_spawn_table = yes	
+		}
+	}	
+	else_if = { 
+		limit = { 
+			habitable_planet = yes
+			NOT = { any_tile = { has_deposit = yes } } 
+		}
+		every_tile = {
+			random_list = { 
+				50 = { cgm_shared_regular_deposit_spawn_table = yes }
+				50 = { } 
+			}
+		}
+	}	
+	if = { 
+		limit = { habitable_planet = yes }
+		if = {
+			limit = { any_tile = { has_blocker = yes } }
+			every_tile = {
+				limit = { has_blocker = yes } 
+				cgm_pe_tile_blocker_spawn_table = yes
+			}
+		}
+		else_if = {
+			limit = { NOT = { any_tile = { has_blocker = yes } } }
+			every_tile = {
+				limit = { has_pop = no has_building = no } 
+				random_list = {
+					50 = { cgm_pe_tile_blocker_spawn_table = yes }
+					50 = { } 
+				}
+			}
+		}
+	}	
+	if = {
+		limit = { 
+			NOT = { has_global_flag = gpm_vanilla_spawn_engine_enabled }
+			OR = { 
+				uninhabitable_regular_planet = yes
+				habitable_planet = yes
+			}	
+			has_regular_vanilla_planet_modifier = yes
+		}
+		remove_and_count_vanilla_regular_planet_modifiers = yes
+		while = {
+			limit = {
+				check_variable = { which = "pm_points" value > 0 }
+			}
+			planet_modifier_spawn_table = yes
+			change_variable = { which = "pm_points" value = -1 }
+		}				
+	}
+}
+cgm_new_worlds_gas_giant_moon_check = {
+	if = {
+		limit = {
+			OR = { 
+				is_planet_class = pc_gas_giant 
+				is_planet_class = pc_ice_giant
+			}
+			has_moon = yes
+			any_moon = { NOT = { has_planet_flag = gas_giant_moon } }
+		}
+		every_moon = {
+			limit = { NOT = { has_planet_flag = gas_giant_moon } }
+			set_planet_flag = gas_giant_moon
+		}
+	}
+}

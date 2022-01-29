@@ -1,0 +1,110 @@
+country_edict = {
+	name = cgm_pe_menu_edict
+	length = 0
+	cost = { }
+	effect = {
+		hidden_effect = { country_event = { id = cgm_pe_spawn_engine.3 } } 
+	}
+	potential = {
+		has_global_flag = cgm_pe_spawn_engine_fired
+		is_ai = no
+		OR = {
+			is_multiplayer = no
+			AND = { is_multiplayer = yes has_country_flag = cgm_game_host }
+		}
+	}
+}
+country_edict = {
+	name = cgm_pe_enable_colonization_automation_edict
+	length = 0
+	cost = { }
+	effect = {
+		hidden_effect = { set_country_flag = cgm_colonization_automation_country_enabled } 
+	}
+	potential = {
+		is_ai = no
+		has_global_flag = cgm_colonization_automation_enabled
+		NOT = { has_country_flag = cgm_colonization_automation_country_enabled }
+	}
+}
+country_edict = {
+	name = cgm_pe_disable_colonization_automation_edict
+	length = 0
+	cost = { }
+	effect = {
+		hidden_effect = { 
+			remove_country_flag = cgm_colonization_automation_country_enabled 
+			every_owned_fleet = { 
+				limit = { any_owned_ship = { is_ship_class = shipclass_colonizer } }
+				set_event_locked = no
+			}	
+		} 
+	}
+	potential = {
+		is_ai = no
+		has_global_flag = cgm_colonization_automation_enabled
+		has_country_flag = cgm_colonization_automation_country_enabled
+	}
+}
+planet_edict = {
+	name = "open_cgm_projects_menu"
+	cost = {}
+	length = 0
+	potential = { 
+		NOR = { 
+			has_planet_flag = cgm_deep_core_mining
+			has_planet_flag = cgm_geothermal_tap
+			has_planet_flag = cgm_tectonic_engineering
+			has_planet_flag = cgm_harvest
+		}	
+	}			
+	allow = {
+		custom_tooltip = {
+			fail_text = "requires_planetary_specialization_technologies"		
+			owner = { 
+				OR = {
+					has_technology = "tech_tectonic_engineering"
+					has_technology = "tech_soil_harvesting"
+					has_technology = "tech_deep_core_mining"
+					has_technology = "tech_geothermal_tap"
+				}
+			}	
+		}	
+		custom_tooltip = {
+			fail_text = "requires_non_artificial_planet"		
+			is_artificial = no
+		}	
+		custom_tooltip = {
+			fail_text = "requires_non_machine_world"		
+			NOT = { is_planet_class = pc_machine }
+		}		
+		custom_tooltip = {
+			fail_text = "requires_non_terraforming_uninhabitable_or_asteroid"		
+			cgm_planet = no
+		}				
+	}	
+	effect = { hidden_effect = { planet_event = { id = cgm_planetary_projects.1 } }	}
+	ai_weight = { weight = 0 }
+}
+planet_edict = { 
+	name = cgm_terraforming_menu
+	cost = {}
+	length = 0 
+	potential = { 
+		has_planet_flag = cgm_terraforming_planet		
+		has_terraformer = yes 
+		exists = owner
+		owner = { 
+			has_technology = tech_advanced_terraforming
+		}		
+	}
+	effect = { 
+		hidden_effect = { 	
+			update_terraforming_time = yes
+			planet_event = { id = cgm_pe_terraforming_events.5 } 			
+		}
+	}
+	ai_weight = { 
+		weight = 100		
+	}		
+}	

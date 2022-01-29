@@ -1,0 +1,16 @@
+@strategic_resource_building_buildtime = 240
+@strategic_resource_building_cost = 250
+@strategic_resource_building_upkeep = 3
+@unique_strategic_resource_building_buildtime = 720
+@unique_strategic_resource_building_cost = 1000
+@unique_strategic_resource_building_upkeep = 6
+@unique_strategic_resource_building_half_output = 9
+@unique_strategic_resource_building_full_output = 18
+@unique_resource_building_tile_resource_planet_modifier = 0.35
+@unique_resource_building_country_research_bonus_modifier = 0.2
+@unique_resource_building_half_adjacency = 1
+@unique_resource_building_full_adjacency = 2
+@special_resource_starbase_building_build_time = 480
+@special_resource_starbase_building_build_cost = 500
+@special_resource_starbase_building_upkeep_1 = -0.5
+@special_resource_starbase_building_upkeep_2 = -1

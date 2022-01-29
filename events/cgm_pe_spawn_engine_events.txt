@@ -1,0 +1,2065 @@
+namespace = cgm_pe_spawn_engine
+
+country_event = { 
+	id = cgm_pe_spawn_engine.0
+	hide_window = yes
+	
+	trigger = { 
+		NOR = { 
+			has_global_flag = planets_enhanced_active 
+			has_global_flag = planets_enhanced_beta_active 
+		}
+		is_ai = no
+	}
+	immediate = { 
+		set_global_flag = planets_enhanced_active
+		if = { 
+			limit = { NOT = { has_country_flag = cgm_game_host } }
+			set_country_flag = cgm_game_host	
+		}	
+		every_megastructure = {
+			limit = { 
+				OR = {
+					is_megastructure_type = dyson_sphere_ruined
+					is_megastructure_type = think_tank_ruined
+					is_megastructure_type = spy_orb_ruined
+					is_megastructure_type = gateway_ruined
+				}
+				exists = orbit				
+			}
+			orbit = { set_planet_flag = has_ruined_megastructure } 
+		}
+		every_planet = {
+			limit = { 
+				is_gas_giant = yes
+				has_moon = yes
+				any_moon = { NOT = { has_planet_flag = gas_giant_moon } }
+			}				
+			every_moon = { 
+				limit = { NOT = { has_planet_flag = gas_giant_moon } }
+				set_planet_flag = gas_giant_moon
+			}
+		}	
+		every_planet = {
+			limit = { is_star = yes }
+			#this effect block identifies star order in systems				
+			if = {
+				limit = {
+					solar_system = {
+						NOT = {
+							any_planet = {
+								NOT = { is_same_value = prevprev }
+								has_planet_flag = system_star_1
+							}
+						}
+					}
+				}
+				set_planet_flag = system_star_1
+			}	
+			else_if = {
+				limit = {
+					solar_system = {
+						NOT = {
+							any_planet = {
+								NOT = { is_same_value = prevprev }
+								has_planet_flag = system_star_2
+							}
+						}
+					}
+				}
+				set_planet_flag = system_star_2
+			}	
+			else = { set_planet_flag = system_star_3 }
+		}				
+		random_planet = { 
+			limit = { is_star = yes }
+			save_global_event_target_as = cgm_pe_variable_storage
+			set_variable = { which = tb_sunflower_spawn value = 0 }			
+			set_variable = { which = tb_precursor_trading_outpost value = 0 } 
+			set_variable = { which = num_of_regular_habitable_planets value = 0 }			
+			every_planet = { 
+				limit = { habitable_planet = yes } 
+				prev = { change_variable = { which = num_of_regular_habitable_planets value = 1 } }
+			}		
+			set_variable = { which = num_of_asteroidal_candidates value = num_of_regular_habitable_planets }
+			divide_variable = { which = num_of_asteroidal_candidates value = 100 }			
+			multiply_variable = { which = num_of_asteroidal_candidates value = 15 }			
+		}	
+		set_default_configuration = yes 
+		set_country_flag = level_0_menu	
+		country_event = { id = cgm_pe_spawn_engine.1 }	
+		country_event = { id = cgm_pe_test_events.1 days = 3 }	
+	}
+}	
+
+country_event = { 
+	id = cgm_pe_spawn_engine.1
+	is_triggered_only = yes	
+	title = cgm_pe.main_menu.title
+	desc = cgm_pe.main_menu.desc
+	diplomatic = yes
+	force_open = yes
+	custom_gui = "cgm_pe_main_menu"	
+	picture_event_data = { room = cgm_pe_menu_room }	
+	trigger = { 		
+		is_ai = no
+		OR = {
+			is_multiplayer = no
+			AND = { 
+				is_multiplayer = yes				
+				has_country_flag = cgm_game_host
+			}	
+		}				
+	}	
+	#Level 0 menu options	
+	option = {
+		name = cgm_pe.default_configuration.name
+		custom_tooltip = cgm_pe.default_configuration.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = level_0_menu
+			NOT = { has_country_flag = cgm_pe_advanced_configuration }
+			cgm_has_flags_and_ready_to_launch = yes
+		}
+		hidden_effect = { 			
+			country_event = { id = cgm_pe_spawn_engine.2 days = 1 }
+		}
+	}	
+	option = {
+		name = cgm_pe.advanced_configuration.name
+		custom_tooltip = cgm_pe.advanced_configuration.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = level_0_menu
+			NOT = { has_country_flag = cgm_pe_advanced_configuration }
+		}			
+		hidden_effect = { 
+			set_timed_country_flag = { flag = cgm_pe_advanced_configuration days = 2 }				
+			remove_country_flag = level_0_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = back
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration
+			cgm_menu_configuration_triggers = no					
+			NOT = { has_country_flag = level_0_menu }
+		}			
+		hidden_effect = { 
+			remove_country_flag = cgm_pe_advanced_configuration	
+			remove_spawn_and_configuration_global_flags = yes
+			set_default_configuration = yes
+			set_country_flag = level_0_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	#Level 1 menu options 
+	option = {
+		name = cgm_pe.configure_planets.name
+		custom_tooltip = cgm_pe.configure_planets.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration
+			cgm_menu_configuration_triggers = no
+		}			
+		hidden_effect = {			
+			remove_global_flag = cgm_pe_prescripted_planets_and_species_adjustment_enabled
+			remove_global_flag = cgm_pe_prescripted_planets_and_species_adjustment_disabled
+			set_timed_country_flag = { flag = cgm_pe_configure_planets days = 2 }		
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.configure_resources.name
+		custom_tooltip = cgm_pe.configure_resources.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration
+			cgm_menu_configuration_triggers = no
+		}			
+		hidden_effect = {			
+			remove_global_flag = cgm_resources_enabled
+			remove_global_flag = cgm_resources_disabled
+			remove_global_flag = cgm_resource_spawn_disabled
+			set_timed_country_flag = { flag = cgm_pe_configure_resources days = 2 }		
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.configure_deposits.name
+		custom_tooltip = cgm_pe.configure_deposits.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration
+			cgm_menu_configuration_triggers = no
+		}			
+		hidden_effect = {
+			set_timed_country_flag = { flag = cgm_pe_configure_deposits_base days = 2 }
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.configure_deposits_num.name
+		custom_tooltip = cgm_pe.configure_deposits_num.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration
+			has_country_flag = cgm_pe_configure_deposits_base
+			NOR = { 
+				has_country_flag = cgm_pe_configure_deposits_num
+				has_country_flag = cgm_pe_configure_deposits_size
+			}	
+		}			
+		hidden_effect = {
+			set_timed_country_flag = { flag = cgm_pe_configure_deposits_num days = 2 }			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.configure_deposits_size.name
+		custom_tooltip = cgm_pe.configure_deposits_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration
+			has_country_flag = cgm_pe_configure_deposits_base
+			NOR = { 
+				has_country_flag = cgm_pe_configure_deposits_num
+				has_country_flag = cgm_pe_configure_deposits_size
+			}			
+		}			
+		hidden_effect = {
+			set_timed_country_flag = { flag = cgm_pe_configure_deposits_size days = 2 }			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.configure_tile_blockers.name
+		custom_tooltip = cgm_pe.configure_tile_blockers.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration
+			cgm_menu_configuration_triggers = no
+		}			
+		hidden_effect = {
+			remove_global_flag = cgm_tile_blockers_disabled
+			remove_global_flag = cgm_tile_blockers_enabled
+			set_timed_country_flag = { flag = cgm_pe_configure_tile_blockers days = 2 }
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}
+	option = {
+		name = cgm_pe.configure_habitable_planet_size.name
+		custom_tooltip = cgm_pe.configure_habitable_planet_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration
+			cgm_menu_configuration_triggers = no
+		}			
+		hidden_effect = {
+			set_timed_country_flag = { flag = cgm_pe_configure_habitable_planet_size days = 2 }
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.configure_planet_size.name
+		custom_tooltip = cgm_pe.configure_planet_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration
+			has_country_flag = cgm_pe_configure_habitable_planet_size
+			NOR = { 
+				has_country_flag = cgm_pe_configure_planet_size
+				has_country_flag = cgm_pe_configure_capital_planet_size
+			}
+		}			
+		hidden_effect = {
+			set_timed_country_flag = { flag = cgm_pe_configure_planet_size days = 2 }
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}			
+	option = {
+		name = cgm_pe.configure_capital_planet_size.name
+		custom_tooltip = cgm_pe.configure_capital_planet_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration
+			has_country_flag = cgm_pe_configure_habitable_planet_size
+			NOR = { 
+				has_country_flag = cgm_pe_configure_planet_size
+				has_country_flag = cgm_pe_configure_capital_planet_size
+			}	
+		}			
+		hidden_effect = {
+			set_timed_country_flag = { flag = cgm_pe_configure_capital_planet_size days = 2 }
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}			
+	option = {
+		name = cgm_pe.configure_additional_features.name
+		custom_tooltip = cgm_pe.configure_additional_features.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration
+			cgm_menu_configuration_triggers = no
+		}			
+		hidden_effect = {
+			set_timed_country_flag = { flag = cgm_pe_configure_additional_features days = 2 }
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.configure_dynamic_settings.name
+		custom_tooltip = cgm_pe.configure_additional_features.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration
+			cgm_menu_configuration_triggers = no
+		}			
+		hidden_effect = {
+			set_timed_country_flag = { flag = cgm_pe_configure_dynamic_settings days = 2 }
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	###### launch option
+	option = { 		
+		name = cgm_pe_done.name
+		custom_tooltip = cgm_pe_done.desc
+		custom_gui = "cgm_pe_option"			
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration
+			cgm_menu_configuration_triggers = no
+			cgm_has_flags_and_ready_to_launch = yes
+		}
+		hidden_effect = { country_event = { id = cgm_pe_spawn_engine.2 days = 1 } }
+	} 		
+	#Level 2 menu options - resources
+	option = {
+		name = cgm_pe.cgm_new_worlds_disabled.name
+		custom_tooltip = cgm_pe.cgm_new_worlds_disabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_planets 
+			planetary_diversity_enabled = no 
+			NOT = { has_country_flag = cgm_pe_configure_planets_prescripted_balance_configuration }
+		}		
+		hidden_effect = {
+			remove_planet_spawn_flags = yes
+			set_global_flag = cgm_new_worlds_disabled 			
+			remove_country_flag = cgm_pe_configure_planets
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.cgm_new_worlds_disabled_planetary_diversity_enabled.name
+		custom_tooltip = cgm_pe.cgm_new_worlds_disabled_planetary_diversity_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_planets 
+			planetary_diversity_enabled = yes 
+			NOT = { has_country_flag = cgm_pe_configure_planets_prescripted_balance_configuration }
+		}		
+		hidden_effect = {
+			remove_planet_spawn_flags = yes
+			set_global_flag = cgm_new_worlds_disabled_planetary_diversity_enabled
+			set_country_flag = cgm_pe_configure_planets_prescripted_balance_configuration
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.cgm_new_worlds_enabled.name
+		custom_tooltip = cgm_pe.cgm_new_worlds_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_planets 
+			planetary_diversity_enabled = no 
+			NOT = { has_country_flag = cgm_pe_configure_planets_prescripted_balance_configuration }			
+		}		
+		hidden_effect = {
+			remove_planet_spawn_flags = yes
+			set_global_flag = cgm_new_worlds_enabled
+			set_country_flag = cgm_pe_configure_planets_prescripted_balance_configuration
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.cgm_new_worlds_enabled_planetary_diversity_enabled.name
+		custom_tooltip = cgm_pe.cgm_new_worlds_enabled_planetary_diversity_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_planets 
+			planetary_diversity_enabled = yes 
+			NOT = { has_country_flag = cgm_pe_configure_planets_prescripted_balance_configuration }
+		}		
+		hidden_effect = {
+			remove_planet_spawn_flags = yes
+			set_global_flag = cgm_new_worlds_enabled_planetary_diversity_enabled
+			set_country_flag = cgm_pe_configure_planets_prescripted_balance_configuration
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}			
+	option = {
+		name = cgm_pe.cgm_pe_prescripted_planets_and_species_adjustment_enabled.name
+		custom_tooltip = cgm_pe.cgm_pe_prescripted_planets_and_species_adjustment_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_planets_prescripted_balance_configuration }		
+		hidden_effect = {
+			remove_prescripted_readjustment_flags = yes
+			set_global_flag = cgm_pe_prescripted_planets_and_species_adjustment_enabled
+			remove_country_flag = cgm_pe_configure_planets_prescripted_balance_configuration
+			remove_country_flag = cgm_pe_configure_planets
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}			
+	option = {
+		name = cgm_pe.cgm_pe_prescripted_planets_and_species_adjustment_disabled.name
+		custom_tooltip = cgm_pe_prescripted_planets_and_species_adjustment_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_planets_prescripted_balance_configuration }		
+		hidden_effect = {
+			remove_prescripted_readjustment_flags = yes
+			set_global_flag = cgm_pe_prescripted_planets_and_species_adjustment_disabled
+			remove_country_flag = cgm_pe_configure_planets_prescripted_balance_configuration
+			remove_country_flag = cgm_pe_configure_planets
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}				
+	#Level 2 menu options - resources
+	option = {
+		name = cgm_pe.resources_disabled.name
+		custom_tooltip = cgm_pe.resources_disabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_resources
+			NOR = { 
+				has_global_flag = cgm_resources_disabled
+				has_global_flag = cgm_resources_enabled
+			}	
+		}		
+		hidden_effect = {
+			remove_resource_spawn_flags = yes
+			set_global_flag = cgm_resources_disabled 			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.cgm_resources_enabled.name
+		custom_tooltip = cgm_pe.cgm_resources_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_resources
+			NOR = { 
+				has_global_flag = cgm_resources_disabled
+				has_global_flag = cgm_resources_enabled
+			}	
+		}		
+		hidden_effect = {
+			remove_resource_spawn_flags = yes
+			set_global_flag = cgm_resources_enabled 			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.very_high_resources.name
+		custom_tooltip = cgm_pe.very_high_resources.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_resources
+			OR = { 
+				has_global_flag = cgm_resources_disabled
+				has_global_flag = cgm_resources_enabled
+			}	
+		}		
+		hidden_effect = {
+			remove_resource_spawn_flags = yes
+			set_global_flag = cgm_very_high_strategic_resources 			
+			remove_country_flag = cgm_pe_configure_resources
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.high_resources.name
+		custom_tooltip = cgm_pe.high_resources.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_resources
+			OR = { 
+				has_global_flag = cgm_resources_disabled
+				has_global_flag = cgm_resources_enabled
+			}	
+		}		
+		hidden_effect = {
+			remove_resource_spawn_flags = yes
+			set_global_flag = cgm_high_strategic_resources 			
+			remove_country_flag = cgm_pe_configure_resources
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.default_resources.name
+		custom_tooltip = cgm_pe.default_resources.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_resources
+			has_global_flag = cgm_resources_enabled
+		}		
+		hidden_effect = {
+			remove_resource_spawn_flags = yes
+			set_global_flag = cgm_default_strategic_resources 			
+			remove_country_flag = cgm_pe_configure_resources
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}
+	option = {
+		name = cgm_pe.default_resources.name
+		custom_tooltip = cgm_pe.default_resources.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_resources
+			has_global_flag = cgm_resources_disabled
+		}		
+		hidden_effect = {
+			remove_resource_spawn_flags = yes
+			set_global_flag = cgm_resource_spawn_disabled 			
+			remove_country_flag = cgm_pe_configure_resources
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.low_resources.name
+		custom_tooltip = cgm_pe.low_resources.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_resources
+			OR = { 
+				has_global_flag = cgm_resources_disabled
+				has_global_flag = cgm_resources_enabled
+			}	
+		}	
+		hidden_effect = {
+			remove_resource_spawn_flags = yes
+			set_global_flag = cgm_low_strategic_resources 			
+			remove_country_flag = cgm_pe_configure_resources
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.very_low_resources.name
+		custom_tooltip = cgm_pe.very_low_resources.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_resources
+			OR = { 
+				has_global_flag = cgm_resources_disabled
+				has_global_flag = cgm_resources_enabled
+			}	
+		}	
+		hidden_effect = {
+			remove_resource_spawn_flags = yes
+			set_global_flag = cgm_very_low_strategic_resources 			
+			remove_country_flag = cgm_pe_configure_resources
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	#Level 2 menu options - deposits
+	option = {
+		name = cgm_pe.no_deposits_rebalance.name
+		custom_tooltip = cgm_pe.no_deposits_rebalance.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_deposits_num }		
+		hidden_effect = {
+			remove_deposit_spawn_flags = yes
+			set_global_flag = cgm_no_deposit_num_change 			
+			remove_country_flag = cgm_pe_configure_deposits_num
+			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.very_high_deposits.name
+		custom_tooltip = cgm_pe.very_high_deposits.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_deposits_num }		
+		hidden_effect = {
+			remove_deposit_spawn_flags = yes
+			set_global_flag = cgm_very_high_deposits 			
+			remove_country_flag = cgm_pe_configure_deposits_num
+			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.high_deposits.name
+		custom_tooltip = cgm_pe.high_deposits.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_deposits_num }		
+		hidden_effect = {
+			remove_deposit_spawn_flags = yes
+			set_global_flag = cgm_high_deposits 			
+			remove_country_flag = cgm_pe_configure_deposits_num
+			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.default_deposits.name
+		custom_tooltip = cgm_pe.default_deposits.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_deposits_num }		
+		hidden_effect = {
+			remove_deposit_spawn_flags = yes
+			set_global_flag = cgm_default_deposits 			
+			remove_country_flag = cgm_pe_configure_deposits_num
+			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.low_deposits.name
+		custom_tooltip = cgm_pe.low_deposits.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_deposits_num }		
+		hidden_effect = {
+			remove_deposit_spawn_flags = yes
+			set_global_flag = cgm_low_deposits 			
+			remove_country_flag = cgm_pe_configure_deposits_num
+			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.very_low_deposits.name
+		custom_tooltip = cgm_pe.very_low_deposits.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_deposits_num }		
+		hidden_effect = {
+			remove_deposit_spawn_flags = yes
+			set_global_flag = cgm_very_low_deposits 			
+			remove_country_flag = cgm_pe_configure_deposits_num
+			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	#Level 2 menu options - regular resource amounts
+	option = {
+		name = cgm_pe.no_deposits_size_rebalance.name
+		custom_tooltip = cgm_pe.no_deposits_size_rebalance.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_deposits_size }		
+		hidden_effect = {
+			remove_deposit_size_spawn_flags = yes
+			set_global_flag = cgm_no_deposit_size_change 			
+			remove_country_flag = cgm_pe_configure_deposits_size
+			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.very_high_deposits_size.name
+		custom_tooltip = cgm_pe.very_high_deposits_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_deposits_size }		
+		hidden_effect = {
+			remove_deposit_size_spawn_flags = yes
+			set_global_flag = cgm_very_high_deposits_size 			
+			remove_country_flag = cgm_pe_configure_deposits_size
+			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.high_deposits_size.name
+		custom_tooltip = cgm_pe.high_deposits_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_deposits_size }		
+		hidden_effect = {
+			remove_deposit_size_spawn_flags = yes
+			set_global_flag = cgm_high_deposits_size 			
+			remove_country_flag = cgm_pe_configure_deposits_size			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.low_deposits_size.name
+		custom_tooltip = cgm_pe.low_deposits_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_deposits_size }		
+		hidden_effect = {
+			remove_deposit_size_spawn_flags = yes
+			set_global_flag = cgm_low_deposits_size 			
+			remove_country_flag = cgm_pe_configure_deposits_size			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.very_low_deposits_size.name
+		custom_tooltip = cgm_pe.very_low_deposits_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_deposits_size }		
+		hidden_effect = {
+			remove_deposit_size_spawn_flags = yes
+			set_global_flag = cgm_very_low_deposits_size 			
+			remove_country_flag = cgm_pe_configure_deposits_size			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	#Level 2 menu options - tile_blockers
+	option = {
+		name = cgm_pe.tile_blockers_disabled.name
+		custom_tooltip = cgm_pe.tile_blockers_disabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_tile_blockers
+			NOR = { 
+				has_global_flag = cgm_tile_blockers_disabled
+				has_global_flag = cgm_tile_blockers_enabled
+			}	
+		}		
+		hidden_effect = {
+			remove_blocker_spawn_flags = yes
+			set_global_flag = cgm_tile_blockers_disabled 			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.cgm_tile_blockers_enabled.name
+		custom_tooltip = cgm_pe.cgm_tile_blockers_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_tile_blockers
+			NOR = { 
+				has_global_flag = cgm_tile_blockers_disabled
+				has_global_flag = cgm_tile_blockers_enabled
+			}	
+		}		
+		hidden_effect = {
+			remove_blocker_spawn_flags = yes
+			set_global_flag = cgm_tile_blockers_enabled 			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.tile_blockers_disabled.name
+		custom_tooltip = cgm_pe.tile_blockers_disabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_tile_blockers
+			OR = { 
+				has_global_flag = cgm_tile_blockers_disabled
+				has_global_flag = cgm_tile_blockers_enabled
+			}				
+		}		
+		hidden_effect = {
+			remove_blocker_spawn_flags = yes
+			set_global_flag = cgm_tile_blockers_disabled 			
+			remove_country_flag = cgm_pe_configure_tile_blockers
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.very_high_tile_blockers.name
+		custom_tooltip = cgm_pe.very_high_tile_blockers.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_tile_blockers
+			OR = { 
+				has_global_flag = cgm_tile_blockers_disabled
+				has_global_flag = cgm_tile_blockers_enabled
+			}							
+		}		
+		hidden_effect = {
+			set_global_flag = cgm_very_high_tile_blockers 			
+			remove_country_flag = cgm_pe_configure_tile_blockers
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.high_tile_blockers.name
+		custom_tooltip = cgm_pe.high_tile_blockers.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_tile_blockers 
+			OR = { 
+				has_global_flag = cgm_tile_blockers_disabled
+				has_global_flag = cgm_tile_blockers_enabled
+			}							
+		}		
+		hidden_effect = {
+			set_global_flag = cgm_high_tile_blockers 			
+			remove_country_flag = cgm_pe_configure_tile_blockers
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.default_tile_blockers.name
+		custom_tooltip = cgm_pe.default_tile_blockers.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			OR = { 
+				has_global_flag = cgm_tile_blockers_disabled
+				has_global_flag = cgm_tile_blockers_enabled
+			}							
+			has_country_flag = cgm_pe_configure_tile_blockers
+		}			
+		hidden_effect = {
+			set_global_flag = cgm_default_tile_blockers 			
+			remove_country_flag = cgm_pe_configure_tile_blockers
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.low_tile_blockers.name
+		custom_tooltip = cgm_pe.low_tile_blockers.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			OR = { 
+				has_global_flag = cgm_tile_blockers_disabled
+				has_global_flag = cgm_tile_blockers_enabled
+			}						
+			has_country_flag = cgm_pe_configure_tile_blockers 
+		}		
+		hidden_effect = {
+			set_global_flag = cgm_low_tile_blockers 			
+			remove_country_flag = cgm_pe_configure_tile_blockers
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.very_low_tile_blockers.name
+		custom_tooltip = cgm_pe.very_low_tile_blockers.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			OR = { 
+				has_global_flag = cgm_tile_blockers_disabled
+				has_global_flag = cgm_tile_blockers_enabled
+			}						
+			has_country_flag = cgm_pe_configure_tile_blockers
+		}		
+		hidden_effect = {
+			set_global_flag = cgm_very_low_tile_blockers 			
+			remove_country_flag = cgm_pe_configure_tile_blockers
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	#Level 2 menu options - planet_size
+	option = {
+		name = cgm_pe.no_planet_resize.name
+		custom_tooltip = cgm_pe.no_planet_resize.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_planet_size }		
+		hidden_effect = {
+			remove_planet_resize_flags = yes
+			set_global_flag = cgm_no_planet_resize 			
+			remove_country_flag = cgm_pe_configure_planet_size
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.very_large_planet_size.name
+		custom_tooltip = cgm_pe.very_large_planet_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_planet_size }		
+		hidden_effect = {
+			remove_planet_resize_flags = yes
+			set_global_flag = cgm_very_large_planet_size 			
+			remove_country_flag = cgm_pe_configure_planet_size
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.large_planet_size.name
+		custom_tooltip = cgm_pe.large_planet_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_planet_size }		
+		hidden_effect = {
+			remove_planet_resize_flags = yes
+			set_global_flag = cgm_large_planet_size 			
+			remove_country_flag = cgm_pe_configure_planet_size
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.small_planet_size.name
+		custom_tooltip = cgm_pe.small_planet_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_planet_size }		
+		hidden_effect = {
+			remove_planet_resize_flags = yes
+			set_global_flag = cgm_small_planet_size 			
+			remove_country_flag = cgm_pe_configure_planet_size
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.very_small_planet_size.name
+		custom_tooltip = cgm_pe.very_small_planet_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_planet_size }		
+		hidden_effect = {
+			remove_planet_resize_flags = yes
+			set_global_flag = cgm_very_small_planet_size 			
+			remove_country_flag = cgm_pe_configure_planet_size
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	#Level 2 menu options - capital_planet_size
+	option = {
+		name = cgm_pe.no_capital_planet_resize.name
+		custom_tooltip = cgm_pe.no_capital_planet_resize.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_capital_planet_size }		
+		hidden_effect = {
+			remove_capital_planet_resize_flags = yes
+			set_global_flag = cgm_no_capital_planet_resize 			
+			remove_country_flag = cgm_pe_configure_capital_planet_size
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.very_large_capital_planet_size.name
+		custom_tooltip = cgm_pe.very_large_capital_planet_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_capital_planet_size }		
+		hidden_effect = {
+			remove_capital_planet_resize_flags = yes
+			set_global_flag = cgm_very_large_capital_planet_size 			
+			remove_country_flag = cgm_pe_configure_capital_planet_size
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.large_capital_planet_size.name
+		custom_tooltip = cgm_pe.large_capital_planet_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_capital_planet_size }		
+		hidden_effect = {
+			remove_capital_planet_resize_flags = yes
+			set_global_flag = cgm_large_capital_planet_size 			
+			remove_country_flag = cgm_pe_configure_capital_planet_size
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.small_capital_planet_size.name
+		custom_tooltip = cgm_pe.small_capital_planet_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_capital_planet_size }		
+		hidden_effect = {
+			remove_capital_planet_resize_flags = yes
+			set_global_flag = cgm_small_capital_planet_size 			
+			remove_country_flag = cgm_pe_configure_capital_planet_size
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.very_small_capital_planet_size.name
+		custom_tooltip = cgm_pe.very_small_capital_planet_size.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_capital_planet_size }		
+		hidden_effect = {
+			remove_capital_planet_resize_flags = yes
+			set_global_flag = cgm_very_small_capital_planet_size 			
+			remove_country_flag = cgm_pe_configure_capital_planet_size
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	### Level 2 menu - additional features
+	option = {
+		name = cgm_pe.game_start_auto_exploration_status.name
+		custom_tooltip = cgm_pe.game_start_auto_exploration_status.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_global_flag = planets_enhanced_game_start_flag
+			has_country_flag = cgm_pe_advanced_configuration 
+			has_country_flag = cgm_pe_configure_additional_features
+			cgm_additional_features_menu_configuration_triggers = no
+		}
+		hidden_effect = {
+			remove_global_flag = cgm_game_start_auto_exploration			
+			set_country_flag = cgm_game_start_auto_exploration_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}
+	option = {
+		name = cgm_pe.game_start_auto_exploration_enabled.name
+		custom_tooltip = cgm_pe.game_start_auto_exploration_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_global_flag = planets_enhanced_game_start_flag
+			has_country_flag = cgm_game_start_auto_exploration_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_game_start_auto_exploration
+			remove_country_flag = cgm_game_start_auto_exploration_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.game_start_auto_exploration_disabled.name
+		custom_tooltip = cgm_pe.game_start_auto_exploration_disabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_global_flag = planets_enhanced_game_start_flag
+			has_country_flag = cgm_game_start_auto_exploration_status_menu
+		}			
+
+		hidden_effect = {
+			remove_country_flag = cgm_game_start_auto_exploration_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.astrocartography_status.name
+		custom_tooltip = cgm_pe.astrocartography_status.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration 
+			has_country_flag = cgm_pe_configure_additional_features
+			cgm_additional_features_menu_configuration_triggers = no
+		}
+		hidden_effect = {
+			remove_global_flag = cgm_astrocartography_enabled
+			remove_global_flag = cgm_astrocartography_disabled
+			set_country_flag = cgm_astrocartography_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}
+	option = {
+		name = cgm_pe.astrocartography_enabled.name
+		custom_tooltip = cgm_pe.astrocartography_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_astrocartography_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_astrocartography_enabled
+			remove_global_flag = cgm_astrocartography_disabled
+			set_global_flag = cgm_astrocartography_enabled
+			remove_country_flag = cgm_astrocartography_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.astrocartography_disabled.name
+		custom_tooltip = cgm_pe.astrocartography_disabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_astrocartography_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_astrocartography_enabled
+			remove_global_flag = cgm_astrocartography_disabled
+			set_global_flag = cgm_astrocartography_disabled
+			remove_country_flag = cgm_astrocartography_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.asteroid_colonization_status.name
+		custom_tooltip = cgm_pe.asteroid_colonization_status.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration 
+			has_country_flag = cgm_pe_configure_additional_features
+			cgm_additional_features_menu_configuration_triggers = no
+		}
+		hidden_effect = {
+			remove_global_flag = cgm_asteroid_colonization_enabled
+			remove_global_flag = cgm_asteroid_colonization_disabled
+			set_timed_country_flag = {flag = cgm_asteroid_colonization_status_menu days = 2 }
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}
+	option = {
+		name = cgm_pe.asteroid_colonization_enabled.name
+		custom_tooltip = cgm_pe.asteroid_colonization_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_asteroid_colonization_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_asteroid_colonization_enabled
+			remove_global_flag = cgm_asteroid_colonization_disabled
+			set_global_flag = cgm_asteroid_colonization_enabled
+			set_timed_country_flag = {flag = cgm_asteroid_colonization_enabled days = 2 }
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.asteroid_colonization_disabled.name
+		custom_tooltip = cgm_pe.asteroid_colonization_disabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_asteroid_colonization_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_asteroid_colonization_enabled
+			remove_global_flag = cgm_asteroid_colonization_disabled
+			remove_asteroid_colonization_flags = yes
+			set_global_flag = cgm_asteroid_colonization_disabled
+			remove_country_flag = cgm_asteroid_colonization_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.very_high_colonizable_asteroids.name
+		custom_tooltip = cgm_pe.very_high_colonizable_asteroids.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_asteroid_colonization_status_menu
+			has_global_flag = cgm_asteroid_colonization_enabled
+			has_country_flag = cgm_asteroid_colonization_enabled
+		}			
+
+		hidden_effect = {
+			remove_country_flag = cgm_asteroid_colonization_status_menu
+			remove_country_flag = cgm_asteroid_colonization_enabled
+			set_global_flag = cgm_very_high_colonizable_asteroids
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}
+	option = {
+		name = cgm_pe.high_colonizable_asteroids.name
+		custom_tooltip = cgm_pe.high_colonizable_asteroids.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_asteroid_colonization_status_menu
+			has_global_flag = cgm_asteroid_colonization_enabled
+			has_country_flag = cgm_asteroid_colonization_enabled
+		}			
+
+		hidden_effect = {
+			remove_country_flag = cgm_asteroid_colonization_status_menu
+			set_global_flag = cgm_high_colonizable_asteroids
+			remove_country_flag = cgm_asteroid_colonization_enabled
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.default_colonizable_asteroids.name
+		custom_tooltip = cgm_pe.default_colonizable_asteroids.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_asteroid_colonization_status_menu
+			has_global_flag = cgm_asteroid_colonization_enabled
+			has_country_flag = cgm_asteroid_colonization_enabled
+		}			
+
+		hidden_effect = {
+			remove_country_flag = cgm_asteroid_colonization_status_menu
+			set_global_flag = cgm_default_colonizable_asteroids
+			remove_country_flag = cgm_asteroid_colonization_enabled
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}			
+	option = {
+		name = cgm_pe.low_colonizable_asteroids.name
+		custom_tooltip = cgm_pe.low_colonizable_asteroids.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_asteroid_colonization_status_menu
+			has_global_flag = cgm_asteroid_colonization_enabled
+			has_country_flag = cgm_asteroid_colonization_enabled
+		}			
+
+		hidden_effect = {
+			remove_country_flag = cgm_asteroid_colonization_status_menu
+			set_global_flag = cgm_low_colonizable_asteroids
+			remove_country_flag = cgm_asteroid_colonization_enabled
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}				
+	option = {
+		name = cgm_pe.very_low_colonizable_asteroids.name
+		custom_tooltip = cgm_pe.very_low_colonizable_asteroids.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_asteroid_colonization_status_menu
+			has_global_flag = cgm_asteroid_colonization_enabled
+			has_country_flag = cgm_asteroid_colonization_enabled
+		}			
+
+		hidden_effect = {
+			remove_country_flag = cgm_asteroid_colonization_status_menu
+			set_global_flag = cgm_very_low_colonizable_asteroids
+			remove_country_flag = cgm_asteroid_colonization_enabled
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}			
+	option = {
+		name = cgm_pe.terraforming_after_effects_status.name
+		custom_tooltip = cgm_pe.terraforming_after_effects_status.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration 
+			has_country_flag = cgm_pe_configure_additional_features
+			cgm_additional_features_menu_configuration_triggers = no
+		}
+		hidden_effect = {
+			remove_global_flag = cgm_terraforming_after_effects_enabled
+			remove_global_flag = cgm_terraforming_after_effects_disabled
+			set_country_flag = cgm_terraforming_after_effects_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}
+	option = {
+		name = cgm_pe.terraforming_after_effects_enabled.name
+		custom_tooltip = cgm_pe.terraforming_after_effects_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_terraforming_after_effects_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_terraforming_after_effects_enabled
+			remove_global_flag = cgm_terraforming_after_effects_disabled
+			set_global_flag = cgm_terraforming_after_effects_enabled
+			remove_country_flag = cgm_terraforming_after_effects_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.terraforming_after_effects_disabled.name
+		custom_tooltip = cgm_pe.terraforming_after_effects_disabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_terraforming_after_effects_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_terraforming_after_effects_enabled
+			remove_global_flag = cgm_terraforming_after_effects_disabled
+			set_global_flag = cgm_terraforming_after_effects_disabled
+			remove_country_flag = cgm_terraforming_after_effects_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.uninhabitable_terraforming_mechanics_status.name
+		custom_tooltip = cgm_pe.uninhabitable_terraforming_mechanics_status.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration 
+			has_country_flag = cgm_pe_configure_additional_features
+			cgm_additional_features_menu_configuration_triggers = no
+		}
+		hidden_effect = {
+			remove_global_flag = cgm_uninhabitable_terraforming_mechanics_enabled
+			remove_global_flag = cgm_uninhabitable_terraforming_mechanics_disabled
+			set_global_flag = cgm_uninhabitable_terraforming_mechanics_enabled
+			set_country_flag = cgm_uninhabitable_terraforming_mechanics_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}
+	option = {
+		name = cgm_pe.uninhabitable_terraforming_mechanics_enabled.name
+		custom_tooltip = cgm_pe.uninhabitable_terraforming_mechanics_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_uninhabitable_terraforming_mechanics_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_uninhabitable_terraforming_mechanics_enabled
+			remove_global_flag = cgm_uninhabitable_terraforming_mechanics_disabled
+			set_global_flag = cgm_uninhabitable_terraforming_mechanics_enabled
+			remove_country_flag = cgm_uninhabitable_terraforming_mechanics_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.uninhabitable_terraforming_mechanics_disabled.name
+		custom_tooltip = cgm_pe.uninhabitable_terraforming_mechanics_disabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_uninhabitable_terraforming_mechanics_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_uninhabitable_terraforming_mechanics_enabled
+			remove_global_flag = cgm_uninhabitable_terraforming_mechanics_disabled
+			set_global_flag = cgm_uninhabitable_terraforming_mechanics_disabled
+			remove_country_flag = cgm_uninhabitable_terraforming_mechanics_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.planetary_projects_mechanics_status.name
+		custom_tooltip = cgm_pe.planetary_projects_mechanics_status.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration 
+			has_country_flag = cgm_pe_configure_additional_features
+			cgm_additional_features_menu_configuration_triggers = no
+		}
+		hidden_effect = {
+			remove_global_flag = cgm_planetary_projects_mechanics_enabled
+			remove_global_flag = cgm_planetary_projects_mechanics_disabled
+			set_global_flag = cgm_planetary_projects_mechanics_enabled
+			set_country_flag = cgm_planetary_projects_mechanics_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}
+	option = {
+		name = cgm_pe.planetary_projects_mechanics_enabled.name
+		custom_tooltip = cgm_pe.planetary_projects_mechanics_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_planetary_projects_mechanics_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_planetary_projects_mechanics_enabled
+			remove_global_flag = cgm_planetary_projects_mechanics_disabled
+			set_global_flag = cgm_planetary_projects_mechanics_enabled
+			remove_country_flag = cgm_planetary_projects_mechanics_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.planetary_projects_mechanics_disabled.name
+		custom_tooltip = cgm_pe.planetary_projects_mechanics_disabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_planetary_projects_mechanics_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_planetary_projects_mechanics_enabled
+			remove_global_flag = cgm_planetary_projects_mechanics_disabled
+			set_global_flag = cgm_planetary_projects_mechanics_disabled
+			remove_country_flag = cgm_planetary_projects_mechanics_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	### Level 2 - dynamic options menu
+	option = {
+		name = cgm_pe.colonization_automation_status.name
+		custom_tooltip = cgm_pe.colonization_automation_status.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration 
+			has_country_flag = cgm_pe_configure_dynamic_settings			
+			cgm_dynamic_settings_menu_configuration_triggers = no
+		}
+		hidden_effect = {
+			remove_colonization_automation_flags = yes			
+			set_country_flag = cgm_colonization_automation_status_menu			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}
+	option = {
+		name = cgm_pe.colonization_automation_enabled.name
+		custom_tooltip = cgm_pe.colonization_automation_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_colonization_automation_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_colonization_automation_enabled
+			set_global_flag = disable_gai_ai_colonize
+			remove_country_flag = cgm_colonization_automation_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}			
+	option = {
+		name = cgm_pe.colonization_automation_disabled.name
+		custom_tooltip = cgm_pe.colonization_automation_disabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_colonization_automation_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_colonization_automation_disabled
+			remove_country_flag = cgm_colonization_automation_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}				
+
+	option = {
+		name = cgm_pe.presapient_discovery_status.name
+		custom_tooltip = cgm_pe.presapient_discovery_status.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration 
+			has_country_flag = cgm_pe_configure_dynamic_settings			
+			cgm_dynamic_settings_menu_configuration_triggers = no
+		}
+		hidden_effect = {
+			remove_presapient_chance_flags = yes			
+			set_country_flag = cgm_presapient_discovery_status_menu			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}
+	option = {
+		name = cgm_pe.presapient_discovery_very_rare.name
+		custom_tooltip = cgm_pe.presapient_discovery_very_rare.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_presapient_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_very_rare_presapients
+			remove_country_flag = cgm_presapient_discovery_status_menu			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.presapient_discovery_vanilla.name
+		custom_tooltip = cgm_pe.presapient_discovery_vanilla.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_presapient_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_vanilla_presapients
+			remove_country_flag = cgm_presapient_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.presapient_discovery_default.name
+		custom_tooltip = cgm_pe.presapient_discovery_default.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_presapient_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_default_presapients
+			remove_country_flag = cgm_presapient_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.presapient_discovery_common.name
+		custom_tooltip = cgm_pe.presapient_discovery_common.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_presapient_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_common_presapients
+			remove_country_flag = cgm_presapient_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.presapient_discovery_very_common.name
+		custom_tooltip = cgm_pe.presapient_discovery_very_common.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_presapient_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_very_common_presapients
+			remove_country_flag = cgm_presapient_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.terraforming_candidate_discovery_status.name
+		custom_tooltip = cgm_pe.terraforming_candidate_discovery_status.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_advanced_configuration 
+			has_country_flag = cgm_pe_configure_dynamic_settings			
+			cgm_dynamic_settings_menu_configuration_triggers = no
+		}
+		hidden_effect = {
+			remove_terraforming_candidate_chance_flags = yes			
+			set_country_flag = cgm_terraforming_candidate_discovery_status_menu			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}
+	option = {
+		name = cgm_pe.terraforming_candidate_discovery_very_rare.name
+		custom_tooltip = cgm_pe.terraforming_candidate_discovery_very_rare.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_terraforming_candidate_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_very_rare_terraforming_candidates
+			remove_country_flag = cgm_terraforming_candidate_discovery_status_menu			
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.terraforming_candidate_discovery_vanilla.name
+		custom_tooltip = cgm_pe.terraforming_candidate_discovery_vanilla.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_terraforming_candidate_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_vanilla_terraforming_candidates
+			remove_country_flag = cgm_terraforming_candidate_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.terraforming_candidate_discovery_default.name
+		custom_tooltip = cgm_pe.terraforming_candidate_discovery_default.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_terraforming_candidate_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_default_terraforming_candidates
+			remove_country_flag = cgm_terraforming_candidate_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.terraforming_candidate_discovery_common.name
+		custom_tooltip = cgm_pe.terraforming_candidate_discovery_common.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_terraforming_candidate_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_common_terraforming_candidates
+			remove_country_flag = cgm_terraforming_candidate_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.terraforming_candidate_discovery_very_common.name
+		custom_tooltip = cgm_pe.terraforming_candidate_discovery_very_common.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_terraforming_candidate_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_very_common_terraforming_candidates
+			remove_country_flag = cgm_terraforming_candidate_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.1 }				
+		}
+	}		
+	option = {
+		name = back
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_dynamic_settings 
+			cgm_dynamic_settings_menu_configuration_triggers = no
+		}	
+		
+		hidden_effect = { 
+			remove_country_flag = cgm_pe_configure_dynamic_settings
+			country_event = { id = cgm_pe_spawn_engine.1 }
+		}
+	}		
+	option = {
+		name = back
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_habitable_planet_size 
+			NOR = { 
+				has_country_flag = cgm_pe_configure_planet_size
+				has_country_flag = cgm_pe_configure_capital_planet_size
+			}		
+		}	
+		
+		hidden_effect = { 
+			remove_country_flag = cgm_pe_configure_habitable_planet_size
+			country_event = { id = cgm_pe_spawn_engine.1 }
+		}
+	}			
+	option = {
+		name = back
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_pe_configure_deposits_base 
+			NOR = { 
+				has_country_flag = cgm_pe_configure_deposits_num
+				has_country_flag = cgm_pe_configure_deposits_size
+			}				
+		}	
+		
+		hidden_effect = { 
+			remove_country_flag = cgm_pe_configure_deposits_base
+			country_event = { id = cgm_pe_spawn_engine.1 }
+		}
+	}		
+	option = {
+		name = back
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_additional_features cgm_additional_features_menu_configuration_triggers = no }	
+		
+		hidden_effect = { 
+			remove_country_flag = cgm_pe_configure_additional_features
+			country_event = { id = cgm_pe_spawn_engine.1 }
+		}
+	}		
+	option = {
+		name = back
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_pe_configure_additional_features cgm_additional_features_menu_configuration_triggers = yes }	
+		
+		hidden_effect = { 
+			remove_additional_features_menu_configuration_flags = yes
+			country_event = { id = cgm_pe_spawn_engine.1 }
+		}
+	}			
+}
+country_event = {
+	id = cgm_pe_spawn_engine.2
+	is_triggered_only = yes	
+	hide_window = yes
+	
+	immediate = { cgm_spawn_engine = yes set_global_flag = cgm_pe_spawn_engine_fired }
+}	
+country_event = { 
+	id = cgm_pe_spawn_engine.3
+	is_triggered_only = yes	
+	title = cgm_pe_optional_features_menu.title
+	desc = cgm_pe_optional_features_menu.desc
+	diplomatic = yes
+	force_open = yes
+	custom_gui = "cgm_pe_optional_features_menu"	
+	picture_event_data = { room = cgm_pe_menu_room }
+	option = {
+		name = cgm_pe.astrocartography_status.name
+		custom_tooltip = cgm_pe.astrocartography_status.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			cgm_additional_features_menu_configuration_triggers = no			
+			cgm_dynamic_settings_menu_configuration_triggers = no
+		}
+		hidden_effect = {
+			remove_global_flag = cgm_astrocartography_enabled
+			remove_global_flag = cgm_astrocartography_disabled
+			set_global_flag = cgm_astrocartography_enabled
+			set_country_flag = cgm_astrocartography_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}
+	option = {
+		name = cgm_pe.astrocartography_enabled.name
+		custom_tooltip = cgm_pe.astrocartography_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_astrocartography_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_astrocartography_enabled
+			remove_global_flag = cgm_astrocartography_disabled
+			set_global_flag = cgm_astrocartography_enabled
+			remove_country_flag = cgm_astrocartography_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.astrocartography_disabled.name
+		custom_tooltip = cgm_pe.astrocartography_disabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_astrocartography_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_astrocartography_enabled
+			remove_global_flag = cgm_astrocartography_disabled
+			set_global_flag = cgm_astrocartography_disabled
+			remove_country_flag = cgm_astrocartography_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.asteroid_colonization_status.name
+		custom_tooltip = cgm_pe.asteroid_colonization_status.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			cgm_additional_features_menu_configuration_triggers = no			
+			cgm_dynamic_settings_menu_configuration_triggers = no
+		}
+		hidden_effect = {
+			remove_global_flag = cgm_asteroid_colonization_enabled
+			remove_global_flag = cgm_asteroid_colonization_disabled
+			set_global_flag = cgm_asteroid_colonization_enabled
+			set_country_flag = cgm_asteroid_colonization_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}
+	option = {
+		name = cgm_pe.asteroid_colonization_enabled.name
+		custom_tooltip = cgm_pe.asteroid_colonization_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_asteroid_colonization_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_asteroid_colonization_enabled
+			remove_global_flag = cgm_asteroid_colonization_disabled
+			set_global_flag = cgm_asteroid_colonization_enabled
+			set_timed_country_flag = { flag = cgm_asteroid_colonization_enabled days = 2 }
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.asteroid_colonization_disabled.name
+		custom_tooltip = cgm_pe.asteroid_colonization_disabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_asteroid_colonization_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_asteroid_colonization_enabled
+			remove_global_flag = cgm_asteroid_colonization_disabled
+			remove_asteroid_colonization_flags = yes
+			set_global_flag = cgm_asteroid_colonization_disabled
+			remove_country_flag = cgm_asteroid_colonization_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.very_high_colonizable_asteroids.name
+		custom_tooltip = cgm_pe.very_high_colonizable_asteroids.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_asteroid_colonization_status_menu
+			has_global_flag = cgm_asteroid_colonization_enabled
+			has_country_flag = cgm_asteroid_colonization_enabled
+		}			
+
+		hidden_effect = {
+			remove_country_flag = cgm_asteroid_colonization_status_menu
+			remove_country_flag = cgm_asteroid_colonization_enabled
+			set_global_flag = cgm_very_high_colonizable_asteroids
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}
+	option = {
+		name = cgm_pe.high_colonizable_asteroids.name
+		custom_tooltip = cgm_pe.high_colonizable_asteroids.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_asteroid_colonization_status_menu
+			has_global_flag = cgm_asteroid_colonization_enabled
+			has_country_flag = cgm_asteroid_colonization_enabled
+		}			
+
+		hidden_effect = {
+			remove_country_flag = cgm_asteroid_colonization_status_menu
+			remove_country_flag = cgm_asteroid_colonization_enabled
+			set_global_flag = cgm_high_colonizable_asteroids
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.default_colonizable_asteroids.name
+		custom_tooltip = cgm_pe.default_colonizable_asteroids.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_asteroid_colonization_status_menu
+			has_global_flag = cgm_asteroid_colonization_enabled
+			has_country_flag = cgm_asteroid_colonization_enabled
+		}			
+
+		hidden_effect = {
+			remove_country_flag = cgm_asteroid_colonization_status_menu
+			remove_country_flag = cgm_asteroid_colonization_enabled
+			set_global_flag = cgm_default_colonizable_asteroids
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}			
+	option = {
+		name = cgm_pe.low_colonizable_asteroids.name
+		custom_tooltip = cgm_pe.low_colonizable_asteroids.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_asteroid_colonization_status_menu
+			has_global_flag = cgm_asteroid_colonization_enabled
+			has_country_flag = cgm_asteroid_colonization_enabled
+		}			
+
+		hidden_effect = {
+			remove_country_flag = cgm_asteroid_colonization_status_menu
+			remove_country_flag = cgm_asteroid_colonization_enabled
+			set_global_flag = cgm_low_colonizable_asteroids
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}				
+	option = {
+		name = cgm_pe.very_low_colonizable_asteroids.name
+		custom_tooltip = cgm_pe.very_low_colonizable_asteroids.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_asteroid_colonization_status_menu
+			has_global_flag = cgm_asteroid_colonization_enabled
+			has_country_flag = cgm_asteroid_colonization_enabled
+		}			
+
+		hidden_effect = {
+			remove_country_flag = cgm_asteroid_colonization_status_menu
+			remove_country_flag = cgm_asteroid_colonization_enabled
+			set_global_flag = cgm_very_low_colonizable_asteroids
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.uninhabitable_terraforming_mechanics_status.name
+		custom_tooltip = cgm_pe.uninhabitable_terraforming_mechanics_status.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			cgm_additional_features_menu_configuration_triggers = no			
+			cgm_dynamic_settings_menu_configuration_triggers = no
+		}
+		hidden_effect = {
+			remove_global_flag = cgm_uninhabitable_terraforming_mechanics_enabled
+			remove_global_flag = cgm_uninhabitable_terraforming_mechanics_disabled
+			set_global_flag = cgm_uninhabitable_terraforming_mechanics_enabled
+			set_country_flag = cgm_uninhabitable_terraforming_mechanics_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}
+	option = {
+		name = cgm_pe.uninhabitable_terraforming_mechanics_enabled.name
+		custom_tooltip = cgm_pe.uninhabitable_terraforming_mechanics_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_uninhabitable_terraforming_mechanics_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_uninhabitable_terraforming_mechanics_enabled
+			remove_global_flag = cgm_uninhabitable_terraforming_mechanics_disabled
+			set_global_flag = cgm_uninhabitable_terraforming_mechanics_enabled
+			remove_country_flag = cgm_uninhabitable_terraforming_mechanics_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.uninhabitable_terraforming_mechanics_disabled.name
+		custom_tooltip = cgm_pe.uninhabitable_terraforming_mechanics_disabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_uninhabitable_terraforming_mechanics_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_uninhabitable_terraforming_mechanics_enabled
+			remove_global_flag = cgm_uninhabitable_terraforming_mechanics_disabled
+			set_global_flag = cgm_uninhabitable_terraforming_mechanics_disabled
+			remove_country_flag = cgm_uninhabitable_terraforming_mechanics_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.planetary_projects_mechanics_status.name
+		custom_tooltip = cgm_pe.planetary_projects_mechanics_status.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			cgm_additional_features_menu_configuration_triggers = no			
+			cgm_dynamic_settings_menu_configuration_triggers = no
+		}
+		hidden_effect = {
+			remove_global_flag = cgm_planetary_projects_mechanics_enabled
+			remove_global_flag = cgm_planetary_projects_mechanics_disabled
+			set_global_flag = cgm_planetary_projects_mechanics_enabled
+			set_country_flag = cgm_planetary_projects_mechanics_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}
+	option = {
+		name = cgm_pe.planetary_projects_mechanics_enabled.name
+		custom_tooltip = cgm_pe.planetary_projects_mechanics_enabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_planetary_projects_mechanics_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_planetary_projects_mechanics_enabled
+			remove_global_flag = cgm_planetary_projects_mechanics_disabled
+			set_global_flag = cgm_planetary_projects_mechanics_enabled
+			remove_country_flag = cgm_planetary_projects_mechanics_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.planetary_projects_mechanics_disabled.name
+		custom_tooltip = cgm_pe.planetary_projects_mechanics_disabled.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { has_country_flag = cgm_planetary_projects_mechanics_status_menu }			
+
+		hidden_effect = {
+			remove_global_flag = cgm_planetary_projects_mechanics_enabled
+			remove_global_flag = cgm_planetary_projects_mechanics_disabled
+			set_global_flag = cgm_planetary_projects_mechanics_disabled
+			remove_country_flag = cgm_planetary_projects_mechanics_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}		
+	### Level 2 - dynamic options menu
+	option = {
+		name = cgm_pe.presapient_discovery_status.name
+		custom_tooltip = cgm_pe.presapient_discovery_status.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			cgm_additional_features_menu_configuration_triggers = no			
+			cgm_dynamic_settings_menu_configuration_triggers = no
+		}
+		hidden_effect = {
+			remove_presapient_chance_flags = yes			
+			set_country_flag = cgm_presapient_discovery_status_menu			
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}
+	option = {
+		name = cgm_pe.presapient_discovery_very_rare.name
+		custom_tooltip = cgm_pe.presapient_discovery_very_rare.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_presapient_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_very_rare_presapients
+			remove_country_flag = cgm_presapient_discovery_status_menu			
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.presapient_discovery_vanilla.name
+		custom_tooltip = cgm_pe.presapient_discovery_vanilla.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_presapient_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_vanilla_presapients
+			remove_country_flag = cgm_presapient_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.presapient_discovery_default.name
+		custom_tooltip = cgm_pe.presapient_discovery_default.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_presapient_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_default_presapients
+			remove_country_flag = cgm_presapient_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.presapient_discovery_common.name
+		custom_tooltip = cgm_pe.presapient_discovery_common.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_presapient_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_common_presapients
+			remove_country_flag = cgm_presapient_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.presapient_discovery_very_common.name
+		custom_tooltip = cgm_pe.presapient_discovery_very_common.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_presapient_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_very_common_presapients
+			remove_country_flag = cgm_presapient_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}	
+	option = {
+		name = cgm_pe.terraforming_candidate_discovery_status.name
+		custom_tooltip = cgm_pe.terraforming_candidate_discovery_status.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			cgm_additional_features_menu_configuration_triggers = no			
+			cgm_dynamic_settings_menu_configuration_triggers = no
+		}
+		hidden_effect = {
+			remove_terraforming_candidate_chance_flags = yes			
+			set_country_flag = cgm_terraforming_candidate_discovery_status_menu			
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}
+	option = {
+		name = cgm_pe.terraforming_candidate_discovery_very_rare.name
+		custom_tooltip = cgm_pe.terraforming_candidate_discovery_very_rare.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_terraforming_candidate_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_very_rare_terraforming_candidates
+			remove_country_flag = cgm_terraforming_candidate_discovery_status_menu			
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.terraforming_candidate_discovery_vanilla.name
+		custom_tooltip = cgm_pe.terraforming_candidate_discovery_vanilla.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_terraforming_candidate_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_vanilla_terraforming_candidates
+			remove_country_flag = cgm_terraforming_candidate_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.terraforming_candidate_discovery_default.name
+		custom_tooltip = cgm_pe.terraforming_candidate_discovery_default.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_terraforming_candidate_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_default_terraforming_candidates
+			remove_country_flag = cgm_terraforming_candidate_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.terraforming_candidate_discovery_common.name
+		custom_tooltip = cgm_pe.terraforming_candidate_discovery_common.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_terraforming_candidate_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_common_terraforming_candidates
+			remove_country_flag = cgm_terraforming_candidate_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}		
+	option = {
+		name = cgm_pe.terraforming_candidate_discovery_very_common.name
+		custom_tooltip = cgm_pe.terraforming_candidate_discovery_very_common.desc
+		custom_gui = "cgm_pe_option"		
+		trigger = { 
+			has_country_flag = cgm_terraforming_candidate_discovery_status_menu
+		}			
+
+		hidden_effect = {
+			set_global_flag = cgm_very_common_terraforming_candidates
+			remove_country_flag = cgm_terraforming_candidate_discovery_status_menu
+			country_event = { id = cgm_pe_spawn_engine.3 }				
+		}
+	}			
+	option = {
+		name = close
+		custom_gui = "cgm_pe_option"
+		trigger = { cgm_additional_features_menu_configuration_triggers = no }	
+	}		
+	option = {
+		name = back
+		custom_gui = "cgm_pe_option"		
+		trigger = { cgm_additional_features_menu_configuration_triggers = yes }	
+		
+		hidden_effect = { 
+			remove_additional_features_menu_configuration_flags = yes
+			country_event = { id = cgm_pe_spawn_engine.3 }
+		}
+	}		
+}	

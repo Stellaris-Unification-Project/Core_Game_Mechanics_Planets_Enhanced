@@ -34,13 +34,13 @@ cgm_pe_unique_sr_spawn_table = {
 				OR = {
 					has_global_flag = unique_sr1
 					has_planet_flag = unique_sr
-					solar_system = { any_planet = { has_planet_flag = unique_sr } }
+					solar_system = { any_system_planet = { has_planet_flag = unique_sr } }
 				}
 			}
 			modifier = {
 				factor = 0.1
 				any_system = {
-					any_planet = {
+					any_system_planet = {
 						NOT = { is_same_value = event_target:unique_resource_candidate }
 						distance = {
 							source = event_target:unique_resource_candidate
@@ -90,13 +90,13 @@ cgm_pe_unique_sr_spawn_table = {
 				OR = {
 					has_global_flag = unique_sr2
 					has_planet_flag = unique_sr
-					solar_system = { any_planet = { has_planet_flag = unique_sr } }
+					solar_system = { any_system_planet = { has_planet_flag = unique_sr } }
 				}
 			}
 			modifier = {
 				factor = 0.1
 				any_system = {
-					any_planet = {
+					any_system_planet = {
 						NOT = { is_same_value = event_target:unique_resource_candidate }
 						distance = {
 							source = event_target:unique_resource_candidate
@@ -146,13 +146,13 @@ cgm_pe_unique_sr_spawn_table = {
 				OR = {
 					has_global_flag = unique_sr3
 					has_planet_flag = unique_sr
-					solar_system = { any_planet = { has_planet_flag = unique_sr } }
+					solar_system = { any_system_planet = { has_planet_flag = unique_sr } }
 				}
 			}
 			modifier = {
 				factor = 0.1
 				any_system = {
-					any_planet = {
+					any_system_planet = {
 						NOT = { is_same_value = event_target:unique_resource_candidate }
 						distance = {
 							source = event_target:unique_resource_candidate
@@ -202,13 +202,13 @@ cgm_pe_unique_sr_spawn_table = {
 				OR = {
 					has_global_flag = unique_sr4
 					has_planet_flag = unique_sr
-					solar_system = { any_planet = { has_planet_flag = unique_sr } }
+					solar_system = { any_system_planet = { has_planet_flag = unique_sr } }
 				}
 			}
 			modifier = {
 				factor = 0.1
 				any_system = {
-					any_planet = {
+					any_system_planet = {
 						NOT = { is_same_value = event_target:unique_resource_candidate }
 						distance = {
 							source = event_target:unique_resource_candidate
@@ -258,13 +258,13 @@ cgm_pe_unique_sr_spawn_table = {
 				OR = {
 					has_global_flag = unique_sr5
 					has_planet_flag = unique_sr
-					solar_system = { any_planet = { has_planet_flag = unique_sr } }
+					solar_system = { any_system_planet = { has_planet_flag = unique_sr } }
 				}
 			}
 			modifier = {
 				factor = 0.1
 				any_system = {
-					any_planet = {
+					any_system_planet = {
 						NOT = { is_same_value = event_target:unique_resource_candidate }
 						distance = {
 							source = event_target:unique_resource_candidate
@@ -314,13 +314,13 @@ cgm_pe_unique_sr_spawn_table = {
 				OR = {
 					has_global_flag = unique_sr6
 					has_planet_flag = unique_sr
-					solar_system = { any_planet = { has_planet_flag = unique_sr } }
+					solar_system = { any_system_planet = { has_planet_flag = unique_sr } }
 				}
 			}
 			modifier = {
 				factor = 0.1
 				any_system = {
-					any_planet = {
+					any_system_planet = {
 						NOT = { is_same_value = event_target:unique_resource_candidate }
 						distance = {
 							source = event_target:unique_resource_candidate
@@ -370,13 +370,13 @@ cgm_pe_unique_sr_spawn_table = {
 				OR = {
 					has_global_flag = unique_sr7
 					has_planet_flag = unique_sr
-					solar_system = { any_planet = { has_planet_flag = unique_sr } }
+					solar_system = { any_system_planet = { has_planet_flag = unique_sr } }
 				}
 			}
 			modifier = {
 				factor = 0.1
 				any_system = {
-					any_planet = {
+					any_system_planet = {
 						NOT = { is_same_value = event_target:unique_resource_candidate }
 						distance = {
 							source = event_target:unique_resource_candidate
@@ -426,13 +426,13 @@ cgm_pe_unique_sr_spawn_table = {
 				OR = {
 					has_global_flag = unique_sr8
 					has_planet_flag = unique_sr
-					solar_system = { any_planet = { has_planet_flag = unique_sr } }
+					solar_system = { any_system_planet = { has_planet_flag = unique_sr } }
 				}
 			}
 			modifier = {
 				factor = 0.1
 				any_system = {
-					any_planet = {
+					any_system_planet = {
 						NOT = { is_same_value = event_target:unique_resource_candidate }
 						distance = {
 							source = event_target:unique_resource_candidate
@@ -482,13 +482,13 @@ cgm_pe_unique_sr_spawn_table = {
 				OR = {
 					has_global_flag = unique_sr9
 					has_planet_flag = unique_sr
-					solar_system = { any_planet = { has_planet_flag = unique_sr } }
+					solar_system = { any_system_planet = { has_planet_flag = unique_sr } }
 				}
 			}
 			modifier = {
 				factor = 0.1
 				any_system = {
-					any_planet = {
+					any_system_planet = {
 						NOT = { is_same_value = event_target:unique_resource_candidate }
 						distance = {
 							source = event_target:unique_resource_candidate

@@ -728,7 +728,7 @@ cgm_new_worlds_planet_spawn_table_inhabitable = {
 			modifier = { factor = 0.15 planet_size > 20 }  #Too big and odds should favor super-terrestrial class
 			modifier = {
 				factor = 0
-				NOT = { planetary_diversity_enabled = yes }
+				planetary_diversity_enabled = no
 			}
 		}
 	}

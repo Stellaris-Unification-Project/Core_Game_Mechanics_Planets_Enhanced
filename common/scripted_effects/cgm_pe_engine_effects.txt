@@ -8,7 +8,7 @@ cgm_spawn_engine = {
 				has_global_flag = cgm_new_worlds_enabled_planetary_diversity_enabled
 			}
 		}
-		every_planet = { 
+		every_system_planet = { 
 			limit = { 
 				cgm_planet_engine_gate_conditions = yes
 				is_star = no 
@@ -72,7 +72,7 @@ cgm_spawn_engine = {
 					has_global_flag = unique_sr9 
 				}
 			}
-			random_planet = {
+			random_system_planet = {
 				limit = {
 					NOR = { 
 						exists = owner
@@ -94,9 +94,9 @@ cgm_spawn_engine = {
 							has_star_flag = elven_system
 							has_star_flag = lunari_system
 							has_star_flag = elven_ring_system
-							any_planet = { has_planet_flag = unique_sr }
-							any_neighbor_system = { ignore_hyperlanes = no any_planet = { has_planet_flag = unique_sr } }
-							any_neighbor_system = { ignore_hyperlanes = yes any_planet = { has_planet_flag = unique_sr } }
+							any_system_planet = { has_planet_flag = unique_sr }
+							any_neighbor_system = { ignore_hyperlanes = no any_system_planet = { has_planet_flag = unique_sr } }
+							any_neighbor_system = { ignore_hyperlanes = yes any_system_planet = { has_planet_flag = unique_sr } }
 						}
 					}
 				}
@@ -162,7 +162,7 @@ cgm_spawn_engine = {
 			}
 		}	
 	}				
-	every_planet = {
+	every_system_planet = {
 		limit = { 
 			is_asteroid = yes
 			has_global_flag = cgm_asteroid_colonization_enabled
@@ -170,7 +170,7 @@ cgm_spawn_engine = {
 		}	
 		prescripted_asteroid_size_readjustment = yes
 	}		
-	every_planet = {
+	every_system_planet = {
 		limit = {
 			OR = {
 				is_capital = no
@@ -183,7 +183,7 @@ cgm_spawn_engine = {
 			planet_is_not_virtual = yes
 			solar_system = {
 				NOR = {
-					any_planet = { exists = owner owner = { is_country_type = default } is_capital = yes }
+					any_system_planet = { exists = owner owner = { is_country_type = default } is_capital = yes }
 					has_star_flag = cgm_ignored_system
 					has_star_flag = sol_system
 					has_star_flag = custom_system
@@ -471,10 +471,8 @@ cgm_spawn_engine = {
 					limit = { 
 						exists = owner
 						owner = { 
-							OR = { 
-								is_country_type = fallen_empire
-								is_country_type = awakened_fallen_empire
-							}
+							
+								is_fallen_empire = yes
 						}
 						is_planet_class = pc_gaia
 					}
@@ -653,7 +651,7 @@ cgm_spawn_engine = {
 					count = num_of_asteroidal_candidates
 					random_system = { 
 						limit = { 
-							any_planet = { 
+							any_system_planet = { 
 								OR = { 
 									is_planet_class = pc_asteroid
 									is_planet_class = pc_ice_asteroid			
@@ -689,7 +687,7 @@ cgm_spawn_engine = {
 					give_technology = { message = no tech = tech_cgm_automated_exploration_feature }
 				}	
 			}	
-			every_planet = { 
+			every_system_planet = { 
 				limit = { NOT = { any_tile = { has_blocker = no } } }
 				random_tile = { 
 					limit = { has_blocker = yes } 

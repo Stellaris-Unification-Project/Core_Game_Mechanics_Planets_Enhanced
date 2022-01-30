@@ -142,7 +142,7 @@ is_exterminator = {
 	}
 }	
 has_pursuit_of_profit = {
-	OR = { has_non_swapped_tradition = tr_prosperity_pursuit_of_profit has_swapped_tradition = tr_prosperity_pursuit_of_profit_machine }
+	OR = { has_active_tradition = tr_prosperity_pursuit_of_profit has_active_tradition = tr_prosperity_pursuit_of_profit_machine }
 }
 # With exists = owner check
 owner_is_machine_empire = {
@@ -156,31 +156,31 @@ owner_is_hive_mind_empire = {
 owner_is_spiritualist = {
 	exists = owner
 	owner = {
-		OR = { has_ethic = ethic_spiritualist has_ethic = ethic_fanatic_spiritualist }
+		OR = { is_spiritualist = yes }
 	}
 }
 owner_is_militarist = {
 	exists = owner
 	owner = { 
-		OR = { has_ethic = ethic_militarist has_ethic = ethic_fanatic_militarist }
+		OR = { is_militarist = yes }
 	}	
 }
 owner_is_materialist = {
 	exists = owner
 	owner = { 
-		OR = { has_ethic = ethic_materialist has_ethic = ethic_fanatic_materialist }
+		OR = { is_materialist = yes }
 	}	
 }
 owner_is_pacifist = {
 	exists = owner
 	owner = { 
-		OR = { has_ethic = ethic_pacifist has_ethic = ethic_fanatic_pacifist }
+		OR = { is_pacifist = yes }
 	}	
 }
 owner_is_xenophile = {
 	exists = owner
 	owner = { 
-		OR = { has_ethic = ethic_xenophile has_ethic = ethic_fanatic_xenophile }
+		OR = { is_xenophile = yes }
 	}	
 }
 owner_is_authoritarian = {
@@ -613,7 +613,7 @@ has_terraformer = {
 regular_star_system = {
 	planet = { 
 		solar_system = {
-			any_planet = {
+			any_system_planet = {
 				NOR = {
 					has_planet_flag = system_star_2
 					has_planet_flag = system_star_3
@@ -637,7 +637,7 @@ has_cgm_unique_resource = {
 binary_star_system = {
 	planet = { 
 		solar_system = {
-			any_planet = {
+			any_system_planet = {
 				has_planet_flag = system_star_2
 				NOT = {	has_planet_flag = system_star_3	}
 			}	
@@ -648,7 +648,7 @@ binary_star_system = {
 ternary_star_system = {
 	planet = { 
 		solar_system = {
-			any_planet = {
+			any_system_planet = {
 				has_planet_flag = system_star_3
 			}	
 		}		
@@ -874,11 +874,11 @@ orbits_nonideal_star = {
 
 orbits_collapsed_star = { # This one is a bit different, the trigger should check if there is any type of collapsed star in the system, not just the primary star, can be used for spawning broken worlds or special resources in systems with a collapsed star present
 	OR = {
-		solar_system = { any_planet = { is_planet_class_pc_black_hole = yes } }
-		solar_system = { any_planet = { is_planet_class_pc_neutron_star = yes } }
-		solar_system = { any_planet = { is_planet_class_pc_pulsar = yes } }
-		solar_system = { any_planet = { is_planet_class_pc_collapsar = yes } }
-		solar_system = { any_planet = { is_planet_class_pc_magnetar = yes } }
+		solar_system = { any_system_planet = { is_planet_class_pc_black_hole = yes } }
+		solar_system = { any_system_planet = { is_planet_class_pc_neutron_star = yes } }
+		solar_system = { any_system_planet = { is_planet_class_pc_pulsar = yes } }
+		solar_system = { any_system_planet = { is_planet_class_pc_collapsar = yes } }
+		solar_system = { any_system_planet = { is_planet_class_pc_magnetar = yes } }
 	}
 }
 

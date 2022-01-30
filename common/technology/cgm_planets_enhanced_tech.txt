@@ -10,7 +10,7 @@ tech_helium_power = {
 		modifier = {
 			factor = 0
 			NOT = { 
-				any_system_within_border = { any_planet = { has_sr_helium_3 = yes } } 
+				any_planet_within_border = { has_sr_helium_3 = yes } } 
 			}
 		}
 		modifier = {
@@ -39,7 +39,7 @@ tech_xerodine_hyperlane_stabilisation = {
 			factor = 0
 			NOR = { 
 				has_country_flag = xerodine_found
-				any_system_within_border = { any_planet = { has_sr_xerodine = yes } } 
+				any_planet_within_border = { has_sr_xerodine = yes } } 
 			}
 		}
 		modifier = {
@@ -74,7 +74,7 @@ tech_neodymium_integrity_field_generator = {
 			factor = 0
 			NOR = { 
 				has_country_flag = neodymium_found
-				any_system_within_border = { any_planet = { has_sr_neodymium = yes } } 
+				any_planet_within_border = { has_sr_neodymium = yes } } 
 			}
 		}
 		modifier = {
@@ -108,7 +108,7 @@ tech_sorium_shield_multiplexer = {
 			factor = 0
 			NOR = { 
 				has_country_flag = sorium_3_found
-				any_system_within_border = { any_planet = { has_sr_sorium_3 = yes } } 
+				any_planet_within_border = { has_sr_sorium_3 = yes } } 
 			}
 		}
 		modifier = {
@@ -142,7 +142,7 @@ tech_neorite_targeting_array = {
 			factor = 0
 			NOR = { 
 				has_country_flag = neorite_found
-				any_system_within_border = { any_planet = { has_sr_neorite = yes } } 
+				any_planet_within_border = { has_sr_neorite = yes } } 
 			}
 		}
 		modifier = {
@@ -176,7 +176,7 @@ tech_illum_spectral_emitters = {
 			factor = 0
 			NOR = { 
 				has_country_flag = illum_found
-				any_system_within_border = { any_planet = { has_sr_illum = yes } } 
+				any_planet_within_border = { has_sr_illum = yes } } 
 			}
 		}
 		modifier = {
@@ -210,7 +210,7 @@ tech_hyperfuel_reactor = {
 			factor = 0
 			NOR = { 
 				has_country_flag = hyperfuels_found
-				any_system_within_border = { any_planet = { has_sr_hyperfuels = yes } } 
+				any_planet_within_border = { has_sr_hyperfuels = yes } } 
 			}
 		}
 		modifier = {
@@ -244,7 +244,7 @@ tech_pyronium_experimental_lab = {
 			factor = 0
 			NOR = { 
 				has_country_flag = pyronium_found
-				any_system_within_border = { any_planet = { has_sr_pyronium = yes } } 
+				any_planet_within_border = { has_sr_pyronium = yes } } 
 			}
 		}
 		modifier = {
@@ -278,7 +278,7 @@ tech_cryodine_purifier = {
 			factor = 0
 			NOR = { 
 				has_country_flag = cryodine_found
-				any_system_within_border = { any_planet = { has_sr_cryodine = yes } } 
+				any_planet_within_border = { has_sr_cryodine = yes } } 
 			}
 		}
 		modifier = {
@@ -312,7 +312,7 @@ tech_selenemite_foundry = {
 			factor = 0
 			NOR = { 
 				has_country_flag = selenemite_found
-				any_system_within_border = { any_planet = { has_sr_selenemite = yes } } 
+				any_planet_within_border = { has_sr_selenemite = yes } } 
 			}
 		}	
 		modifier = {
@@ -347,7 +347,7 @@ tech_hyperdiamond_lapidary = {
 			factor = 0
 			NOR = { 
 				has_country_flag = hyper_diamond_found
-				any_system_within_border = { any_planet = { has_sr_hyper_diamond = yes } } 
+				any_planet_within_border = { has_sr_hyper_diamond = yes } } 
 			}
 		}
 		modifier = {
@@ -381,7 +381,7 @@ tech_cavorite_amalgamator = {
 			factor = 0
 			NOR = { 
 				has_country_flag = cavorite_found
-				any_system_within_border = { any_planet = { has_sr_cavorite = yes } } 
+				any_planet_within_border = { has_sr_cavorite = yes } } 
 			}
 		}
 		modifier = {
@@ -415,7 +415,7 @@ tech_thullium_energy_processor = {
 			factor = 0
 			NOR = { 
 				has_country_flag = thullium_found
-				any_system_within_border = { any_planet = { has_sr_thullium = yes } } 
+				any_planet_within_border = { has_sr_thullium = yes } } 
 			}
 		}
 		modifier = {
@@ -449,7 +449,7 @@ tech_lythuric_reactor = {
 			factor = 0
 			NOR = { 
 				has_country_flag = lythuric_found
-				any_system_within_border = { any_planet = { has_sr_lythuric = yes } } 
+				any_planet_within_border = { has_sr_lythuric = yes } } 
 			}
 		}
 		modifier = {
@@ -483,7 +483,7 @@ tech_scritch_gravity_forge = {
 			factor = 0
 			NOR = { 
 				has_country_flag = scritch_found
-				any_system_within_border = { any_planet = { has_sr_scritch = yes } } 
+				any_planet_within_border = { has_sr_scritch = yes } } 
 			}
 		}
 		modifier = {

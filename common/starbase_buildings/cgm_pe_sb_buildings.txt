@@ -17,7 +17,7 @@ sb_building_xerodine_hyperlane_stabilizer = {
 	ai_build_outside_chokepoint = yes	
 	ai_weight = {
 		weight = 200
-		modifier = { factor = 0 solar_system = { NOT = { any_planet = { is_colony = yes } } } }
+		modifier = { factor = 0 solar_system = { NOT = { any_system_planet = { is_colony = yes } } } }
 		modifier = { factor = 0 owner = { has_country_strategic_resource = { type = sr_xerodine amount < 1.5 } } }
 	}	
 } 

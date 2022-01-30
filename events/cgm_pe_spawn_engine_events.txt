@@ -29,7 +29,7 @@ country_event = {
 			}
 			orbit = { set_planet_flag = has_ruined_megastructure } 
 		}
-		every_planet = {
+		every_system_planet = {
 			limit = { 
 				is_gas_giant = yes
 				has_moon = yes
@@ -40,14 +40,14 @@ country_event = {
 				set_planet_flag = gas_giant_moon
 			}
 		}	
-		every_planet = {
+		every_system_planet = {
 			limit = { is_star = yes }
 			#this effect block identifies star order in systems				
 			if = {
 				limit = {
 					solar_system = {
 						NOT = {
-							any_planet = {
+							any_system_planet = {
 								NOT = { is_same_value = prevprev }
 								has_planet_flag = system_star_1
 							}
@@ -60,7 +60,7 @@ country_event = {
 				limit = {
 					solar_system = {
 						NOT = {
-							any_planet = {
+							any_system_planet = {
 								NOT = { is_same_value = prevprev }
 								has_planet_flag = system_star_2
 							}
@@ -71,13 +71,12 @@ country_event = {
 			}	
 			else = { set_planet_flag = system_star_3 }
 		}				
-		random_planet = { 
-			limit = { is_star = yes }
+		star = {
 			save_global_event_target_as = cgm_pe_variable_storage
 			set_variable = { which = tb_sunflower_spawn value = 0 }			
 			set_variable = { which = tb_precursor_trading_outpost value = 0 } 
 			set_variable = { which = num_of_regular_habitable_planets value = 0 }			
-			every_planet = { 
+			every_system_planet = { 
 				limit = { habitable_planet = yes } 
 				prev = { change_variable = { which = num_of_regular_habitable_planets value = 1 } }
 			}		

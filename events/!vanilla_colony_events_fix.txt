@@ -186,8 +186,7 @@ planet_event = {
 			has_planet_flag = colony_event
 			is_planet_class = pc_nuked
 			is_planet_class = pc_gaia
-			is_planet_class = pc_ringworld_habitable
-			is_planet_class = pc_habitat
+			is_artificial = yes
 			owner = { has_country_flag = abandoned_terraforming_country }
 			owner = { has_authority = auth_machine_intelligence }
 			is_ideal_planet_class = { who = owner status = yes }
@@ -482,17 +481,17 @@ planet_event = {
 			}
 			create_army = {
 				name = "NAME_Deformed_Creatures"
-				owner = last_created
+				owner = last_created_country
 				type = "mutant_army"
 			}
 			create_army = {
 				name = "NAME_Twisted_Beasts"
-				owner = last_created
+				owner = last_created_country
 				type = "mutant_army"
 			}
 			create_army = {
 				name = "NAME_Mutated_Horrors"
-				owner = last_created
+				owner = last_created_country
 				type = "mutant_army"
 			}
 		}

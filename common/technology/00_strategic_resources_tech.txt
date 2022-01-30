@@ -19,7 +19,7 @@ tech_mine_garanthium = {
 					NOR = {
 						has_country_flag = garanthium_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_garanthium amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_garanthium amount > 0 } }
 						}					
 					}
 				}	
@@ -28,7 +28,7 @@ tech_mine_garanthium = {
 					NOR = {
 						has_country_flag = garanthium_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_garanthium amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_garanthium amount > 0 } }
 						}
 						any_relation = {
 							is_country_type = default 
@@ -73,7 +73,7 @@ tech_engos_vapor = {
 			NOR = {
 				has_country_flag = engos_found
 				any_system_within_border = {
-					any_planet = { has_resource = { type = sr_engos amount > 0 } }
+					any_system_planet = { has_resource = { type = sr_engos amount > 0 } }
 				}
 				any_relation = {
 					AND = { is_country_type = default has_communications = ROOT has_technology = tech_engos_vapor }
@@ -111,7 +111,7 @@ tech_mine_teldar = {
 					NOR = {
 						has_country_flag = teldar_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_teldar amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_teldar amount > 0 } }
 						}					
 					}
 				}	
@@ -120,7 +120,7 @@ tech_mine_teldar = {
 					NOR = {
 						has_country_flag = teldar_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_teldar amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_teldar amount > 0 } }
 						}
 						any_relation = {
 							is_country_type = default 
@@ -167,7 +167,7 @@ tech_mine_yurantic = {
 					NOR = {
 						has_country_flag = yurantic_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_yurantic amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_yurantic amount > 0 } }
 						}					
 					}
 				}	
@@ -176,7 +176,7 @@ tech_mine_yurantic = {
 					NOR = {
 						has_country_flag = yurantic_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_yurantic amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_yurantic amount > 0 } }
 						}
 						any_relation = {
 							is_country_type = default 
@@ -223,7 +223,7 @@ tech_mine_aldar = {
 					NOR = {
 						has_country_flag = aldar_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_aldar amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_aldar amount > 0 } }
 						}					
 					}
 				}	
@@ -232,7 +232,7 @@ tech_mine_aldar = {
 					NOR = {
 						has_country_flag = aldar_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_aldar amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_aldar amount > 0 } }
 						}
 						any_relation = {
 							is_country_type = default 
@@ -279,7 +279,7 @@ tech_mine_orillium = {
 					NOR = {
 						has_country_flag = orillium_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_orillium amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_orillium amount > 0 } }
 						}					
 					}
 				}	
@@ -288,7 +288,7 @@ tech_mine_orillium = {
 					NOR = {
 						has_country_flag = orillium_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_orillium amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_orillium amount > 0 } }
 						}
 						any_relation = {
 							is_country_type = default 
@@ -336,7 +336,7 @@ tech_mine_neutronium = {
 					NOR = {
 						has_country_flag = neutronium_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_neutronium amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_neutronium amount > 0 } }
 						}					
 					}
 				}	
@@ -345,7 +345,7 @@ tech_mine_neutronium = {
 					NOR = {
 						has_country_flag = neutronium_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_neutronium amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_neutronium amount > 0 } }
 						}
 						any_relation = {
 							is_country_type = default 
@@ -399,7 +399,7 @@ tech_mine_zro = {
 					NOR = {
 						has_country_flag = zro_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_zro amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_zro amount > 0 } }
 						}					
 					}
 				}	
@@ -408,7 +408,7 @@ tech_mine_zro = {
 					NOR = {
 						has_country_flag = zro_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_zro amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_zro amount > 0 } }
 						}
 						any_relation = {
 							is_country_type = default 
@@ -467,7 +467,7 @@ tech_mine_dark_matter = {
 					NOR = {
 						has_country_flag = dark_matter_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_dark_matter amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_dark_matter amount > 0 } }
 						}					
 					}
 				}	
@@ -476,7 +476,7 @@ tech_mine_dark_matter = {
 					NOR = {
 						has_country_flag = dark_matter_found
 						any_system_within_border = {
-							any_planet = { has_resource = { type = sr_dark_matter amount > 0 } }
+							any_system_planet = { has_resource = { type = sr_dark_matter amount > 0 } }
 						}
 						any_relation = {
 							is_country_type = default 

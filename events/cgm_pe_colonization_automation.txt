@@ -14,10 +14,7 @@ event = { #on_monthly_pulse
 					is_ai = yes
 					has_country_flag = cgm_colonization_automation_country_enabled				
 				}				
-				OR = { 
-					is_country_type = default
-					is_country_type = awakened_fallen_empire
-				}			
+				is_country_type_with_subjects = yes			
 				any_planet_within_border = { 
 					NOR = { 
 						exists = owner
@@ -240,7 +237,7 @@ country_event = {
 											NOT = { is_same_value = prevprev } 
 											colonization_candidate_prerequisite = yes
 											habitability = { who = event_target:cgm_colonizing_species value > 0.19 }
-											check_variable = { which = colonization_value_transport value > prevprev } 
+											check_variable = { which = colonization_value_transport value > prevprev.colonization_value_transport } 
 										}
 									}
 								}

@@ -34,11 +34,7 @@ UPLIFT_SNAKEOID_CAT = {
 		modifier = {
 			factor = 0
 			from.owner = {
-				OR = {
-					has_valid_civic = civic_fanatic_purifiers
-					has_valid_civic = civic_hive_devouring_swarm
-					has_valid_civic = civic_machine_terminator
-				}
+				is_homicidal = yes
 			}
 		}		
 	}
@@ -75,11 +71,7 @@ UPLIFT_DESERT_CAT = {
 		modifier = {
 			factor = 0
 			from.owner = {
-				OR = {
-					has_valid_civic = civic_fanatic_purifiers
-					has_valid_civic = civic_hive_devouring_swarm
-					has_valid_civic = civic_machine_terminator
-				}
+				is_homicidal = yes
 			}
 		}
 	}
@@ -119,11 +111,7 @@ UPLIFT_OCEAN_CAT = {
 		modifier = {
 			factor = 0
 			from.owner = {
-				OR = {
-					has_valid_civic = civic_fanatic_purifiers
-					has_valid_civic = civic_hive_devouring_swarm
-					has_valid_civic = civic_machine_terminator
-				}
+				is_homicidal = yes
 			}
 		}
 	}
@@ -163,11 +151,7 @@ UPLIFT_ARID_CAT = {
 		modifier = {
 			factor = 0
 			from.owner = {
-				OR = {
-					has_valid_civic = civic_fanatic_purifiers
-					has_valid_civic = civic_hive_devouring_swarm
-					has_valid_civic = civic_machine_terminator
-				}
+				is_homicidal = yes
 			}
 		}
 	}
@@ -207,11 +191,7 @@ UPLIFT_CONTINENTAL_CAT = {
 		modifier = {
 			factor = 0
 			from.owner = {
-				OR = {
-					has_valid_civic = civic_fanatic_purifiers
-					has_valid_civic = civic_hive_devouring_swarm
-					has_valid_civic = civic_machine_terminator
-				}
+				is_homicidal = yes
 			}
 		}
 	}
@@ -251,11 +231,7 @@ UPLIFT_TROPICAL_CAT = {
 		modifier = {
 			factor = 0
 			from.owner = {
-				OR = {
-					has_valid_civic = civic_fanatic_purifiers
-					has_valid_civic = civic_hive_devouring_swarm
-					has_valid_civic = civic_machine_terminator
-				}
+				is_homicidal = yes
 			}
 		}
 	}
@@ -295,11 +271,7 @@ UPLIFT_TUNDRA_CAT = {
 		modifier = {
 			factor = 0
 			from.owner = {
-				OR = {
-					has_valid_civic = civic_fanatic_purifiers
-					has_valid_civic = civic_hive_devouring_swarm
-					has_valid_civic = civic_machine_terminator
-				}
+				is_homicidal = yes
 			}
 		}
 	}
@@ -339,11 +311,7 @@ UPLIFT_ARCTIC_CAT = {
 		modifier = {
 			factor = 0
 			from.owner = {
-				OR = {
-					has_valid_civic = civic_fanatic_purifiers
-					has_valid_civic = civic_hive_devouring_swarm
-					has_valid_civic = civic_machine_terminator
-				}
+				is_homicidal = yes
 			}
 		}
 	}
@@ -390,11 +358,7 @@ UPLIFT_GENERIC_CAT = {
 		modifier = {
 			factor = 0
 			from.owner = {
-				OR = {
-					has_valid_civic = civic_fanatic_purifiers
-					has_valid_civic = civic_hive_devouring_swarm
-					has_valid_civic = civic_machine_terminator
-				}
+				is_homicidal = yes
 			}
 		}
 	}
@@ -433,11 +397,7 @@ UPLIFT_ROACHOID_CAT = {
 		modifier = {
 			factor = 0
 			from.owner = {
-				OR = {
-					has_valid_civic = civic_fanatic_purifiers
-					has_valid_civic = civic_hive_devouring_swarm
-					has_valid_civic = civic_machine_terminator
-				}
+				is_homicidal = yes
 			}
 		}
 	}

@@ -12,7 +12,7 @@ set_colonization_value = {
 					}	
 					AND = { 
 						exists = owner
-						owner = { is_same_value = root }
+						is_owned_by = root
 					}
 				}	
 			}

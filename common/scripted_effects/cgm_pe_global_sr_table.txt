@@ -324,7 +324,7 @@ cgm_pe_orbital_sr_spawn_table = {
 			modifier = { add = 15 is_planet_class_pc_geometallic = yes new_worlds_enabled = yes }
 			modifier = { add = 12 is_planet_class_pc_dwarf_planet_asteroid = yes new_worlds_enabled = yes }
 			modifier = { factor = 1.5 new_worlds_enabled = no }
-			modifier = { factor = 0 NOT = { orbits_cold_star = yes } }
+			modifier = { factor = 0 orbits_cold_star = no }
 			modifier = { factor = 0 has_global_flag = cgm_resources_disabled }
 		}
 		0 = {

@@ -1219,9 +1219,9 @@ make_mammalian = {
 	}	
 	every_owned_pop = {
 		limit = { is_same_species = event_target:target_species }	
-		change_species = last_created					
+		change_species = last_created_species					
 	}
-	owner = { change_dominant_species = { species = last_created change_all = yes } }		
+	owner = { change_dominant_species = { species = last_created_species change_all = yes } }		
 
 }		
 make_avian = {
@@ -1246,9 +1246,9 @@ make_avian = {
 	}	
 	every_owned_pop = {
 		limit = { is_same_species = event_target:target_species }	
-		change_species = last_created					
+		change_species = last_created_species					
 	}
-	owner = { change_dominant_species = { species = last_created change_all = yes } }		
+	owner = { change_dominant_species = { species = last_created_species change_all = yes } }		
 }	
 make_molluscoid = {
 	random_owned_pop = {
@@ -1272,9 +1272,9 @@ make_molluscoid = {
 	}	
 	every_owned_pop = {
 		limit = { is_same_species = event_target:target_species }	
-		change_species = last_created					
+		change_species = last_created_species					
 	}
-	owner = { change_dominant_species = { species = last_created change_all = yes } }		
+	owner = { change_dominant_species = { species = last_created_species change_all = yes } }		
 
 }		
 make_fungoid = {
@@ -1299,9 +1299,9 @@ make_fungoid = {
 	}	
 	every_owned_pop = {
 		limit = { is_same_species = event_target:target_species }	
-		change_species = last_created					
+		change_species = last_created_species					
 	}
-	owner = { change_dominant_species = { species = last_created change_all = yes } }		
+	owner = { change_dominant_species = { species = last_created_species change_all = yes } }		
 
 }		
 make_arthropoid = {
@@ -1326,9 +1326,9 @@ make_arthropoid = {
 	}	
 	every_owned_pop = {
 		limit = { is_same_species = event_target:target_species }	
-		change_species = last_created					
+		change_species = last_created_species					
 	}
-	owner = { change_dominant_species = { species = last_created change_all = yes } }		
+	owner = { change_dominant_species = { species = last_created_species change_all = yes } }		
 
 }		
 make_reptilian = {
@@ -1353,9 +1353,9 @@ make_reptilian = {
 	}	
 	every_owned_pop = {
 		limit = { is_same_species = event_target:target_species }	
-		change_species = last_created					
+		change_species = last_created_species					
 	}
-	owner = { change_dominant_species = { species = last_created change_all = yes } }		
+	owner = { change_dominant_species = { species = last_created_species change_all = yes } }		
 
 }		
 make_humanoid = {
@@ -1380,9 +1380,9 @@ make_humanoid = {
 	}	
 	every_owned_pop = {
 		limit = { is_same_species = event_target:target_species }	
-		change_species = last_created					
+		change_species = last_created_species					
 	}
-	owner = { change_dominant_species = { species = last_created change_all = yes } }		
+	owner = { change_dominant_species = { species = last_created_species change_all = yes } }		
 }		
 make_plantoid = {
 	random_owned_pop = {
@@ -1406,9 +1406,9 @@ make_plantoid = {
 	}	
 	every_owned_pop = {
 		limit = { is_same_species = event_target:target_species }	
-		change_species = last_created					
+		change_species = last_created_species					
 	}
-	owner = { change_dominant_species = { species = last_created change_all = yes } }		
+	owner = { change_dominant_species = { species = last_created_species change_all = yes } }		
 
 }		
 remove_and_count_vanilla_regular_planet_modifiers = {
@@ -1750,7 +1750,7 @@ change_owner_species_to_this_planet_preference = {
             base = none # makes this replace parent species
         }
     }
-    owner = { change_dominant_species = { species = last_created change_all = yes } }
+    owner = { change_dominant_species = { species = last_created_species change_all = yes } }
 }
 remove_negative_planet_modifiers = {
 	if = {

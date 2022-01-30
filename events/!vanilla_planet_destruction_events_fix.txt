@@ -11,7 +11,7 @@ planet_event = {
 		if = {
 			limit = {
 				exists = owner
-				owner = { NOT = { is_same_value = from.owner } }
+				owner = { NOT = { is_same_empire = from.owner } }
 			}
 			from.owner = {
 				country_event = { id = planet_destruction.301 }
@@ -23,7 +23,7 @@ planet_event = {
 			limit = {
 				owner = { is_country_type = swarm }
 			}
-			every_country = {
+			every_playable_country = {
 				limit = { has_event_chain = "prethoryn_scourge_chain" }
 				add_event_chain_counter = {
 					event_chain = "prethoryn_scourge_chain"
@@ -42,11 +42,10 @@ planet_event = {
 			limit = {
 				exists = owner
 				owner = {
-					NOT = { is_same_value = from.owner }
+					NOT = { is_same_empire = from.owner }
 					OR = {
 						is_country_type = default
-						is_country_type = fallen_empire
-						is_country_type = awakened_fallen_empire
+						is_fallen_empire = yes
 					}
 				}
 			}
@@ -56,8 +55,8 @@ planet_event = {
 			every_country = {
 				limit = {
 					NOR = {
-						is_same_value = from.owner
-						is_same_value = root.owner
+						is_same_empire = from.owner
+						is_same_empire = root.owner
 						AND = {
 							has_federation = yes
 							is_in_federation_with = from.owner
@@ -111,7 +110,7 @@ planet_event = {
 			# modifier for allies + those upset by genocide
 			every_country = {
 				limit = {
-					NOT = { is_same_value = from.owner }
+					NOT = { is_same_empire = from.owner }
 					OR = {
 						has_communications = from.owner
 						has_communications = root.owner
@@ -130,7 +129,7 @@ planet_event = {
 			}
 			every_country = {
 				limit = {
-					NOT = { is_same_value = from.owner }
+					NOT = { is_same_empire = from.owner }
 					OR = {
 						has_communications = from.owner
 						has_communications = root.owner
@@ -178,8 +177,7 @@ planet_event = {
 		if = {
 			limit = {
 				OR = {
-					is_planet_class = pc_habitat
-					is_planet_class = pc_ringworld_habitable
+					is_artificial = yes
 				}
 			}
 			# nothing
@@ -255,7 +253,7 @@ planet_event = {
 		if = {
 			limit = {
 				exists = owner
-				owner = { NOT = { is_same_value = from.owner } }
+				owner = { NOT = { is_same_empire = from.owner } }
 			}
 			from.owner = {
 				country_event = { id = planet_destruction.401 }
@@ -265,11 +263,10 @@ planet_event = {
 			limit = {
 				exists = owner
 				owner = {
-					NOT = { is_same_value = from.owner }
+					NOT = { is_same_empire = from.owner }
 					OR = {
 						is_country_type = default
-						is_country_type = fallen_empire
-						is_country_type = awakened_fallen_empire
+						is_fallen_empire = yes
 					}
 				}
 			}
@@ -279,8 +276,8 @@ planet_event = {
 			every_country = {
 				limit = {
 					NOR = {
-						is_same_value = from.owner
-						is_same_value = root.owner
+						is_same_empire = from.owner
+						is_same_empire = root.owner
 						AND = {
 							has_federation = yes
 							is_in_federation_with = from.owner
@@ -378,8 +375,7 @@ planet_event = {
 		if = {
 			limit = {
 				OR = {
-					is_planet_class = pc_habitat
-					is_planet_class = pc_ringworld_habitable
+					is_artificial = yes
 				}
 			}
 			# nothing
@@ -441,7 +437,7 @@ planet_event = {
 		if = {
 			limit = {
 				exists = owner
-				owner = { is_same_value = from.owner }
+				is_owned_by = from.owner
 			}
 			add_modifier = {
 				modifier = uneasy_faith
@@ -463,11 +459,10 @@ planet_event = {
 			limit = {
 				exists = owner
 				owner = {
-					NOT = { is_same_value = from.owner }
+					NOT = { is_same_empire = from.owner }
 					OR = {
 						is_country_type = default
-						is_country_type = fallen_empire
-						is_country_type = awakened_fallen_empire
+						is_fallen_empire = yes
 					}
 				}
 			}
@@ -477,8 +472,8 @@ planet_event = {
 			every_country = {
 				limit = {
 					NOR = {
-						is_same_value = from.owner
-						is_same_value = root.owner
+						is_same_empire = from.owner
+						is_same_empire = root.owner
 						AND = {
 							has_federation = yes
 							is_in_federation_with = from.owner
@@ -531,7 +526,7 @@ planet_event = {
 			# modifier for allies + those upset by genocide
 			every_country = {
 				limit = {
-					NOR = { is_same_value = from.owner }
+					NOR = { is_same_empire = from.owner }
 					OR = {
 						has_communications = from.owner
 						has_communications = root.owner
@@ -550,7 +545,7 @@ planet_event = {
 			}
 			every_country = {
 				limit = {
-					NOR = { is_same_value = from.owner }
+					NOR = { is_same_empire = from.owner }
 					OR = {
 						has_communications = from.owner
 						has_communications = root.owner
@@ -580,7 +575,7 @@ planet_event = {
 		if = {
 			limit = {
 				exists = owner
-				owner = { is_same_value = from.owner }
+				is_owned_by = from.owner
 			}
 			# already owned
 		}
@@ -636,8 +631,7 @@ planet_event = {
 		if = {
 			limit = {
 				OR = {
-					is_planet_class = pc_habitat
-					is_planet_class = pc_ringworld_habitable
+					is_artificial = yes
 				}
 			}
 			# nothing

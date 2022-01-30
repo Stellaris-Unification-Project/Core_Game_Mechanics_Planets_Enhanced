@@ -87,8 +87,7 @@ planet_event = {
 			every_system_planet = {
 				limit = {
 					OR = {
-						is_planet_class = pc_ringworld_habitable
-						is_planet_class = pc_habitat
+						is_artificial = yes
 					}
 				}
 				every_owned_pop = {
@@ -121,8 +120,7 @@ planet_event = {
 					}
 				}
 			}
-			random_system_planet = {
-				limit = { is_star = yes }
+			star = {
 				# explosion ambient object
 				change_pc = pc_black_hole
 			}
